@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Rol;
+use App\Models\Estado;
 use App\Models\User;
+use Couchbase\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -11,15 +14,24 @@ class DatabaseSeeder extends Seeder
     use WithoutModelEvents;
 
     /**
-     * Seed the application's database.
+     * Inicializar la base de datos, en orden específico de creación.
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            /*
+           RolSeeder::class,
+           EstadoSeeder::class,
+           TipoSanguineoSeeder::class,
+           EspecialidadSeeder::class,
+           DiagnosticoSeeder::class,
+           CondicionMedicaSeeder::class,
+           AlergiaSeeder::class,
+           MedicamentoSeeder::class,
+           ServicioSeeder::class,
+
+            */
         ]);
     }
 }

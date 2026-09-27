@@ -30,6 +30,11 @@
 </head>
 <body>
 
+    <div class="d-flex flex-grow-1">
+        <main class="container-fluid px-4 pb-5 pt-4 flex-grow-1">
+            @yield('contenido')
+        </main>
+    </div>
 
     {{-- SECCIÓN DE COMPONENTES --}}
     @include('components.toast')
