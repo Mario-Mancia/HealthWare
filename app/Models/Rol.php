@@ -54,4 +54,48 @@ class Rol extends Model
     {
         return static::all();
     }
+
+    /**
+     * Inserta un nuevo rol.
+     */
+    public static function insertar(array $datos): Rol
+    {
+        return static::create($datos);
+    }
+
+    /**
+     * Busca un rol por su identificador.
+     */
+    public static function buscarRolXId(int $id): ?Rol
+    {
+        return static::find($id);
+    }
+
+    /**
+     * Actualiza un rol existente.
+     */
+    public static function actualizar(array $datos, int $id): bool
+    {
+        $rol = static::find($id);
+
+        if (!$rol) {
+            return false;
+        }
+
+        return $rol->update($datos);
+    }
+
+    /**
+     * Elimina un rol existente.
+     */
+    public static function eliminar(int $id): bool
+    {
+        $rol = static::find($id);
+
+        if (!$rol) {
+            return false;
+        }
+
+        return (bool) $rol->delete();
+    }
 }

@@ -73,4 +73,48 @@ class Medicamento extends Model
     {
         return static::all();
     }
+
+    /**
+     * Inserta un nuevo medicamento.
+     */
+    public static function insertar(array $datos): Medicamento
+    {
+        return static::create($datos);
+    }
+
+    /**
+     * Busca un medicamento por su ID.
+     */
+    public static function buscarMedicamentoXId(int $id): ?Medicamento
+    {
+        return static::find($id);
+    }
+
+    /**
+     * Actualiza un medicamento existente.
+     */
+    public static function actualizar(array $datos, int $id): bool
+    {
+        $medicamento = static::find($id);
+
+        if (!$medicamento) {
+            return false;
+        }
+
+        return $medicamento->update($datos);
+    }
+
+    /**
+     * Elimina un medicamento existente.
+     */
+    public static function eliminar(int $id): bool
+    {
+        $medicamento = static::find($id);
+
+        if (!$medicamento) {
+            return false;
+        }
+
+        return (bool) $medicamento->delete();
+    }
 }

@@ -1,8 +1,6 @@
 {{-- Componente reutilizable de toast para mostrar notificaciones al usuario --}}
 
-@extends('layouts.app_layout')
 
-@section()
     <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 1056;">
 
         @foreach (['success', 'error', 'warning', 'info'] as $msgType)
@@ -68,4 +66,4 @@
             @endforeach
         @endif
     </div>
-@endsection
+

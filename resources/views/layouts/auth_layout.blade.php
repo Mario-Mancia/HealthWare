@@ -28,20 +28,39 @@
     {{-- Carga de estilos particulares --}}
     @stack('estilos')
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
-    <div class="d-flex flex-grow-1">
-        <main class="container-fluid px-4 pb-5 pt-4 flex-grow-1">
+        {{-- TOPBAR PRINCIPAL --}}
+        <nav class="navbar navbar-expand-lg navbar-healthware shadow-sm py-2">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand d-flex align-items-center fw-bold gap-2" href="#">
+                    <span class="material-symbols-outlined fs-2">health_and_safety</span>
+                    HealthWare
+                </a>
+            </div>
+        </nav>
+
+        {{-- CONTENIDO PRINCIPAL --}}
+        <main class="container-fluid px-3 px-md-4 py-4 flex-grow-1 d-flex flex-column align-items-center justify-content-center">
             @yield('contenido')
         </main>
-    </div>
 
-    {{-- SECCIÓN DE COMPONENTES --}}
-    @include('components.toast')
-    {{-- SECCIÓN DE SCRIPTS --}}
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{asset('js/toast.js')}}"></script>
-    @stack('scripts')
+        {{-- FOOTER PRINCIPAL --}}
+        <footer class="py-3 mt-auto footer-healthware">
+            <div class="container text-center">
+                    <span class="fw-medium footer-text">
+                        &copy; {{ date('Y') }} HealthWare. Sistema de Gestión Clínica.
+                    </span>
+            </div>
+        </footer>
+
+    {{-- Componentes reutilizables --}}
+@include('components.toast')
+
+    {{-- Sección de scripts --}}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/toast.js') }}"></script>
+@stack('scripts')
 </body>
 </html>

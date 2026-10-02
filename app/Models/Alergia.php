@@ -55,4 +55,48 @@ class Alergia extends Model
     {
         return static::all();
     }
+
+    /**
+     * Inserta una nueva alergia.
+     */
+    public static function insertar(array $datos): Alergia
+    {
+        return static::create($datos);
+    }
+
+    /**
+     * Busca una alergia por su ID.
+     */
+    public static function buscarAlergiaXId(int $id): ?Alergia
+    {
+        return static::find($id);
+    }
+
+    /**
+     * Actualiza una alergia existente.
+     */
+    public static function actualizar(array $datos, int $id): bool
+    {
+        $alergia = static::find($id);
+
+        if (!$alergia) {
+            return false;
+        }
+
+        return $alergia->update($datos);
+    }
+
+    /**
+     * Elimina una alergia existente.
+     */
+    public static function eliminar(int $id): bool
+    {
+        $alergia = static::find($id);
+
+        if (!$alergia) {
+            return false;
+        }
+
+        return (bool) $alergia->delete();
+    }
 }

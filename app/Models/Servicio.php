@@ -56,4 +56,48 @@ class Servicio extends Model
         return static::all();
     }
 
+    /**
+     * Inserta un nuevo servicio.
+     */
+    public static function insertar(array $datos): Servicio
+    {
+        return static::create($datos);
+    }
+
+    /**
+     * Busca un servicio por su ID.
+     */
+    public static function buscarServicioXId(int $id): ?Servicio
+    {
+        return static::find($id);
+    }
+
+    /**
+     * Actualiza un servicio existente.
+     */
+    public static function actualizar(array $datos, int $id): bool
+    {
+        $servicio = static::find($id);
+
+        if (!$servicio) {
+            return false;
+        }
+
+        return $servicio->update($datos);
+    }
+
+    /**
+     * Elimina un servicio existente.
+     */
+    public static function eliminar(int $id): bool
+    {
+        $servicio = static::find($id);
+
+        if (!$servicio) {
+            return false;
+        }
+
+        return (bool) $servicio->delete();
+    }
+
 }

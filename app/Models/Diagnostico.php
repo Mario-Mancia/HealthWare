@@ -60,4 +60,48 @@ class Diagnostico extends Model
     {
         return static::all();
     }
+
+    /**
+     * Inserta un nuevo diagnóstico.
+     */
+    public static function insertar(array $datos): Diagnostico
+    {
+        return static::create($datos);
+    }
+
+    /**
+     * Busca un diagnóstico por su ID.
+     */
+    public static function buscarDiagnosticoXId(int $id): ?Diagnostico
+    {
+        return static::find($id);
+    }
+
+    /**
+     * Actualiza un diagnóstico existente.
+     */
+    public static function actualizar(array $datos, int $id): bool
+    {
+        $diagnostico = static::find($id);
+
+        if (!$diagnostico) {
+            return false;
+        }
+
+        return $diagnostico->update($datos);
+    }
+
+    /**
+     * Elimina un diagnóstico existente.
+     */
+    public static function eliminar(int $id): bool
+    {
+        $diagnostico = static::find($id);
+
+        if (!$diagnostico) {
+            return false;
+        }
+
+        return (bool) $diagnostico->delete();
+    }
 }

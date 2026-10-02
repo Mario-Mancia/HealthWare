@@ -55,4 +55,48 @@ class Especialidad extends Model
     {
         return static::all();
     }
+
+    /**
+     * Inserta una nueva especialidad.
+     */
+    public static function insertar(array $datos): Especialidad
+    {
+        return static::create($datos);
+    }
+
+    /**
+     * Busca una especialidad por su ID.
+     */
+    public static function buscarEspecialidadXId(int $id): ?Especialidad
+    {
+        return static::find($id);
+    }
+
+    /**
+     * Actualiza una especialidad existente.
+     */
+    public static function actualizar(array $datos, int $id): bool
+    {
+        $especialidad = static::find($id);
+
+        if (!$especialidad) {
+            return false;
+        }
+
+        return $especialidad->update($datos);
+    }
+
+    /**
+     * Elimina una especialidad existente.
+     */
+    public static function eliminar(int $id): bool
+    {
+        $especialidad = static::find($id);
+
+        if (!$especialidad) {
+            return false;
+        }
+
+        return (bool) $especialidad->delete();
+    }
 }

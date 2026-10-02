@@ -55,4 +55,48 @@ class CondicionMedica extends Model
     {
         return static::all();
     }
+
+    /**
+     * Inserta una nueva condición médica.
+     */
+    public static function insertar(array $datos): CondicionMedica
+    {
+        return static::create($datos);
+    }
+
+    /**
+     * Busca una condición médica por su ID.
+     */
+    public static function buscarCondicionMedicaXId(int $id): ?CondicionMedica
+    {
+        return static::find($id);
+    }
+
+    /**
+     * Actualiza una condición médica existente.
+     */
+    public static function actualizar(array $datos, int $id): bool
+    {
+        $condicionMedica = static::find($id);
+
+        if (!$condicionMedica) {
+            return false;
+        }
+
+        return $condicionMedica->update($datos);
+    }
+
+    /**
+     * Elimina una condición médica existente.
+     */
+    public static function eliminar(int $id): bool
+    {
+        $condicionMedica = static::find($id);
+
+        if (!$condicionMedica) {
+            return false;
+        }
+
+        return (bool) $condicionMedica->delete();
+    }
 }

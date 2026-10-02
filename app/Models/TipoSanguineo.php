@@ -55,4 +55,48 @@ class TipoSanguineo extends Model
     {
         return static::all();
     }
+
+    /**
+     * Inserta un nuevo tipo sanguíneo.
+     */
+    public static function insertar(array $datos): TipoSanguineo
+    {
+        return static::create($datos);
+    }
+
+    /**
+     * Busca un tipo sanguíneo por su identificador.
+     */
+    public static function buscarTipoSanguineoXId(int $id): ?TipoSanguineo
+    {
+        return static::find($id);
+    }
+
+    /**
+     * Actualiza un tipo sanguíneo existente.
+     */
+    public static function actualizar(array $datos, int $id): bool
+    {
+        $tipoSanguineo = static::find($id);
+
+        if (!$tipoSanguineo) {
+            return false;
+        }
+
+        return $tipoSanguineo->update($datos);
+    }
+
+    /**
+     * Elimina un tipo sanguíneo existente.
+     */
+    public static function eliminar(int $id): bool
+    {
+        $tipoSanguineo = static::find($id);
+
+        if (!$tipoSanguineo) {
+            return false;
+        }
+
+        return (bool) $tipoSanguineo->delete();
+    }
 }

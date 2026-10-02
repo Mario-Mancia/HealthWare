@@ -55,4 +55,48 @@ class Estado extends Model
     {
         return static::all();
     }
+
+    /**
+     * Inserta un nuevo estado.
+     */
+    public static function insertar(array $datos): Estado
+    {
+        return static::create($datos);
+    }
+
+    /**
+     * Busca un estado por su identificador.
+     */
+    public static function buscarEstadoXId(int $id): ?Estado
+    {
+        return static::find($id);
+    }
+
+    /**
+     * Actualiza un estado existente.
+     */
+    public static function actualizar(array $datos, int $id): bool
+    {
+        $estado = static::find($id);
+
+        if (!$estado) {
+            return false;
+        }
+
+        return $estado->update($datos);
+    }
+
+    /**
+     * Elimina un estado existente.
+     */
+    public static function eliminar(int $id): bool
+    {
+        $estado = static::find($id);
+
+        if (!$estado) {
+            return false;
+        }
+
+        return (bool) $estado->delete();
+    }
 }

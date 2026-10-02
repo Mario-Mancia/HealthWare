@@ -2,10 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Rol;
-use App\Models\Estado;
-use App\Models\User;
-use Couchbase\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -20,7 +16,9 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
+
             /*
+
            RolSeeder::class,
            EstadoSeeder::class,
            TipoSanguineoSeeder::class,
@@ -30,6 +28,7 @@ class DatabaseSeeder extends Seeder
            AlergiaSeeder::class,
            MedicamentoSeeder::class,
            ServicioSeeder::class,
+           UsuarioSeeder::class,
 
             */
         ]);
