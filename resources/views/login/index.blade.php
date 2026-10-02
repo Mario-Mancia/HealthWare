@@ -7,10 +7,10 @@
 @section('contenido')
     <div class="row g-0 md3-pill-card mx-auto">
 
-        {{-- Panel Izquierdo: Branding y Pasos (Visible en pantallas lg+) --}}
+        {{-- Panel Izquierdo --}}
         <div class="col-lg-5 left-panel d-none d-lg-flex flex-column justify-content-center">
-            <h2 class="fw-bold mb-3">Portal Clínico</h2>
-            <p class="mb-5 opacity-75">Gestión integral de expedientes médicos, citas y administración con estándares de seguridad.</p>
+            <h2 class="fw-bold mb-3">Sistema Clínico</h2>
+            <p class="mb-5 opacity-75">Gestión de expedientes médicos, citas y administración con estándares de seguridad.</p>
 
             <div class="d-flex align-items-start mb-4">
                 <div class="step-icon-wrapper me-3">
@@ -69,7 +69,7 @@
 
                 {{-- Botón Submit --}}
                 <button type="submit" class="w-100 md3-btn d-flex align-items-center justify-content-center gap-2">
-                    <span>Acceder al panel</span>
+                    <span>Iniciar sesión</span>
                     <span class="material-symbols-outlined fs-5">arrow_forward</span>
                 </button>
             </form>

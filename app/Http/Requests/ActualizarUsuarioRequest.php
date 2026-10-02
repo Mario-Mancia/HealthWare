@@ -57,13 +57,30 @@ class ActualizarUsuarioRequest extends FormRequest
             'correo.max' => 'El correo no debe exceder los 150 caracteres.',
             'correo.unique' => 'Este correo electrónico ya está en uso por otro usuario.',
 
-            'contrasenha.required' => 'La contraseña es obligatoria.',
+            'contrasenha.confirmed' => 'La contraseña y su confirmación no coinciden.',
             'contrasenha.string' => 'La contraseña debe ser texto.',
             'contrasenha.min' => 'La contraseña debe tener al menos 8 caracteres.',
             'contrasenha.max' => 'La contraseña no debe exceder los 250 caracteres.',
 
             'telefono.string' => 'El teléfono debe ser texto.',
             'telefono.max' => 'El teléfono no debe exceder los 25 caracteres.',
+        ];
+    }
+
+    /**
+     * Nombres amigables para los atributos.
+     */
+    public function attributes(): array
+    {
+        return [
+            'id_rol' => 'Rol',
+            'id_estado' => 'Estado',
+            'nombres' => 'Nombres',
+            'apellidos' => 'Apellidos',
+            'correo' => 'Correo electrónico',
+            'contrasenha' => 'Contraseña',
+            'contrasenha_confirmation' => 'Confirmación de contraseña',
+            'telefono' => 'Teléfono',
         ];
     }
 }

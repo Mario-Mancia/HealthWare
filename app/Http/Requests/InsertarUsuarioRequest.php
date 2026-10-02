@@ -53,6 +53,7 @@ class InsertarUsuarioRequest extends FormRequest
             'correo.unique' => 'Este correo electrónico ya está en uso por otro usuario.',
 
             'contrasenha.required' => 'La contraseña es obligatoria.',
+            'contrasenha.confirmed' => 'La contraseña y su confirmación no coinciden.',
             'contrasenha.string' => 'La contraseña debe ser texto.',
             'contrasenha.min' => 'La contraseña debe tener al menos 8 caracteres.',
             'contrasenha.max' => 'La contraseña no debe exceder los 250 caracteres.',

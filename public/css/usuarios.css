@@ -1,0 +1,288 @@
+/* ============================================================
+   HEALTHWARE - MÓDULO DE USUARIOS
+   Archivo: public/css/usuarios.css
+   ============================================================ */
+
+/* ----- ENCABEZADO DE PÁGINA ----- */
+.page-title {
+    color: var(--md-sys-color-on-surface);
+    font-weight: 700;
+}
+
+.page-title-icon {
+    color: var(--bs-primary);
+}
+
+/* ----- TARJETA Y TABLA MATERIAL DESIGN 3 ----- */
+.md3-card-table {
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid rgba(121, 116, 126, 0.12);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.md3-table {
+    margin-bottom: 0;
+    color: var(--md-sys-color-on-surface);
+}
+
+.md3-table-header {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+.md3-table-header th {
+    color: var(--md-sys-color-on-surface);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem 1.25rem;
+    background-color: transparent;
+    border-bottom: 1px solid rgba(121, 116, 126, 0.15);
+}
+
+.md3-table td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(121, 116, 126, 0.08);
+    background-color: transparent;
+    color: var(--md-sys-color-on-surface);
+}
+
+.md3-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.md3-table tbody tr:hover {
+    background-color: rgba(103, 80, 164, 0.04);
+}
+
+@media (prefers-color-scheme: dark) {
+    .md3-table tbody tr:hover {
+        background-color: rgba(208, 188, 255, 0.06);
+    }
+}
+
+/* ----- BADGES ESTILO MATERIAL DESIGN 3 ----- */
+.md3-badge {
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding: 0.4em 0.85em;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.md3-badge-primary {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+}
+
+.md3-badge-secondary {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--md-sys-color-outline);
+}
+
+/* ----- BOTONES DE ACCIÓN EN TABLA ----- */
+.btn-icon-soft {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.btn-icon-soft:active {
+    transform: scale(0.95);
+}
+
+.btn-icon-soft-primary {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+}
+
+.btn-icon-soft-primary:hover {
+    background-color: var(--bs-primary);
+    color: var(--md-sys-color-on-primary);
+}
+
+.btn-icon-soft-danger {
+    background-color: rgba(179, 38, 30, 0.12);
+    color: var(--bs-danger);
+}
+
+.btn-icon-soft-danger:hover {
+    background-color: var(--bs-danger);
+    color: var(--md-sys-color-on-error);
+}
+
+/* ----- MODALES MATERIAL DESIGN 3 ----- */
+.md3-modal-content {
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    border-radius: 28px;
+    border: none;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.md3-modal-header {
+    border-bottom: none;
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.md3-modal-body {
+    padding: 1rem 1.5rem;
+}
+
+.md3-modal-footer {
+    border-top: none;
+    padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+/* Inputs y Selects dentro de Modales */
+.md3-form-label {
+    color: var(--md-sys-color-on-surface);
+    font-weight: 500;
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+}
+
+.md3-form-control,
+.md3-form-select {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: 12px;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.925rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.md3-form-control:focus,
+.md3-form-select:focus {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 3px rgba(103, 80, 164, 0.2);
+    outline: none;
+}
+
+/* Botón Cancelar Elegante */
+.btn-soft-cancel {
+    background-color: transparent;
+    color: var(--md-sys-color-outline);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: 100px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.btn-soft-cancel:hover {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+}
+
+/* Resumen del usuario a eliminar */
+.md3-container-variant {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border-radius: 16px;
+    padding: 1rem;
+}
+
+/* ----- DATATABLES INTEGRACIÓN BOOTSTRAP Y DARKMODE ----- */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+    color: var(--md-sys-color-on-surface) !important;
+    margin-bottom: 0.75rem;
+}
+
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: 8px;
+    padding: 0.35rem 0.65rem;
+}
+
+.dataTables_wrapper .pagination .page-item .page-link {
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    border-color: rgba(121, 116, 126, 0.2);
+}
+
+.dataTables_wrapper .pagination .page-item.active .page-link {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: var(--md-sys-color-on-primary);
+}
+
+/* ----- BOTONES BRAND (Forzar color Morado de la paleta) ----- */
+.btn-brand {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    border: none;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-brand:hover, .btn-brand:focus {
+    background-color: var(--md-sys-color-on-primary-container);
+    color: var(--md-sys-color-on-primary);
+    box-shadow: 0 4px 12px rgba(103, 80, 164, 0.3);
+}
+
+/* ----- MODALES MEJORADOS ----- */
+.md3-modal-header {
+    /* Degradado sutil para quitar lo "deprimente" */
+    background: linear-gradient(135deg, var(--md-sys-color-primary-container) 0%, var(--md-sys-color-surface) 100%);
+    border-bottom: 1px solid rgba(121, 116, 126, 0.1);
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    border-radius: 28px 28px 0 0;
+}
+
+.md3-modal-header .modal-title {
+    color: var(--md-sys-color-on-surface);
+}
+
+/* ----- FLOATING LABELS (Inputs con texto que sube) ----- */
+.form-floating > .md3-form-control,
+.form-floating > .md3-form-select {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: 12px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-floating > .md3-form-control:focus,
+.form-floating > .md3-form-select:focus {
+    background-color: var(--md-sys-color-surface-container);
+    border-color: var(--md-sys-color-primary);
+    box-shadow: 0 0 0 3px rgba(103, 80, 164, 0.2);
+}
+
+.form-floating > label {
+    color: var(--md-sys-color-outline);
+    padding-left: 1rem;
+}
+
+.form-floating > .md3-form-control:focus ~ label,
+.form-floating > .md3-form-select:focus ~ label,
+.form-floating > .md3-form-control:not(:placeholder-shown) ~ label,
+.form-floating > .md3-form-select:not([value=""]) ~ label {
+    color: var(--md-sys-color-primary);
+    font-weight: 500;
+}

@@ -7,42 +7,54 @@
 
 /* ----- TOKENS Y VARIABLES DE TEMA ----- */
 :root {
-    /* Paleta MD3 Púrpura - Light Scheme */
+    /* Paleta Interactiva (Primary) */
     --md-sys-color-primary: #6750a4;
     --md-sys-color-on-primary: #ffffff;
     --md-sys-color-primary-container: #eaddff;
     --md-sys-color-on-primary-container: #21005d;
 
+    /* Paleta Estructural / Chasis (Morado Fijo) */
+    --md-sys-color-brand-bg: #6750a4;
+    --md-sys-color-on-brand-bg: #ffffff;
+
+    /* Paleta de Peligro / Error */
+    --md-sys-color-error: #b3261e;
+    --md-sys-color-on-error: #ffffff;
+
+    /* Superficies Internas */
     --md-sys-color-surface: #fef7ff;
     --md-sys-color-on-surface: #1d1b20;
     --md-sys-color-surface-container: #f3edf7;
     --md-sys-color-outline: #79747e;
 
-    /* Sobreescritura de Bootstrap (Light) */
+    /* Sobreescritura de Bootstrap */
     --bs-primary: var(--md-sys-color-primary);
-    --bs-primary-rgb: 103, 80, 164;
+    --bs-danger: var(--md-sys-color-error);
     --bs-body-bg: var(--md-sys-color-surface-container);
     --bs-body-color: var(--md-sys-color-on-surface);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        /* Paleta MD3 Púrpura - Dark Scheme */
+        /* Primary cambia a Rosa Pastel para accesibilidad e interactividad */
         --md-sys-color-primary: #d0bcff;
         --md-sys-color-on-primary: #381e72;
         --md-sys-color-primary-container: #4f378b;
         --md-sys-color-on-primary-container: #eaddff;
 
+        /* Chasis / Fondo cambia a un Morado Muy Oscuro (No rosa) */
+        --md-sys-color-brand-bg: #21005d;
+        --md-sys-color-on-brand-bg: #eaddff;
+
+        /* Danger cambia a Rojo Pastel oscuro */
+        --md-sys-color-error: #f2b8b5;
+        --md-sys-color-on-error: #601410;
+
+        /* Superficies Internas Oscuras */
         --md-sys-color-surface: #141218;
         --md-sys-color-on-surface: #e6e0e9;
         --md-sys-color-surface-container: #0f0d13;
         --md-sys-color-outline: #938f99;
-
-        /* Sobreescritura de Bootstrap (Dark) */
-        --bs-primary: var(--md-sys-color-primary);
-        --bs-primary-rgb: 208, 188, 255;
-        --bs-body-bg: var(--md-sys-color-surface-container);
-        --bs-body-color: var(--md-sys-color-on-surface);
     }
 }
 
@@ -53,14 +65,14 @@ body {
     color: var(--bs-body-color);
 }
 
-/* Topbar Principal */
+/* Topbar Auth (Usa Primary para interactividad local) */
 .navbar-healthware {
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
+    background-color: var(--md-sys-color-brand-bg);
+    color: var(--md-sys-color-on-brand-bg);
 }
 
 .navbar-healthware .navbar-brand {
-    color: var(--md-sys-color-on-primary);
+    color: var(--md-sys-color-on-brand-bg);
 }
 
 /* Footer Principal */

@@ -72,21 +72,25 @@ class Usuario extends Authenticatable
                 'integer',
                 'exists:roles,id',
             ],
+
             'id_estado' => [
                 'required',
                 'integer',
                 'exists:estados,id',
             ],
+
             'nombres' => [
                 'required',
                 'string',
                 'max:100',
             ],
+
             'apellidos' => [
                 'required',
                 'string',
                 'max:100',
             ],
+
             'correo' => [
                 'required',
                 'string',
@@ -94,12 +98,23 @@ class Usuario extends Authenticatable
                 'max:150',
                 Rule::unique('usuarios', 'correo')->ignore($id),
             ],
-            'contrasenha' => [
-                'required',
-                'string',
-                'min:8',
-                'max:250',
-            ],
+
+            'contrasenha' => $id === null
+                ? [
+                    'required',
+                    'string',
+                    'min:8',
+                    'max:250',
+                    'confirmed',
+                ]
+                : [
+                    'nullable',
+                    'string',
+                    'min:8',
+                    'max:250',
+                    'confirmed',
+                ],
+
             'telefono' => [
                 'nullable',
                 'string',
@@ -140,7 +155,7 @@ class Usuario extends Authenticatable
      */
     public static function mostrarTodos(): Collection
     {
-        return static::all();
+        return static::with(['rol', 'estado'])->get();
     }
 
     /**
@@ -168,6 +183,17 @@ class Usuario extends Authenticatable
 
         if (!$usuario) {
             return false;
+        }
+
+        /*
+         * Si no se proporciona una nueva contraseña,
+         * se conserva la contraseña actual.
+         */
+        if (
+            array_key_exists('contrasenha', $datos) &&
+            blank($datos['contrasenha'])
+        ) {
+            unset($datos['contrasenha']);
         }
 
         return $usuario->update($datos);

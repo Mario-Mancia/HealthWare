@@ -48,9 +48,18 @@ class UsuarioController extends Controller
      */
     public function buscarUsuarioXId(int $id): JsonResponse
     {
-        return response()->json(
-            Usuario::buscarUsuarioXId($id)
-        );
+        $usuario = Usuario::buscarUsuarioXId($id);
+
+        if (!$usuario) {
+            return response()->json(
+                [
+                    'message' => 'Usuario no encontrado.'
+                ],
+                404
+            );
+        }
+
+        return response()->json($usuario);
     }
 
     /**

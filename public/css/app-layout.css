@@ -3,83 +3,85 @@
    Archivo: public/css/app-layout.css
    ============================================================ */
 
-/*
-   El "Chasis" de la app ahora es el color Primario (Morado).
-   El texto base sobre el chasis será blanco (on-primary).
-*/
+/* El "Chasis" de la app ahora es el color Brand. */
 body {
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
+    background-color: var(--md-sys-color-brand-bg);
+    color: var(--md-sys-color-on-brand-bg);
     height: 100vh;
-    overflow: hidden; /* El scroll ocurre solo en la pantalla interna */
+    overflow: hidden;
 }
 
 /* ----- TOPBAR ----- */
 .app-topbar {
     background-color: transparent;
-    min-height: 60px; /* Reducido para dar más aire */
+    min-height: 60px;
 }
 
 /* Avatar de usuario en Topbar */
 .user-avatar {
     width: 38px;
     height: 38px;
-    background-color: var(--md-sys-color-on-primary);
-    color: var(--md-sys-color-primary);
+    background-color: var(--md-sys-color-on-brand-bg);
+    color: var(--md-sys-color-brand-bg);
 }
 
 /* ----- SIDEBAR ----- */
 .app-sidebar {
-    width: 240px; /* Reducido de 280px a 240px para más aire */
+    width: 240px;
     background-color: transparent;
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease;
 }
 
-/* Enlaces del Sidebar (Textos blancos con opacidad) */
 .sidebar-link {
     display: flex;
     align-items: center;
-    padding: 0.75rem 1rem;
-    color: rgba(255, 255, 255, 0.75);
+    padding: 0.5rem 0.85rem; /* Reducido de 0.75rem 1rem */
+    font-size: 0.9rem; /* Fuente un poco más pequeña */
+    color: inherit;
+    opacity: 0.75;
     text-decoration: none;
     border-radius: 100px;
     font-weight: 500;
-    margin-bottom: 0.25rem;
-    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    margin-bottom: 0.15rem; /* Margen inferior reducido */
+    transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.1s ease;
+}
+
+/* Reducimos ligeramente el icono para mantener la proporción */
+.sidebar-link .material-symbols-outlined {
+    font-size: 1.35rem;
 }
 
 .sidebar-link:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    opacity: 1;
 }
 
-/* El enlace activo simula estar "conectado" a la pantalla principal */
 .sidebar-link.active {
     background-color: var(--md-sys-color-surface);
     color: var(--md-sys-color-primary);
+    opacity: 1;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* ----- PANTALLA PRINCIPAL (Zen Browser Effect) ----- */
+/* ----- PANTALLA PRINCIPAL ----- */
 .app-screen {
     background-color: var(--md-sys-color-surface);
-    color: var(--md-sys-color-on-surface); /* Texto oscuro en fondo claro */
+    color: var(--md-sys-color-on-surface);
     border-radius: 24px;
     box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.15);
     overflow-y: auto;
-    /* Aumentamos el margen derecho e inferior para dar más respiro */
     margin: 0 1.5rem 1.5rem 0;
 }
 
-/* ----- BOTÓN CERRAR SESIÓN (Soft Danger en el Dropdown) ----- */
+/* ----- BOTÓN CERRAR SESIÓN ----- */
 .btn-soft-danger {
-    background-color: var(--bs-danger);
-    color: var(--md-sys-color-on-error-container);
+    background-color: transparent;
+    color: var(--md-sys-color-error);
     border: none;
     font-weight: 500;
-    transition: opacity 0.2s ease;
+    transition: all 0.2s ease;
     border-radius: 8px;
     padding: 0.5rem 1rem;
     width: 100%;
@@ -90,9 +92,8 @@ body {
 }
 
 .btn-soft-danger:hover {
-    opacity: 0.9;
-    background-color: var(--bs-danger);
-    color: white;
+    background-color: var(--md-sys-color-error);
+    color: var(--md-sys-color-on-error);
 }
 
 /* ----- ADAPTACIÓN MOBILE ----- */
@@ -101,41 +102,7 @@ body {
         margin: 0 0.75rem 0.75rem 0.75rem;
         border-radius: 20px;
     }
-    /* En móvil, el Offcanvas debe mantener el fondo morado */
     .app-sidebar {
-        background-color: var(--md-sys-color-primary);
-    }
-}
-
-/* ============================================================
-   CORRECCIÓN DARK MODE - Chasis Morado Profundo
-   ============================================================ */
-@media (prefers-color-scheme: dark) {
-    /* Sobrescribimos el fondo del body para evitar el morado pastel */
-    body {
-        background-color: #21005d; /* Morado medianoche muy oscuro */
-        color: #ffffff;
-    }
-
-    /* El avatar del usuario necesita adaptarse al nuevo contraste */
-    .user-avatar {
-        background-color: var(--md-sys-color-surface);
-        color: var(--md-sys-color-primary); /* El icono tomará el morado pastel */
-    }
-
-    /* Ajuste fino para el menú lateral en modo oscuro */
-    .sidebar-link {
-        color: rgba(255, 255, 255, 0.75);
-    }
-
-    .sidebar-link:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: #ffffff;
-    }
-
-    /* El enlace activo toma el color oscuro de la pantalla central */
-    .sidebar-link.active {
-        background-color: var(--md-sys-color-surface);
-        color: var(--md-sys-color-primary); /* Texto morado pastel que resalta bien en oscuro */
+        background-color: var(--md-sys-color-brand-bg);
     }
 }
