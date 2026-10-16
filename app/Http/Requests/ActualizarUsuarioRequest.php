@@ -67,9 +67,6 @@ class ActualizarUsuarioRequest extends FormRequest
         ];
     }
 
-    /**
-     * Nombres amigables para los atributos.
-     */
     public function attributes(): array
     {
         return [

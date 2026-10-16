@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -36,6 +38,8 @@ class Usuario extends Authenticatable
         'id_estado' => 'integer',
         'contrasenha' => 'hashed',
     ];
+
+    public const ESTADO_ELIMINADO = 3;
 
     /**
      * Indica el nombre de la columna utilizada para la contraseña.
@@ -185,6 +189,10 @@ class Usuario extends Authenticatable
             return false;
         }
 
+        if ($usuario->id_estado === self::ESTADO_ELIMINADO) {
+            return false;
+        }
+
         /*
          * Si no se proporciona una nueva contraseña,
          * se conserva la contraseña actual.
@@ -200,7 +208,10 @@ class Usuario extends Authenticatable
     }
 
     /**
-     * Elimina un usuario existente.
+     * Elimina de forma lógica un usuario existente.
+     *
+     * No elimina físicamente el registro por motivos de auditoría, simplemente cambia su estado a eliminado
+     * y ya no se pueden realizar más acciones con él, incluso revertirlo, al menos desde el sistema.
      */
     public static function eliminar(int $id): bool
     {
@@ -210,6 +221,16 @@ class Usuario extends Authenticatable
             return false;
         }
 
-        return (bool)$usuario->delete();
+        if ($usuario->id_estado === self::ESTADO_ELIMINADO) {
+            return false;
+        }
+
+        return $usuario->update(['id_estado' => self::ESTADO_ELIMINADO]);
+    }
+
+    public static function estadosDeUsuario()
+    {
+
+        return \DB::table('vista_usuarios_por_estado')->select('nombre_estado', 'total_usuarios')->get();
     }
 }

@@ -1,0 +1,280 @@
+/* ============================================================
+   HEALTHWARE - MÓDULO DE BITÁCORA
+   Archivo: public/css/bitacora.css
+   ============================================================ */
+
+/* ----- ENCABEZADO DE PÁGINA ----- */
+
+.page-title {
+    color: var(--md-sys-color-on-surface);
+    font-weight: 700;
+}
+
+.page-title-icon {
+    color: var(--bs-primary);
+}
+
+
+/* ============================================================
+   FILTROS
+   ============================================================ */
+
+.md3-filter-card {
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid rgba(121, 116, 126, 0.12);
+    border-radius: 20px;
+}
+
+.md3-filter-card .card-body {
+    padding: 1.25rem;
+}
+
+.md3-filter-label {
+    color: var(--md-sys-color-on-surface);
+    font-weight: 500;
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+}
+
+.md3-filter-control,
+.md3-filter-select {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: 12px;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.9rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.md3-filter-control:focus,
+.md3-filter-select:focus {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border-color: var(--md-sys-color-primary);
+    box-shadow: 0 0 0 3px rgba(103, 80, 164, 0.2);
+    outline: none;
+}
+
+.md3-filter-control::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+}
+
+
+/* ----- BOTÓN FILTRAR ----- */
+
+.btn-filter {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    border: none;
+    border-radius: 100px;
+    padding: 0.6rem 1.25rem;
+    font-weight: 500;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.btn-filter:hover,
+.btn-filter:focus {
+    background-color: var(--md-sys-color-on-primary-container);
+    color: var(--md-sys-color-on-primary);
+}
+
+.btn-filter:active {
+    transform: scale(0.97);
+}
+
+
+/* ----- BOTÓN LIMPIAR ----- */
+
+.btn-filter-clear {
+    background-color: transparent;
+    color: var(--md-sys-color-outline);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: 100px;
+    padding: 0.6rem 1.25rem;
+    font-weight: 500;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-filter-clear:hover {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+}
+
+
+/* ============================================================
+   TARJETA Y TABLA
+   ============================================================ */
+
+.md3-card-table {
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid rgba(121, 116, 126, 0.12);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.md3-table {
+    margin-bottom: 0;
+    color: var(--md-sys-color-on-surface);
+}
+
+.md3-table-header {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+.md3-table-header th {
+    color: var(--md-sys-color-on-surface);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem 1.25rem;
+    background-color: transparent;
+    border-bottom: 1px solid rgba(121, 116, 126, 0.15);
+}
+
+.md3-table td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(121, 116, 126, 0.08);
+    background-color: transparent;
+    color: var(--md-sys-color-on-surface);
+}
+
+.md3-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.md3-table tbody tr:hover {
+    background-color: rgba(103, 80, 164, 0.04);
+}
+
+.md3-table td.descripcion {
+    min-width: 280px;
+    max-width: 450px;
+    white-space: normal;
+}
+
+@media (prefers-color-scheme: dark) {
+    .md3-table tbody tr:hover {
+        background-color: rgba(208, 188, 255, 0.06);
+    }
+}
+
+
+/* ============================================================
+   BADGES DE EVENTOS
+   ============================================================ */
+
+.md3-badge {
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding: 0.4em 0.85em;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+
+/* LOGIN CORRECTO */
+
+.md3-badge-login-ok {
+    background-color: rgba(25, 135, 84, 0.14);
+    color: #146c43;
+}
+
+
+/* LOGIN FALLIDO */
+
+.md3-badge-login-fallido {
+    background-color: rgba(220, 53, 69, 0.14);
+    color: #b02a37;
+}
+
+
+/* LOGOUT */
+
+.md3-badge-logout {
+    background-color: rgba(108, 117, 125, 0.16);
+    color: #495057;
+}
+
+
+/* REGISTRO CREADO */
+
+.md3-badge-creado {
+    background-color: rgba(13, 110, 253, 0.14);
+    color: #0a58ca;
+}
+
+
+/* REGISTRO ACTUALIZADO */
+
+.md3-badge-actualizado {
+    background-color: rgba(255, 193, 7, 0.20);
+    color: #997404;
+}
+
+
+/* REGISTRO ELIMINADO */
+
+.md3-badge-eliminado {
+    background-color: rgba(220, 53, 69, 0.14);
+    color: #b02a37;
+}
+
+
+/* EVENTO DESCONOCIDO */
+
+.md3-badge-default {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--md-sys-color-outline);
+}
+
+
+/* ============================================================
+   BADGE DE MÓDULO
+   ============================================================ */
+
+.md3-badge-secondary {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--md-sys-color-outline);
+}
+
+
+/* ============================================================
+   DATATABLES
+   ============================================================ */
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+    color: var(--md-sys-color-on-surface) !important;
+    margin-bottom: 0.75rem;
+}
+
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: 8px;
+    padding: 0.35rem 0.65rem;
+}
+
+.dataTables_wrapper .pagination .page-item .page-link {
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    border-color: rgba(121, 116, 126, 0.2);
+}
+
+.dataTables_wrapper .pagination .page-item.active .page-link {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: var(--md-sys-color-on-primary);
+}

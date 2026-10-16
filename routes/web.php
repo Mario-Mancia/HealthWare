@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\AlergiaController;
+use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\CondicionMedicaController;
 use App\Http\Controllers\DiagnosticoController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HorarioDoctorController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\RolController;
@@ -25,8 +28,11 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', 'rol'])->group(function () {
 
-    // Ruta de entrada principal
+    // Rutas de HOME
     Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('home/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('bitacora', [BitacoraController::class, 'index'])->name('bitacora');
 
     // NOTA A RECORDAD: AGRUPAR RUTAS POR ROLES
 
@@ -101,6 +107,18 @@ Route::middleware(['auth', 'rol'])->group(function () {
     Route::delete('usuarios/{usuario}', [UsuarioController::class, 'eliminarUsuario'])->name('usuarios.eliminar');
 
 
+    //Rutas de doctores
+    Route::get('doctores', [DoctorController::class, 'index'])->name('doctores');
+    Route::post('doctores', [DoctorController::class, 'insertarDoctor'])->name('doctores.insertar');
+    Route::get('doctores/{id}/buscar', [DoctorController::class, 'buscarDoctorXId'])->name('doctores.buscar');
+    Route::put('doctores/{doctor}', [DoctorController::class, 'actualizarDoctor'])->name('doctores.actualizar');
+
+    // Rutas de horarios de doctores
+    Route::get('horarios', [HorarioDoctorController::class, 'index'])->name('horarios');
+    Route::post('horarios', [HorarioDoctorController::class, 'insertarHorario'])->name('horarios.insertar');
+    Route::get('horarios/{id}/buscar', [HorarioDoctorController::class, 'buscarHorarioXId'])->name('horarios.buscar');
+    Route::put('horarios/{horario}', [HorarioDoctorController::class, 'actualizarHorario'])->name('horarios.actualizar');
+    Route::delete('horarios/{horario}', [HorarioDoctorController::class, 'eliminarHorario'])->name('horarios.eliminar');
 
     // ============== Fin de rutas protegidas ================================
 });

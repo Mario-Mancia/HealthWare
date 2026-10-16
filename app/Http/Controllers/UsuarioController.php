@@ -10,6 +10,7 @@ use App\Models\Usuario;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Models\Bitacora;
 
 class UsuarioController extends Controller
 {
@@ -33,13 +34,22 @@ class UsuarioController extends Controller
     public function insertarUsuario(
         InsertarUsuarioRequest $request
     ): RedirectResponse {
-        Usuario::insertar($request->validated());
+        $usuario = Usuario::insertar($request->validated());
+
+        Bitacora::registrar(
+            Bitacora::CREADO,
+            'USUARIOS',
+            $usuario->getKey(),
+            'Usuario creado corectamente: '
+            . trim($usuario->nombres . ' ' . $usuario->apellidos)
+            . ' (' . $usuario->correo . ')'
+        );
 
         return redirect()
             ->route('usuarios')
             ->with(
                 'success',
-                'Usuario insertado correctamente'
+                'Usuario creado correctamente'
             );
     }
 
@@ -75,6 +85,15 @@ class UsuarioController extends Controller
                 $usuario->getKey()
             )
         ) {
+            Bitacora::registrar(
+                Bitacora::ACTUALIZADO,
+                'USUARIOS',
+                $usuario->getKey(),
+                'Usuario actualizado correctamente: '
+                . trim($usuario->nombres . ' ' . $usuario->apellidos)
+                . ' (' . $usuario->correo . ')'
+            );
+
             return redirect()
                 ->route('usuarios')
                 ->with(
@@ -96,8 +115,22 @@ class UsuarioController extends Controller
      */
     public function eliminarUsuario(
         Usuario $usuario
-    ): RedirectResponse {
-        if (Usuario::eliminar($usuario->getKey())) {
+    ): RedirectResponse
+    {
+        $registroId = $usuario->getKey();
+
+        $descripcion = 'Usuario eliminado correctamente: '
+            . trim($usuario->nombres . ' ' . $usuario->apellidos)
+            . ' (' . $usuario->correo . ')';
+
+        if (Usuario::eliminar($registroId)) {
+            Bitacora::registrar(
+                Bitacora::ELIMINADO,
+                'USUARIOS',
+                $registroId,
+                $descripcion
+            );
+
             return redirect()
                 ->route('usuarios')
                 ->with(

@@ -52,34 +52,48 @@
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
 
-                                    {{-- EDITAR --}}
-                                    <button type="button"
-                                            class="btn-icon-soft btn-icon-soft-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalModificarUsuario"
-                                            data-id="{{ $usuario->id }}"
-                                            title="Modificar usuario">
+                                    @if ($usuario->id_estado !== \App\Models\Usuario::ESTADO_ELIMINADO)
 
-                                            <span class="material-symbols-outlined fs-5">
-                                                edit
+                                        {{-- EDITAR --}}
+                                        <button type="button"
+                                                class="btn-icon-soft btn-icon-soft-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalModificarUsuario"
+                                                data-id="{{ $usuario->id }}"
+                                                title="Modificar usuario">
+
+                                        <span class="material-symbols-outlined fs-5">
+                                            edit
+                                        </span>
+
+                                        </button>
+
+                                        {{-- ELIMINAR --}}
+                                        <button type="button"
+                                                class="btn-icon-soft btn-icon-soft-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEliminarUsuario"
+                                                data-id="{{ $usuario->id }}"
+                                                data-nombre="{{ $usuario->nombres }} {{ $usuario->apellidos }}"
+                                                data-correo="{{ $usuario->correo }}"
+                                                title="Eliminar usuario">
+
+                                                <span class="material-symbols-outlined fs-5">
+                                                    delete
+                                                </span>
+
+                                        </button>
+
+                                    @else
+                                        <span class="small text-muted d-flex align-items-center gap-1">
+                                            <span class="material-symbols-outlined fs-6">
+                                                person_off
                                             </span>
-                                    </button>
+                                            Usuario eliminado
+                                        </span>
 
-                                    {{-- ELIMINAR --}}
-                                    <button type="button"
-                                            class="btn-icon-soft btn-icon-soft-danger"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalEliminarUsuario"
-                                            data-id="{{ $usuario->id }}"
-                                            data-nombre="{{ $usuario->nombres }} {{ $usuario->apellidos }}"
-                                            data-correo="{{ $usuario->correo }}"
-                                            title="Eliminar usuario">
+                                    @endif
 
-                                            <span class="material-symbols-outlined fs-5">
-                                                delete
-                                            </span>
-
-                                    </button>
                                 </div>
                             </td>
                         </tr>

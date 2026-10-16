@@ -92,6 +92,10 @@
             <nav class="d-flex flex-column flex-grow-1 gap-1">
                 {{-- Rutas Dinámicas: Se activa solo si coincide con el nombre de la ruta --}}
                 <a href="{{ route('home') }}" class="sidebar-link {{ request()->routeIs('home') ? 'active' : '' }}">
+                    <span class="material-symbols-outlined me-2">home</span>
+                    Inicio
+                </a>
+                <a href="{{ route('dashboard') }}" class="sidebar-link {{ request()->routeIs('home') ? 'active' : '' }}">
                     <span class="material-symbols-outlined me-2">dashboard</span>
                     Dashboard
                 </a>
@@ -99,6 +103,11 @@
                 <a href="{{ route('usuarios') }}" class="sidebar-link {{ request()->routeIs('usuarios*') ? 'active' : '' }}">
                     <span class="material-symbols-outlined me-2">group</span>
                     Gestión de usuarios
+                </a>
+
+                <a href="{{ route('bitacora') }}" class="sidebar-link {{ request()->routeIs('bitacora*') ? 'active' : '' }}">
+                    <span class="material-symbols-outlined me-2">history</span>
+                    Bitácora del sistema
                 </a>
 
                 {{-- Puedes ir agregando más enlaces de esta misma forma --}}
