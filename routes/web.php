@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\CitaController;
 use App\Http\Controllers\CondicionMedicaController;
 use App\Http\Controllers\DiagnosticoController;
 use App\Http\Controllers\DoctorController;
@@ -9,6 +10,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HorarioDoctorController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MedicamentoController;
+use App\Http\Controllers\PacienteCondicionController;
+use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\RegistroMedicoController;
+use App\Http\Controllers\RegistroMedicoDiagnosticoController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\ServicioController;
@@ -119,6 +124,38 @@ Route::middleware(['auth', 'rol'])->group(function () {
     Route::get('horarios/{id}/buscar', [HorarioDoctorController::class, 'buscarHorarioXId'])->name('horarios.buscar');
     Route::put('horarios/{horario}', [HorarioDoctorController::class, 'actualizarHorario'])->name('horarios.actualizar');
     Route::delete('horarios/{horario}', [HorarioDoctorController::class, 'eliminarHorario'])->name('horarios.eliminar');
+
+    // Rutas de pacientes
+    Route::get('pacientes', [PacienteController::class, 'index'])->name('pacientes');
+    Route::post('pacientes', [PacienteController::class, 'insertarPaciente'])->name('pacientes.insertar');
+    Route::get('pacientes/{id}/buscar', [PacienteController::class, 'buscarPacienteXId'])->name('pacientes.buscar');
+    Route::put('pacientes/{paciente}', [PacienteController::class, 'actualizarPaciente'])->name('pacientes.actualizar');
+    Route::delete('pacientes/{paciente}', [PacienteController::class, 'eliminarPaciente'])->name('pacientes.eliminar');
+
+    // Rutas de citas
+    Route::get('citas', [CitaController::class, 'index'])->name('citas');
+    Route::post('citas', [CitaController::class, 'insertarCita'])->name('citas.insertar');
+    Route::get('citas/{id}/buscar', [CitaController::class, 'buscarCitaXId'])->name('citas.buscar');
+    Route::put('citas/{cita}', [CitaController::class, 'actualizarCita'])->name('citas.actualizar');
+    Route::delete('citas/{cita}', [CitaController::class, 'eliminarCita'])->name('citas.eliminar');
+
+    // Rutas de registros médicos
+    Route::get('registros-medicos', [RegistroMedicoController::class, 'index',])->name('registros_medicos');
+    Route::post('registros-medicos', [RegistroMedicoController::class, 'insertarRegistroMedico',])->name('registros_medicos.insertar');
+    Route::get('registros-medicos/{id}/buscar', [RegistroMedicoController::class, 'buscarRegistroMedicoXId',])->name('registros_medicos.buscar');
+    Route::delete('registros-medicos/{registroMedico}', [RegistroMedicoController::class, 'eliminarRegistroMedico',])->name('registros_medicos.eliminar');
+
+    // Rutas de registros medicos diagnosticos
+    Route::get('registro-medico-diagnosticos', [RegistroMedicoDiagnosticoController::class, 'index',])->name('registro_medico_diagnosticos');
+    Route::post('registro-medico-diagnosticos', [RegistroMedicoDiagnosticoController::class, 'insertarRegistroMedicoDiagnostico',])->name('registro_medico_diagnosticos.insertar');
+    Route::get('registro-medico-diagnosticos/{id}/buscar', [RegistroMedicoDiagnosticoController::class, 'buscarRegistroMedicoDiagnosticoXId',])->name('registro_medico_diagnosticos.buscar');
+    Route::delete('registro-medico-diagnosticos/{registroMedicoDiagnostico}', [RegistroMedicoDiagnosticoController::class, 'eliminarRegistroMedicoDiagnostico',])->name('registro_medico_diagnosticos.eliminar');
+
+    // Rutas de pacientes condiciones
+    Route::get('/pacientes-condiciones', [PacienteCondicionController::class, 'index'])->name('pacientes_condiciones');
+    Route::post('/pacientes-condiciones/insertar', [PacienteCondicionController::class, 'insertarPacienteCondicion'])->name('pacientes_condiciones.insertar');
+    Route::get('/pacientes-condiciones/buscar/{id}', [PacienteCondicionController::class, 'buscarPacienteCondicion'])->name('pacientes_condiciones.buscar');
+    Route::delete('/pacientes-condiciones/eliminar/{pacienteCondicion}', [PacienteCondicionController::class, 'eliminarPacienteCondicion'])->name('pacientes_condiciones.eliminar');
 
     // ============== Fin de rutas protegidas ================================
 });
