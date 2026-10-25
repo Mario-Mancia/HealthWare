@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,6 +18,13 @@ class Servicio extends Model
         'servicio',
         'descripcion',
     ];
+
+    // Relacions
+
+    public function detallesFacturas(): HasMany
+    {
+        return $this->hasMany(DetalleFactura::class, 'id_servicio');
+    }
 
     /**
      * Reglas de validación para el modelo.

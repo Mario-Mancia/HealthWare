@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -28,15 +30,63 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request): RedirectResponse
     {
+        // Normalizar correo electrónico y generar clave del limitador.
+        $correo = strtolower(trim($request->correo));
+
+        $claveLimite = 'login:' . hash(
+                'sha256',
+                $correo . '|' . $request->ip()
+            );
+
+        // Verificar si se alcanzó el límite de intentos fallidos.
+        if (RateLimiter::tooManyAttempts($claveLimite, 5)) {
+
+            Bitacora::registrar(
+                Bitacora::LOGIN_FALLIDO,
+                'LOGIN',
+                null,
+                'Intento de inicio de sesión bloqueado por límite de intentos.',
+                $correo
+            );
+
+            return redirect()
+                ->route('login')
+                ->with(
+                    'error',
+                    'Demasiados intentos. Intente nuevamente más tarde.'
+                );
+        }
+
+
         $credenciales = [
-            'correo' => $request->correo,
+            'correo' => $correo,
             'password' => $request->contrasenha,
         ];
 
+
         if (Auth::attempt($credenciales)) {
+
             $usuario = Auth::user();
 
-            if (strtolower($usuario->estado->estado) == 'inactivo') {
+
+            $estado = strtolower($usuario->estado?->estado ?? '');
+
+
+            if (!in_array($estado, ['activo', 'inactivo', 'eliminado'], true)
+                || in_array($estado, ['inactivo', 'eliminado'], true)) {
+
+                // Registrar el rechazo antes de cerrar la sesión.
+                Bitacora::registrar(
+                    Bitacora::LOGIN_FALLIDO,
+                    'LOGIN',
+                    $usuario->id,
+                    'Inicio de sesión rechazado: cuenta ' .
+                    ($estado ?: 'sin estado válido') . '.'
+                );
+
+                // Contabilizar el intento fallido.
+                RateLimiter::hit($claveLimite, 300);
+
                 Auth::logout();
 
                 $request->session()->invalidate();
@@ -44,26 +94,23 @@ class LoginController extends Controller
 
                 return redirect()
                     ->route('login')
-                    ->with('warning', 'Su cuenta se encuentra inactiva, contacte al administrador.');
-            };
-
-            if (strtolower($usuario->estado->estado) == 'eliminado') {
-                Auth::logout();
-
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
-
-                return redirect()
-                    ->route('login')
-                    ->with('error', 'Su cuenta ya no está disponible en el sistema.');
+                    ->with(
+                        'error',
+                        'No fue posible iniciar sesión. Verifique sus credenciales o contacte al administrador.'
+                    );
             }
 
+            // Regenerar la sesión para prevenir session fixation.
             $request->session()->regenerate();
+
+
+            RateLimiter::clear($claveLimite);
+
 
             Bitacora::registrar(
                 Bitacora::LOGIN_OK,
                 'LOGIN',
-                $usuario->id_usuario,
+                $usuario->id,
                 'Inicio de sesión exitoso.'
             );
 
@@ -75,13 +122,17 @@ class LoginController extends Controller
                 );
         }
 
+
         Bitacora::registrar(
             Bitacora::LOGIN_FALLIDO,
             'LOGIN',
             null,
-            'Intento de inicio de sesión fallido.',
-            $request->correo
+            'Intento de inicio de sesión fallido: credenciales incorrectas.',
+            $correo
         );
+
+
+        RateLimiter::hit($claveLimite, 300);
 
         return redirect()
             ->route('login')

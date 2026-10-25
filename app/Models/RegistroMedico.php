@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -58,6 +59,11 @@ class RegistroMedico extends Model
             SignoVital::class,
             'id_registro_medico'
         );
+    }
+
+    public function recetas(): HasMany
+    {
+        return $this->hasMany(Receta::class, 'id_registro_medico');
     }
 
     // Reglas de validación

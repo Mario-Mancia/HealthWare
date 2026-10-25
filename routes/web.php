@@ -1,17 +1,24 @@
 <?php
 
 use App\Http\Controllers\AlergiaController;
+use App\Http\Controllers\AnuncioGlobalController;
 use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\CondicionMedicaController;
+use App\Http\Controllers\DetalleFacturaController;
+use App\Http\Controllers\DetalleRecetaController;
 use App\Http\Controllers\DiagnosticoController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HorarioDoctorController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MedicamentoController;
+use App\Http\Controllers\NotificacionController;
+use App\Http\Controllers\PacienteAlergiaController;
 use App\Http\Controllers\PacienteCondicionController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\RecetaController;
 use App\Http\Controllers\RegistroMedicoController;
 use App\Http\Controllers\RegistroMedicoDiagnosticoController;
 use App\Http\Controllers\RolController;
@@ -27,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 // Rutas iniciales de autenticación:
 
 Route::get('login', [LoginController::class, 'index'])->name('login');
-Route::post('login', [LoginController::class, 'login'])->middleware('throttle:5,1');
+Route::post('login', [LoginController::class, 'login'])->middleware('throttle:5,3');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
@@ -156,6 +163,49 @@ Route::middleware(['auth', 'rol'])->group(function () {
     Route::post('/pacientes-condiciones/insertar', [PacienteCondicionController::class, 'insertarPacienteCondicion'])->name('pacientes_condiciones.insertar');
     Route::get('/pacientes-condiciones/buscar/{id}', [PacienteCondicionController::class, 'buscarPacienteCondicion'])->name('pacientes_condiciones.buscar');
     Route::delete('/pacientes-condiciones/eliminar/{pacienteCondicion}', [PacienteCondicionController::class, 'eliminarPacienteCondicion'])->name('pacientes_condiciones.eliminar');
+
+    // Rutas de pacientes alergias
+    Route::get('/pacientes-alergias', [PacienteAlergiaController::class, 'index'])->name('pacientes_alergias');
+    Route::post('/pacientes-alergias/insertar', [PacienteAlergiaController::class, 'insertarPacienteAlergia'])->name('pacientes_alergias.insertar');
+    Route::get('/pacientes-alergias/buscar/{id}', [PacienteAlergiaController::class, 'buscarPacienteAlergia'])->name('pacientes_alergias.buscar');
+    Route::delete('/pacientes-alergias/eliminar/{pacienteAlergia}', [PacienteAlergiaController::class, 'eliminarPacienteAlergia'])->name('pacientes_alergias.eliminar');
+
+    // Rutas de receta
+    Route::get('/recetas', [RecetaController::class, 'index'])->name('recetas');
+    Route::post('/recetas/insertar', [RecetaController::class, 'insertarReceta'])->name('recetas.insertar');
+    Route::get('/recetas/buscar/{id}', [RecetaController::class, 'buscarReceta'])->name('recetas.buscar');
+
+    // Rutas de detale recetas
+    Route::get('/detalle-recetas', [DetalleRecetaController::class, 'index'])->name('detalle_recetas');
+    Route::post('/detalle-recetas/insertar', [DetalleRecetaController::class, 'insertarDetalleReceta'])->name('detalle_recetas.insertar');
+    Route::get('/detalle-recetas/buscar/{id}', [DetalleRecetaController::class, 'buscarDetalleReceta'])->name('detalle_recetas.buscar');
+
+    // Rutas de factura
+    Route::get('/facturas', [FacturaController::class, 'index'])->name('facturas');
+    Route::get('/facturas/todos', [FacturaController::class, 'mostrarTodos'])->name('facturas.todos');
+    Route::post('/facturas/insertar', [FacturaController::class, 'insertarFactura'])->name('facturas.insertar');
+    Route::get('/facturas/buscar/{id}', [FacturaController::class, 'buscarFactura'])->name('facturas.buscar');
+
+    // Rutas de detalle facturas
+
+    Route::get('/detalle-facturas', [DetalleFacturaController::class, 'index'])->name('detalle_facturas');
+    Route::get('/detalle-facturas/todos', [DetalleFacturaController::class, 'mostrarTodos'])->name('detalle_facturas.todos');
+    Route::post('/detalle-facturas/insertar', [DetalleFacturaController::class, 'insertarDetalleFactura'])->name('detalle_facturas.insertar');
+    Route::get('/detalle-facturas/buscar/{id}', [DetalleFacturaController::class, 'buscarDetalleFactura'])->name('detalle_facturas.buscar');
+
+    // Rutas de Notificaciones
+    Route::get('/notificaciones', [NotificacionController::class, 'index'])->name('notificaciones');
+    Route::get('/notificaciones/todos', [NotificacionController::class, 'mostrarTodos'])->name('notificaciones.todos');
+    Route::post('/notificaciones/insertar', [NotificacionController::class, 'insertar'])->name('notificaciones.insertar');
+    Route::get('/notificaciones/buscar/{id}', [NotificacionController::class, 'buscar'])->name('notificaciones.buscar');
+    Route::put('/notificaciones/actualizar/{id}', [NotificacionController::class, 'actualizar'])->name('notificaciones.actualizar');
+
+    // Rutas de Anuncios globales
+    Route::get('/anuncios-globales', [AnuncioGlobalController::class, 'index'])->name('anuncios_globales');
+    Route::get('/anuncios-globales/todos', [AnuncioGlobalController::class, 'mostrarTodos'])->name('anuncios_globales.todos');
+    Route::post('/anuncios-globales/insertar', [AnuncioGlobalController::class, 'insertar'])->name('anuncios_globales.insertar');
+    Route::get('/anuncios-globales/buscar/{id}', [AnuncioGlobalController::class, 'buscar'])->name('anuncios_globales.buscar');
+    Route::put('/anuncios-globales/actualizar/{id}', [AnuncioGlobalController::class, 'actualizar'])->name('anuncios_globales.actualizar');
 
     // ============== Fin de rutas protegidas ================================
 });

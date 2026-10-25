@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -63,6 +64,16 @@ class Usuario extends Authenticatable
     public function estado(): BelongsTo
     {
         return $this->belongsTo(Estado::class, 'id_estado');
+    }
+
+    public function notificaciones(): HasMany
+    {
+        return $this->hasMany(Notificacion::class, 'id_usuario');
+    }
+
+    public function anunciosGlobalesCreados(): HasMany
+    {
+        return $this->hasMany(AnuncioGlobal::class, 'creado_por');
     }
 
     /**

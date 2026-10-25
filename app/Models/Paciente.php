@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 class Paciente extends Model
@@ -49,6 +50,11 @@ class Paciente extends Model
             TipoSanguineo::class,
             'id_tipo_sanguineo'
         );
+    }
+
+    public function facturas(): HasMany
+    {
+        return $this->hasMany(Factura::class, 'id_paciente');
     }
 
     /*
