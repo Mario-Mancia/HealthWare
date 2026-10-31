@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\PreventBackHistory;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -16,7 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias(
             [
-                'rol' => RolMiddleware::class
+                'rol' => RolMiddleware::class,
+                'no-cache' => PreventBackHistory::class,
             ]
         );
     })
@@ -25,6 +27,12 @@ return Application::configure(basePath: dirname(__DIR__))
            AuthenticationException $e,
            Request $request
         ) {
+            if (!$request->expectsJson()) {
+                return redirect()
+                    ->guest(route('login'))
+                    ->with('error', 'No puedes acceder a esta ruta sin iniciar sesión.');
+            }
+
             return redirect()
                 ->route('login')
                 ->with('warning', 'Debe iniciar sesión para acceder al sistema.');

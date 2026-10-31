@@ -38,7 +38,7 @@ Route::post('login', [LoginController::class, 'login'])->middleware('throttle:5,
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
-Route::middleware(['auth', 'rol'])->group(function () {
+Route::middleware(['auth', 'rol', 'no-cache'])->group(function () {
 
     // Rutas de HOME
     Route::get('/', [HomeController::class, 'index'])->name('home');
