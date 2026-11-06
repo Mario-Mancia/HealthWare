@@ -18,21 +18,13 @@ class RolSeeder extends Seeder
                 'descripcion' => 'Usuario encargado de la gestión general del sistema.'
             ],
             [
-                'rol' => 'Supervisor',
-                'descripcion' => 'Usuario subencargado de revisión de funcionamiento del sistema.'
-            ],
-            [
-                'rol' => 'Médico',
+                'rol' => 'Medico',
                 'descripcion' => 'Usuario encargado de atención y gestión de información clínica de los pacientes.'
             ],
             [
                 'rol' => 'Recepcionista',
                 'descripcion' => 'Usuario encargado de la recepción, gestión de citas y atención general.'
-            ],
-            [
-                'rol' => 'Paciente',
-                'descripcion' => 'Usuario que utiliza el sistema para monitorear su estado de salud y citas.'
-            ],
+            ]
         ];
 
         foreach ($roles as $rol) {

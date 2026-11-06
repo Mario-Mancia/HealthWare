@@ -18,21 +18,25 @@ class RolMiddleware
     ): Response {
         $usuario = auth()->user();
 
-        /*
+        /**
          * El middleware "auth" debe ejecutarse antes que este middleware.
-         * Por seguridad, verificamos también que exista un usuario.
+         * Esta comprobación funciona como medida adicional de seguridad.
          */
         if (!$usuario) {
-            return redirect()->route('login');
+            return redirect()
+                ->route('login')
+                ->with(
+                    'error',
+                    'Debe iniciar sesión para acceder al sistema.'
+                );
         }
 
-        /*
-         * Verificamos el estado del usuario mediante
-         * la relación con la tabla estados.
+        /**
+         * Verificamos que el usuario tenga un estado válido y activo.
          */
         if (
             !$usuario->estado ||
-            strtolower($usuario->estado->estado) !== 'activo'
+            strtolower(trim($usuario->estado->estado)) !== 'activo'
         ) {
             auth()->logout();
 
@@ -47,32 +51,40 @@ class RolMiddleware
                 );
         }
 
-        /*
-         * Si la ruta no especifica roles, cualquier usuario
+        /**
+         * Si no se especifican roles, cualquier usuario
          * autenticado y activo puede continuar.
          */
         if (empty($roles)) {
             return $next($request);
         }
 
-        /*
-         * Verificamos si el rol del usuario coincide con
-         * alguno de los roles permitidos por la ruta.
+        /**
+         * Obtenemos el rol del usuario y normalizamos su nombre.
          */
+        $rolUsuario = $usuario->rol
+            ? strtolower(trim($usuario->rol->rol))
+            : null;
+
+        /**
+         * Normalizamos los roles permitidos y comprobamos
+         * si el usuario tiene alguno de ellos.
+         */
+        $rolesPermitidos = array_map(
+            fn ($rol) => strtolower(trim($rol)),
+            $roles
+        );
+
         if (
-            $usuario->rol &&
-            in_array(
-                strtolower($usuario->rol->rol),
-                array_map('strtolower', $roles),
-                true
-            )
+            $rolUsuario !== null &&
+            in_array($rolUsuario, $rolesPermitidos, true)
         ) {
             return $next($request);
         }
 
-        /*
+        /**
          * El usuario está autenticado y activo, pero no tiene
-         * permisos suficientes para acceder a la ruta.
+         * permisos suficientes para acceder a esta sección.
          */
         return redirect()
             ->route('home')
