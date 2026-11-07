@@ -7,6 +7,7 @@ use App\Http\Requests\InsertarUsuarioRequest;
 use App\Models\Estado;
 use App\Models\Rol;
 use App\Models\Usuario;
+use Illuminate\Http\Client\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -33,7 +34,7 @@ class UsuarioController extends Controller
      */
     public function insertarUsuario(
         InsertarUsuarioRequest $request
-    ): RedirectResponse {
+    ): RedirectResponse | JsonResponse {
         $usuario = Usuario::insertar($request->validated());
 
         Bitacora::registrar(
@@ -45,12 +46,16 @@ class UsuarioController extends Controller
             . ' (' . $usuario->correo . ')'
         );
 
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Usuario creado correctamente',
+                'usuario' => $usuario->load(['rol', 'estado']),
+            ], 201);
+        }
+
         return redirect()
             ->route('usuarios')
-            ->with(
-                'success',
-                'Usuario creado correctamente'
-            );
+            ->with('success', 'Usuario creado correctamente');
     }
 
     /**
@@ -78,7 +83,7 @@ class UsuarioController extends Controller
     public function actualizarUsuario(
         ActualizarUsuarioRequest $request,
         Usuario $usuario
-    ): RedirectResponse {
+    ): RedirectResponse | JsonResponse {
         if (
             Usuario::actualizar(
                 $request->validated(),
@@ -94,12 +99,16 @@ class UsuarioController extends Controller
                 . ' (' . $usuario->correo . ')'
             );
 
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Usuario actualizado correctamente',
+                    'usuario' => $usuario->refresh()->load(['rol', 'estado']),
+                ]);
+            }
+
             return redirect()
                 ->route('usuarios')
-                ->with(
-                    'success',
-                    'Usuario actualizado correctamente'
-                );
+                ->with('success', 'Usuario actualizado correctamente');
         }
 
         return redirect()
@@ -114,8 +123,9 @@ class UsuarioController extends Controller
      * Elimina un usuario existente.
      */
     public function eliminarUsuario(
+        Request $request,
         Usuario $usuario
-    ): RedirectResponse
+    ): RedirectResponse | JsonResponse
     {
         $registroId = $usuario->getKey();
 
@@ -131,12 +141,16 @@ class UsuarioController extends Controller
                 $descripcion
             );
 
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Usuario eliminado correctamente',
+                    'id' => $registroId,
+                ]);
+            }
+
             return redirect()
                 ->route('usuarios')
-                ->with(
-                    'success',
-                    'Usuario eliminado correctamente'
-                );
+                ->with('success', 'Usuario eliminado correctamente');
         }
 
         return redirect()

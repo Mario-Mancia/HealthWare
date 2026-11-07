@@ -14,6 +14,7 @@
     {{-- Framework y Design System --}}
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/global-styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/toast.css') }}">
 
     {{-- Estilos del layout --}}
     <link rel="stylesheet" href="{{ asset('css/sidebar-modulos.css') }}">

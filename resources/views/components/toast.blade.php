@@ -1,69 +1,96 @@
-{{-- Componente reutilizable de toast para mostrar notificaciones al usuario --}}
 
+{{-- Componente reutilizable de notificaciones HealthWare --}}
 
-    <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 1056;">
+@php
+    $notificaciones = [];
 
-        @foreach (['success', 'error', 'warning', 'info'] as $msgType)
-            @if(session($msgType))
-                @php
-                    $bsClass = '';
-                    $iconName = '';
+    foreach (['success', 'error', 'warning', 'info'] as $tipo) {
+        if (session()->has($tipo)) {
+            $notificaciones[] = [
+                'tipo' => $tipo,
+                'mensaje' => session($tipo)
+            ];
+        }
+    }
 
-                    switch($msgType) {
-                        case 'success':
-                            $bsClass = 'success';
-                            $iconName = 'check_circle';
-                            break;
-                        case 'error':
-                            $bsClass = 'danger';
-                            $iconName = 'error';
-                            break;
-                        case 'warning':
-                            $bsClass = 'warning';
-                            $iconName = 'warning';
-                            break;
-                        case 'info':
-                            $bsClass = 'info';
-                            $iconName = 'info';
-                            break;
-                    }
-                @endphp
+    if ($errors->any()) {
+        foreach ($errors->all() as $error) {
+            $notificaciones[] = [
+                'tipo' => 'error',
+                'mensaje' => $error
+            ];
+        }
+    }
 
+    $configuracionesToast = [
+        'success' => [
+            'titulo' => 'Operación exitosa',
+            'icono' => 'check_circle'
+        ],
+        'error' => [
+            'titulo' => 'Ha ocurrido un error',
+            'icono' => 'error'
+        ],
+        'warning' => [
+            'titulo' => 'Atención',
+            'icono' => 'warning'
+        ],
+        'info' => [
+            'titulo' => 'Información',
+            'icono' => 'info'
+        ]
+    ];
+@endphp
 
-                <div class="toast align-items-center bg-body border border-{{ $bsClass }} rounded-3 shadow-sm mb-3" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex px-3 py-3">
-                        <!-- Icono Material -->
-                        <span class="material-symbols-outlined text-{{ $bsClass }} me-3 fs-5">
-                            {{ $iconName }}
-                        </span>
+<div
+    id="healthware-toast-container"
+    class="toast-container position-fixed bottom-0 end-0 p-3 hw-toast-container"
+    aria-live="polite"
+    aria-atomic="false"
+>
+    @foreach ($notificaciones as $notificacion)
+        @php
+            $tipo = $notificacion['tipo'];
+            $configuracion = $configuracionesToast[$tipo];
+        @endphp
 
-                        <!-- Mensaje -->
-                        <div class="toast-body p-0 fw-medium text-{{ $bsClass }} flex-grow-1 align-self-center">
-                            {{ session($msgType) }}
-                        </div>
+        <div
+            class="toast hw-toast hw-toast--{{ $tipo }}"
+            role="{{ $tipo === 'error' ? 'alert' : 'status' }}"
+            aria-live="{{ $tipo === 'error' ? 'assertive' : 'polite' }}"
+            aria-atomic="true"
+            data-toast-duration="4500"
+        >
+            <div class="hw-toast__content">
 
-                        <!-- Botón cerrar (Opcional, Bootstrap lo alinea a la derecha) -->
-                        <button type="button" class="btn-close ms-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+                <div class="hw-toast__icon-container">
+                    <span class="material-symbols-outlined hw-toast__icon">
+                        {{ $configuracion['icono'] }}
+                    </span>
+                </div>
+
+                <div class="hw-toast__message">
+                    <div class="hw-toast__title">
+                        {{ $configuracion['titulo'] }}
+                    </div>
+
+                    <div class="hw-toast__description">
+                        {{ $notificacion['mensaje'] }}
                     </div>
                 </div>
-            @endif
-        @endforeach
 
-        <!-- Toasts para errores de validación de Laravel -->
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                <div class="toast align-items-center bg-body border border-danger rounded-3 shadow-sm mb-3" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex px-3 py-3">
-                        <span class="material-symbols-outlined text-danger me-3 fs-5">
-                            error
-                        </span>
-                        <div class="toast-body p-0 fw-medium text-danger flex-grow-1 align-self-center">
-                            {{ $error }}
-                        </div>
-                        <button type="button" class="btn-close ms-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
-                    </div>
-                </div>
-            @endforeach
-        @endif
-    </div>
+                <button
+                    type="button"
+                    class="btn-close hw-toast__close"
+                    data-bs-dismiss="toast"
+                    aria-label="Cerrar notificación"
+                ></button>
 
+            </div>
+
+            <div class="hw-toast__progress">
+                <div class="hw-toast__progress-bar"></div>
+            </div>
+        </div>
+    @endforeach
+</div>
