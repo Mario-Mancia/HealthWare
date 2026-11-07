@@ -18,7 +18,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->foreignId('id_medicamento')
-                ->constrained('medicamentos')
+                ->constrained('medicamentos.css')
                 ->restrictOnDelete();
 
             $table->string('dosis', 100);

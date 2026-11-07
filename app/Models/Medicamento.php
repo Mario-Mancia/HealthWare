@@ -11,7 +11,7 @@ class Medicamento extends Model
 {
     use HasFactory;
 
-    protected $table = 'medicamentos';
+    protected $table = 'medicamentos.css';
 
     protected $fillable = [
         'nombre',
@@ -67,7 +67,7 @@ class Medicamento extends Model
     }
 
     /**
-     * Obtiene todos los medicamentos registrados.
+     * Obtiene todos los medicamentos.css registrados.
      */
     public static function mostrarTodos(): Collection
     {

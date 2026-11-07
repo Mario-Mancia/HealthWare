@@ -36,7 +36,7 @@ class ServicioSeeder extends Seeder
             ],
             [
                 'servicio' => 'Aplicación de inyección',
-                'descripcion' => 'Servicio de administración de medicamentos mediante inyección.',
+                'descripcion' => 'Servicio de administración de medicamentos.css mediante inyección.',
             ],
             [
                 'servicio' => 'Examen de laboratorio',

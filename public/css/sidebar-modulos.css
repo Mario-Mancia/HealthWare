@@ -1,0 +1,140 @@
+
+/*
+|--------------------------------------------------------------------------
+| HEALTHWARE - SIDEBAR DE MÓDULOS
+|--------------------------------------------------------------------------
+| Responsabilidad:
+| - Navegación lateral de módulos.
+| - Encabezados y separadores de navegación.
+| - Estados activo, hover y focus.
+|
+| Los colores, tipografía, superficies, elevaciones y radios generales
+| se heredan de global-styles.css.
+|--------------------------------------------------------------------------
+*/
+
+/* Contenedor principal de navegación */
+.sidebar-navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 1rem 0.75rem;
+}
+
+/* Secciones de módulos */
+.sidebar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+/* Título de cada sección */
+.sidebar-section-title {
+    padding: 0 0.85rem;
+    margin-bottom: 0.35rem;
+
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+/* Lista de enlaces */
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* Enlaces de navegación */
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+
+    min-height: 44px;
+    padding: 0.65rem 0.85rem;
+
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+
+    border-radius: 999px;
+
+    transition:
+        background-color 180ms ease,
+        color 180ms ease,
+        transform 180ms ease;
+}
+
+/* Iconos */
+.sidebar-link .material-symbols-rounded {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    font-weight: normal;
+}
+
+/* Hover */
+.sidebar-link:hover {
+    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface-container);
+}
+
+/* Focus accesible */
+.sidebar-link:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}
+
+/* Enlace activo */
+.sidebar-link.active {
+    color: var(--md-sys-color-on-primary-container);
+    background-color: var(--md-sys-color-primary-container);
+    font-weight: 700;
+}
+
+/* Icono del enlace activo */
+.sidebar-link.active .material-symbols-rounded {
+    color: var(--md-sys-color-on-primary-container);
+}
+
+/* Separadores */
+.sidebar-divider {
+    height: 1px;
+    margin: 0.35rem 0.75rem;
+    background-color: var(--md-sys-color-outline-variant);
+    opacity: 0.55;
+}
+
+/* Texto complementario opcional */
+.sidebar-link-description {
+    display: block;
+    margin-top: 0.1rem;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.7rem;
+    font-weight: 400;
+}
+
+/* Adaptación para dispositivos móviles */
+@media (max-width: 991.98px) {
+    .sidebar-navigation {
+        padding-top: 0.75rem;
+    }
+
+    .sidebar-link {
+        min-height: 46px;
+    }
+}
+
+/* Respeto por preferencias de movimiento */
+@media (prefers-reduced-motion: reduce) {
+    .sidebar-link {
+        transition: none;
+    }
+}

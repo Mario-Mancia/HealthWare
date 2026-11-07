@@ -97,9 +97,9 @@ Route::middleware(['auth', 'rol', 'no-cache'])->group(function () {
         Route::delete('alergias/{alergia}', [AlergiaController::class, 'eliminarAlergia'])->name('alergias.eliminar');
 
         // Medicamentos
-        Route::post('medicamentos', [MedicamentoController::class, 'insertarMedicamento'])->name('medicamentos.insertar');
-        Route::put('medicamentos/{medicamento}', [MedicamentoController::class, 'actualizarMedicamento'])->name('medicamentos.actualizar');
-        Route::delete('medicamentos/{medicamento}', [MedicamentoController::class, 'eliminarMedicamento'])->name('medicamentos.eliminar');
+        Route::post('medicamentos.css', [MedicamentoController::class, 'insertarMedicamento'])->name('medicamentos.css.insertar');
+        Route::put('medicamentos.css/{medicamento}', [MedicamentoController::class, 'actualizarMedicamento'])->name('medicamentos.css.actualizar');
+        Route::delete('medicamentos.css/{medicamento}', [MedicamentoController::class, 'eliminarMedicamento'])->name('medicamentos.css.eliminar');
 
         // Servicios
         Route::post('servicios', [ServicioController::class, 'insertarServicio'])->name('servicios.insertar');
@@ -135,8 +135,8 @@ Route::middleware(['auth', 'rol', 'no-cache'])->group(function () {
         Route::get('alergias/{id}/buscar', [AlergiaController::class, 'buscarAlergiaXId'])->name('alergias.buscar');
 
         // Medicamentos: consulta
-        Route::get('medicamentos', [MedicamentoController::class, 'index'])->name('medicamentos');
-        Route::get('medicamentos/{id}/buscar', [MedicamentoController::class, 'buscarMedicamentoXId'])->name('medicamentos.buscar');
+        Route::get('medicamentos.css', [MedicamentoController::class, 'index'])->name('medicamentos.css');
+        Route::get('medicamentos.css/{id}/buscar', [MedicamentoController::class, 'buscarMedicamentoXId'])->name('medicamentos.css.buscar');
 
         // Registros médicos
         Route::get('registros-medicos', [RegistroMedicoController::class, 'index'])->name('registros_medicos');

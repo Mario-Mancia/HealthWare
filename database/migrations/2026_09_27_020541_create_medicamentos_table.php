@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('medicamentos', function (Blueprint $table) {
+        Schema::create('medicamentos.css', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 50);
             $table->string('principio_activo', 150)->nullable();
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('medicamentos');
+        Schema::dropIfExists('medicamentos.css');
     }
 };

@@ -1,18 +1,32 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const togglePassword = document.querySelector('#togglePassword');
-    const passwordInput = document.querySelector('#password');
 
-    if (togglePassword && passwordInput) {
-        togglePassword.addEventListener('click', function () {
-            // Alternar el tipo de input
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
+document.addEventListener('DOMContentLoaded', () => {
+    'use strict';
 
-            // Alternar el icono de Material Design
-            this.textContent = type === 'password' ? 'visibility_off' : 'visibility';
+    const passwordInput = document.getElementById('password');
+    const toggleButton = document.getElementById('togglePassword');
+    const passwordIcon = document.getElementById('passwordIcon');
 
-            // Efecto visual al interactuar
-            this.style.color = type === 'password' ? 'var(--md-sys-color-outline)' : 'var(--bs-primary)';
-        });
+    if (!passwordInput || !toggleButton || !passwordIcon) {
+        return;
     }
+
+    toggleButton.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+
+        passwordInput.type = isPassword ? 'text' : 'password';
+
+        passwordIcon.textContent = isPassword
+            ? 'visibility'
+            : 'visibility_off';
+
+        toggleButton.setAttribute(
+            'aria-label',
+            isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
+        );
+
+        toggleButton.setAttribute(
+            'aria-pressed',
+            String(isPassword)
+        );
+    });
 });

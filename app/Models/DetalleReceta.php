@@ -57,7 +57,7 @@ class DetalleReceta extends Model
             'id_medicamento' => [
                 'required',
                 'integer',
-                'exists:medicamentos,id_medicamento',
+                'exists:medicamentos.css,id_medicamento',
             ],
             'dosis' => [
                 'required',

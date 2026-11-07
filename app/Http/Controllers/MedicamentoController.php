@@ -13,7 +13,7 @@ class MedicamentoController extends Controller
     public function index(): View
     {
         $datos = [
-            'medicamentos' => Medicamento::mostrarTodos(),
+            'medicamentos.css' => Medicamento::mostrarTodos(),
         ];
 
         return view('medicamentos.index', $datos);
@@ -41,7 +41,7 @@ class MedicamentoController extends Controller
     ): RedirectResponse {
         if (Medicamento::eliminar($medicamento->getKey())) {
             return redirect()
-                ->route('medicamentos')
+                ->route('medicamentos.css')
                 ->with(
                     'success',
                     'Medicamento eliminado correctamente'
@@ -49,7 +49,7 @@ class MedicamentoController extends Controller
         }
 
         return redirect()
-            ->route('medicamentos')
+            ->route('medicamentos.css')
             ->with(
                 'error',
                 'Medicamento no eliminado'

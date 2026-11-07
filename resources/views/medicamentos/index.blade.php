@@ -3,7 +3,7 @@
 @section('titulo', 'Medicamentos')
 
 @push('estilos')
-    <link rel="stylesheet" href="{{ asset('css/medicamentos') }}"
+    <link rel="stylesheet" href="{{ asset('css/medicamentos.css') }}"
 @endpush
 
 @section('contenido')
@@ -11,5 +11,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/medicamento/medicamentos.js') }}"></script>
+    <script src="{{ asset('js/medicamento/medicamentos.css.js') }}"></script>
 @endpush

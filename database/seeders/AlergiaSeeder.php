@@ -16,7 +16,7 @@ class AlergiaSeeder extends Seeder
         $alergias = [
             [
                 'alergia' => 'Penicilina',
-                'descripcion' => 'Alergia a medicamentos derivados de la penicilina.',
+                'descripcion' => 'Alergia a medicamentos.css derivados de la penicilina.',
             ],
             [
                 'alergia' => 'Amoxicilina',
@@ -88,11 +88,11 @@ class AlergiaSeeder extends Seeder
             ],
             [
                 'alergia' => 'Cefalosporinas',
-                'descripcion' => 'Alergia a medicamentos antibióticos pertenecientes al grupo de las cefalosporinas.',
+                'descripcion' => 'Alergia a medicamentos.css antibióticos pertenecientes al grupo de las cefalosporinas.',
             ],
             [
                 'alergia' => 'Sulfonamidas',
-                'descripcion' => 'Alergia a medicamentos que contienen compuestos pertenecientes al grupo de las sulfonamidas.',
+                'descripcion' => 'Alergia a medicamentos.css que contienen compuestos pertenecientes al grupo de las sulfonamidas.',
             ],
         ];
 
