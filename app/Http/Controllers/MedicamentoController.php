@@ -16,7 +16,7 @@ class MedicamentoController extends Controller
             'medicamentos' => Medicamento::mostrarTodos(),
         ];
 
-        return view('medicamento.medicamentos', $datos);
+        return view('medicamentos.index', $datos);
     }
 
     public function insertarMedicamento()

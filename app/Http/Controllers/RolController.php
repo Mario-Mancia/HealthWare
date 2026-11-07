@@ -18,7 +18,7 @@ class RolController extends Controller
             'roles' => Rol::mostrarTodos(),
         ];
 
-        return view('rol.roles', $datos);
+        return view('roles.index', $datos);
     }
 
     /**

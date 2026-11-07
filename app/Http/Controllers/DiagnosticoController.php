@@ -15,7 +15,7 @@ class DiagnosticoController extends Controller
             'diagnosticos' => Diagnostico::mostrarTodos(),
         ];
 
-        return view('diagnostico.diagnosticos', $datos);
+        return view('diagnosticos.index', $datos);
     }
 
     public function insertarDiagnostico()

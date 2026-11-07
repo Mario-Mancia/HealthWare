@@ -18,7 +18,7 @@ class TipoSanguineoController extends Controller
             'tiposSanguineos' => TipoSanguineo::mostrarTodos(),
         ];
 
-        return view('tipo_sanguineo.tipos_sanguineos', $datos);
+        return view('tipos_sanguineos.index', $datos);
     }
 
     /**

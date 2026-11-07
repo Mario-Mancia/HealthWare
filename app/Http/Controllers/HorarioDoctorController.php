@@ -23,7 +23,7 @@ class HorarioDoctorController extends Controller
             'doctores' => Doctor::mostrarTodos(),
         ];
 
-        return view('horarios.horarios', $datos);
+        return view('horarios.index', $datos);
     }
 
     /**

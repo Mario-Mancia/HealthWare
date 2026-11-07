@@ -84,7 +84,7 @@ class DetalleFactura extends Model
     public static function mostrarTodos(): Collection
     {
         return static::with([
-            'factura',
+            'facturacion',
             'servicio',
         ])
             ->orderByDesc('created_at')
@@ -95,7 +95,7 @@ class DetalleFactura extends Model
         int $id
     ): ?DetalleFactura {
         return static::with([
-            'factura',
+            'facturacion',
             'servicio',
         ])->find($id);
     }

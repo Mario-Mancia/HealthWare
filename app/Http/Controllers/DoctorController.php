@@ -23,7 +23,7 @@ class DoctorController extends Controller
             'especialidades' => Especialidad::mostrarTodos(),
         ];
 
-        return view('doctor.doctores', $datos);
+        return view('doctores.index', $datos);
     }
 
     /**

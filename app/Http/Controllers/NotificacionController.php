@@ -15,7 +15,7 @@ class NotificacionController extends Controller
     // Mostrar vista principal
     public function index(): View
     {
-        return view('notificacion.notificaciones', [
+        return view('notificaciones.index', [
             'notificaciones' => Notificacion::mostrarTodos()
         ]);
     }

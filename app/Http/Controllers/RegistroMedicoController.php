@@ -16,7 +16,7 @@ class RegistroMedicoController extends Controller
 {
     public function index(): View
     {
-        return view('registro_medico.registros_medicos', [
+        return view('registros_medicos.index', [
             'registrosMedicos' => RegistroMedico::mostrarTodos(),
             'pacientes' => Paciente::mostrarTodos(),
             'doctores' => Doctor::mostrarTodos(),

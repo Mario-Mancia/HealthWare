@@ -16,7 +16,7 @@ class CitaController extends Controller
 {
     public function index(): View
     {
-        return view('cita.citas', [
+        return view('citas.index', [
             'citas' => Cita::mostrarTodos(),
             'pacientes' => Paciente::mostrarTodos(),
             'doctores' => Doctor::mostrarTodos(),

@@ -15,7 +15,7 @@ class ServicioController extends Controller
             'servicios' => Servicio::mostrarTodos(),
         ];
 
-        return view('servicio.servicios', $datos);
+        return view('servicios.index', $datos);
     }
 
     public function insertarServicio()

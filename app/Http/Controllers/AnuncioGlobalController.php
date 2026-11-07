@@ -15,7 +15,7 @@ class AnuncioGlobalController extends Controller
     // Mostrar vista principal
     public function index(): View
     {
-        return view('anuncio_global.anuncios_globales', [
+        return view('anuncios_globales.index', [
             'anuncios' => AnuncioGlobal::mostrarTodos()
         ]);
     }
@@ -39,7 +39,7 @@ class AnuncioGlobalController extends Controller
         );
 
         return redirect()
-            ->route('anuncio_global')
+            ->route('anuncios_globales')
             ->with('success', 'Anuncio registrado correctamente.');
     }
 
@@ -66,7 +66,7 @@ class AnuncioGlobalController extends Controller
 
         if (!$anuncio) {
             return redirect()
-                ->route('anuncio_global')
+                ->route('anuncios_globales')
                 ->with('error', 'Anuncio no encontrado.');
         }
 
@@ -80,7 +80,7 @@ class AnuncioGlobalController extends Controller
         );
 
         return redirect()
-            ->route('anuncio_global')
+            ->route('anuncios_globales')
             ->with('success', 'Anuncio actualizado correctamente.');
     }
 }

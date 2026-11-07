@@ -19,6 +19,6 @@ class BitacoraController extends Controller
             'eventos' => Bitacora::eventos(),
         ];
 
-        return view('bitacora.bitacora', $datos);
+        return view('bitacora.index', $datos);
     }
 }

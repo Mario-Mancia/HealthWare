@@ -24,14 +24,14 @@ class InsertarFacturaRequest extends FormRequest
             'id_paciente.integer' => 'El paciente seleccionado no es válido.',
             'id_paciente.exists' => 'El paciente seleccionado no existe.',
 
-            'numero_factura.required' => 'Debe ingresar el número de factura.',
-            'numero_factura.string' => 'El número de factura debe ser texto.',
-            'numero_factura.max' => 'El número de factura no debe superar los 50 caracteres.',
-            'numero_factura.unique' => 'El número de factura ya está registrado.',
+            'numero_factura.required' => 'Debe ingresar el número de facturacion.',
+            'numero_factura.string' => 'El número de facturacion debe ser texto.',
+            'numero_factura.max' => 'El número de facturacion no debe superar los 50 caracteres.',
+            'numero_factura.unique' => 'El número de facturacion ya está registrado.',
 
             'fecha_emision.date' => 'La fecha de emisión no es válida.',
 
-            'estado.in' => 'El estado de la factura seleccionado no es válido.',
+            'estado.in' => 'El estado de la facturacion seleccionado no es válido.',
 
             'subtotal.numeric' => 'El subtotal debe ser un valor numérico.',
             'subtotal.min' => 'El subtotal no puede ser negativo.',
@@ -57,7 +57,7 @@ class InsertarFacturaRequest extends FormRequest
     {
         return [
             'id_paciente' => 'paciente',
-            'numero_factura' => 'número de factura',
+            'numero_factura' => 'número de facturacion',
             'fecha_emision' => 'fecha de emisión',
             'estado' => 'estado',
             'subtotal' => 'subtotal',

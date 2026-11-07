@@ -120,7 +120,7 @@ Route::middleware(['auth', 'rol', 'no-cache'])->group(function () {
     });
 
     // ADMINISTRADOR Y MÉDICO
-    Route::middleware('rol:Administrador,Medico')->group(function () {
+    Route::middleware('rol:Administrador,Médico')->group(function () {
 
         // Diagnósticos: consulta
         Route::get('diagnosticos', [DiagnosticoController::class, 'index'])->name('diagnosticos');
@@ -196,7 +196,7 @@ Route::middleware(['auth', 'rol', 'no-cache'])->group(function () {
     });
 
     // LOS TRES ROLES: CONSULTAS Y OPERACIONES COMUNES
-    Route::middleware('rol:Administrador,Medico,Recepcionista')->group(function () {
+    Route::middleware('rol:Administrador,Médico,Recepcionista')->group(function () {
 
         // Tipos sanguíneos: consulta
         Route::get('tipos-sanguineos', [TipoSanguineoController::class, 'index'])->name('tipos-sanguineos');
@@ -249,7 +249,7 @@ Route::middleware(['auth', 'rol', 'no-cache'])->group(function () {
     });
 
     // ADMINISTRADOR Y MÉDICO: GESTIÓN DE HORARIOS
-    Route::middleware('rol:Administrador,Medico')->group(function () {
+    Route::middleware('rol:Administrador,Médico')->group(function () {
 
         Route::post('horarios', [HorarioDoctorController::class, 'insertarHorario'])->name('horarios.insertar');
         Route::put('horarios/{horario}', [HorarioDoctorController::class, 'actualizarHorario'])->name('horarios.actualizar');

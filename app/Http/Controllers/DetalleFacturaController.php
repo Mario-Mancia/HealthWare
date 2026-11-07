@@ -13,7 +13,7 @@ class DetalleFacturaController extends Controller
 {
     public function index(): View
     {
-        return view('detalle_facturas.detalle_facturas', [
+        return view('facturacion.detalle', [
             'detallesFacturas' => DetalleFactura::mostrarTodos(),
         ]);
     }
@@ -36,14 +36,14 @@ class DetalleFacturaController extends Controller
             Bitacora::CREADO,
             'DETALLE_FACTURAS',
             $detalleFactura->getKey(),
-            'Se agregó un servicio a una factura.'
+            'Se agregó un servicio a una facturacion.'
         );
 
         return redirect()
             ->route('detalle_facturas')
             ->with(
                 'success',
-                'El servicio se agregó a la factura correctamente.'
+                'El servicio se agregó a la facturacion correctamente.'
             );
     }
 
@@ -53,7 +53,7 @@ class DetalleFacturaController extends Controller
 
         if (!$detalleFactura) {
             return response()->json([
-                'mensaje' => 'El detalle de la factura no existe.',
+                'mensaje' => 'El detalle de la facturacion no existe.',
             ], 404);
         }
 

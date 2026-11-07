@@ -15,7 +15,7 @@ class EspecialidadController extends Controller
             'especialidades' => Especialidad::mostrarTodos(),
         ];
 
-        return view('especialidad.especialidades', $datos);
+        return view('especialidades.index', $datos);
     }
 
     public function insertarEspecialidad()

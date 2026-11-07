@@ -15,7 +15,7 @@ class AlergiaController extends Controller
             'alergias' => Alergia::mostrarTodos(),
         ];
 
-        return view('alergia.alergias', $datos);
+        return view('alergias.index', $datos);
     }
 
     public function insertarAlergia()

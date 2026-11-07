@@ -16,7 +16,7 @@ class CondicionMedicaController extends Controller
             'condicionesMedicas' => CondicionMedica::mostrarTodos(),
         ];
 
-        return view('condicion_medica.condiciones_medicas', $datos);
+        return view('condiciones_medicas.index', $datos);
     }
 
     public function insertarCondicionMedica()

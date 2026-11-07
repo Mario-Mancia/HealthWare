@@ -13,7 +13,7 @@ class FacturaController extends Controller
 {
     public function index(): View
     {
-        return view('factura.facturas', [
+        return view('facturacion.index', [
             'facturas' => Factura::mostrarTodos(),
         ]);
     }
@@ -36,12 +36,12 @@ class FacturaController extends Controller
             Bitacora::CREADO,
             'FACTURAS',
             $factura->getKey(),
-            'Se registró una nueva factura.'
+            'Se registró una nueva facturacion.'
         );
 
         return redirect()
             ->route('facturas')
-            ->with('success', 'La factura se registró correctamente.');
+            ->with('success', 'La facturacion se registró correctamente.');
     }
 
     public function buscarFactura(int $id): JsonResponse
@@ -50,7 +50,7 @@ class FacturaController extends Controller
 
         if (!$factura) {
             return response()->json([
-                'mensaje' => 'La factura no existe.',
+                'mensaje' => 'La facturacion no existe.',
             ], 404);
         }
 

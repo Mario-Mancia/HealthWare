@@ -18,7 +18,7 @@ class EstadoController extends Controller
             'estados' => Estado::mostrarTodos(),
         ];
 
-        return view('estado.estados', $datos);
+        return view('estados.index', $datos);
     }
 
     /**

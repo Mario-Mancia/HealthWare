@@ -59,7 +59,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap util/index.js
+   * Bootstrap util/recetas.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */

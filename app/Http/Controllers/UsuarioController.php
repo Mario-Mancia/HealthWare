@@ -25,7 +25,7 @@ class UsuarioController extends Controller
             'estados' => Estado::mostrarTodos(),
         ];
 
-        return view('usuario.usuarios', $datos);
+        return view('usuarios.index', $datos);
     }
 
     /**

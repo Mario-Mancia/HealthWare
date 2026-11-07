@@ -24,7 +24,7 @@ class PacienteController extends Controller
             'tiposSanguineos' => TipoSanguineo::all(),
         ];
 
-        return view('paciente.pacientes', $datos);
+        return view('pacientes.index', $datos);
     }
 
     /**

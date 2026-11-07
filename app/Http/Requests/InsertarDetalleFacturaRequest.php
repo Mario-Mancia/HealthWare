@@ -20,9 +20,9 @@ class InsertarDetalleFacturaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'id_factura.required' => 'Debe seleccionar una factura.',
-            'id_factura.integer' => 'La factura seleccionada no es válida.',
-            'id_factura.exists' => 'La factura seleccionada no existe.',
+            'id_factura.required' => 'Debe seleccionar una facturacion.',
+            'id_factura.integer' => 'La facturacion seleccionada no es válida.',
+            'id_factura.exists' => 'La facturacion seleccionada no existe.',
 
             'id_servicio.required' => 'Debe seleccionar un servicio.',
             'id_servicio.integer' => 'El servicio seleccionado no es válido.',
@@ -44,7 +44,7 @@ class InsertarDetalleFacturaRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'id_factura' => 'factura',
+            'id_factura' => 'facturacion',
             'id_servicio' => 'servicio',
             'descripcion' => 'descripción',
             'cantidad' => 'cantidad',
