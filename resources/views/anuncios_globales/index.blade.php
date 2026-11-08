@@ -1,14 +1,405 @@
+{{-- HEALTHWARE-GENERADO: generado por generar-frontend.sh v1.0.0 · no mezclar con otros marcadores --}}
 @extends('layouts.app_layout')
 
 @section('titulo', 'Anuncios')
 
 @push('estilos')
-    <link rel="stylesheet" href="{{ asset('css/anuncios_globales.css')}}"
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="{{ asset('css/anuncios_globales.css') }}">
 @endpush
 
 @section('contenido')
-    <h1>Ruta de anuncios globales</h1>
 
+    @php
+        $rolActual = \Illuminate\Support\Str::of(auth()->user()?->rol?->rol ?? '')->ascii()->lower()->toString();
+        $puedeCrear = in_array($rolActual, ['administrador']);
+        $puedeEditar = in_array($rolActual, ['administrador']);
+        $puedeEliminar = false;
+        $lista = $anuncios ?? collect();
+        $fmtFecha = fn($v, $f = 'd/m/Y') => $v ? \Illuminate\Support\Carbon::parse($v)->format($f) : '—';
+    @endphp
+
+    <div class="anuncios-globales-page">
+
+        {{-- ENCABEZADO --}}
+        <header class="anuncios-globales-header">
+            <div class="anuncios-globales-heading">
+                <div class="anuncios-globales-heading-icon">
+                    <span class="material-symbols-outlined">campaign</span>
+                </div>
+                <div>
+                    <h1 class="anuncios-globales-title">Anuncios globales</h1>
+                    <p class="anuncios-globales-subtitle">Comunicados visibles para el personal de la clínica.</p>
+                </div>
+            </div>
+
+            @if($puedeCrear)
+                <button type="button"
+                        class="btn btn-primary anuncios-globales-create-button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalNuevo">
+                    <span class="material-symbols-outlined">add_alert</span>
+                    Nuevo anuncio
+                </button>
+            @endif
+        </header>
+
+
+        {{-- SUPERFICIE --}}
+        <section class="anuncios-globales-surface">
+
+            <div class="anuncios-globales-surface-header">
+                <div>
+                    <h2 class="anuncios-globales-surface-title">Anuncios publicados</h2>
+                    <p class="anuncios-globales-surface-description">Administra el contenido, la prioridad y la vigencia.</p>
+                </div>
+                <div class="anuncios-globales-record-indicator">
+                    <span class="material-symbols-outlined">database</span>
+                    <span>{{ $lista->count() }} registros</span>
+                </div>
+            </div>
+
+            @if($lista->isEmpty())
+                <div class="anuncios-globales-empty">
+                    <span class="material-symbols-outlined">campaign</span>
+                    <h3>Aún no hay registros</h3>
+                    <p>Cuando existan datos aparecerán aquí.</p>
+                </div>
+            @else
+            <div class="anuncios-globales-toolbar">
+                <select class="form-select" data-filtro-columna="2" aria-label="Filtrar por prioridad">
+                    <option value="">Prioridad: todos</option>
+                </select>
+                <select class="form-select" data-filtro-columna="4" aria-label="Filtrar por estado">
+                    <option value="">Estado: todos</option>
+                </select>
+                <button type="button" class="btn btn-text anuncios-globales-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
+            </div>
+
+            <div class="table-responsive anuncios-globales-table-container">
+                <table id="tabla-anuncios-globales" class="table anuncios-globales-table align-middle mb-0" data-page-length="10">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="anuncios-globales-column-id">ID</th>
+                            <th scope="col">Anuncio</th>
+                            <th scope="col">Prioridad</th>
+                            <th scope="col">Vigencia</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col" class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($lista as $item)
+                        <tr>
+                            <td class="anuncios-globales-id">#{{ $item->id }}</td>
+                            <td>
+                              <div class="anuncios-globales-identity">
+                                <div class="anuncios-globales-avatar"><span class="material-symbols-outlined">campaign</span></div>
+                                <div class="anuncios-globales-identity-data">
+                                  <span class="anuncios-globales-fullname" data-filtro-valor>{{ $item->titulo }}</span>
+                                  <span class="anuncios-globales-identity-caption">{{ \Illuminate\Support\Str::limit((string) ($item->mensaje ?? ""), 60) }}</span>
+                                </div>
+                              </div>
+                            </td>
+                            <td><span class="anuncios-globales-status anuncios-globales-status-{{ ['baja' => 'neutral', 'normal' => 'info', 'alta' => 'warning', 'urgente' => 'error', ][(string) ($item->prioridad)] ?? "neutral" }}" data-filtro-valor><span class="anuncios-globales-status-dot"></span>{{ ucfirst(str_replace("_", " ", (string) ($item->prioridad))) }}</span></td>
+                            <td>{{ $fmtFecha($item->inicia_en, 'd/m/Y H:i') }} → {{ $item->finaliza_en ? $fmtFecha($item->finaliza_en, 'd/m/Y H:i') : 'Sin fin' }}</td>
+                            <td><span class="anuncios-globales-status anuncios-globales-status-{{ $item->activo ? 'success' : 'neutral' }}" data-filtro-valor><span class="anuncios-globales-status-dot"></span>{{ $item->activo ? 'Activo' : 'Inactivo' }}</span></td>
+                            <td>
+                                <div class="anuncios-globales-actions">
+                                    <button type="button" class="anuncios-globales-action-button"
+                                            data-bs-toggle="modal" data-bs-target="#modalVer"
+                                            data-id="{{ $item->id }}"
+                                            title="Consultar anuncio" aria-label="Consultar anuncio">
+                                        <span class="material-symbols-outlined">visibility</span>
+                                    </button>
+                                    @if($puedeEditar)
+                                        <button type="button" class="anuncios-globales-action-button"
+                                                data-bs-toggle="modal" data-bs-target="#modalEditar"
+                                                data-id="{{ $item->id }}"
+                                                title="Editar anuncio" aria-label="Editar anuncio">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            @endif
+
+        </section>
+    </div>
+
+    {{-- MODAL: NUEVO --}}
+    @if($puedeCrear)
+    <div class="modal fade anuncios-globales-modal" id="modalNuevo" tabindex="-1" aria-labelledby="tituloNuevo" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="anuncios-globales-modal-header">
+                    <div class="anuncios-globales-modal-heading">
+                        <div class="anuncios-globales-modal-icon"><span class="material-symbols-outlined">add_alert</span></div>
+                        <div>
+                            <h2 class="anuncios-globales-modal-title" id="tituloNuevo">Registrar anuncio</h2>
+                            <p class="anuncios-globales-modal-subtitle">Completa la información solicitada.</p>
+                        </div>
+                    </div>
+                    <button type="button" class="anuncios-globales-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                <form id="formNuevo" method="POST" action="{{ route('anuncios_globales.insertar') }}" novalidate>
+                    @csrf
+                    <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
+
+                    <div class="modal-body anuncios-globales-modal-body">
+                        <div class="anuncios-globales-form-section">
+                          <div class="anuncios-globales-form-section-heading">
+                            <span class="material-symbols-outlined">campaign</span>
+                            <div>
+                              <h3>Contenido</h3>
+                              <p>Título y mensaje del anuncio.</p>
+                            </div>
+                          </div>
+                          <div class="row g-3">
+                            <div class="col-md-12">
+                              <div class="form-floating">
+                                <input type="text" name="titulo" id="nuevo_titulo" class="form-control" placeholder="Título" maxlength="150" required>
+                                <label for="nuevo_titulo">Título</label>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-floating">
+                                <textarea name="mensaje" id="nuevo_mensaje" class="form-control" placeholder="Mensaje" required></textarea>
+                                <label for="nuevo_mensaje">Mensaje</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="anuncios-globales-form-section">
+                          <div class="anuncios-globales-form-section-heading">
+                            <span class="material-symbols-outlined">event_repeat</span>
+                            <div>
+                              <h3>Publicación</h3>
+                              <p>Prioridad y periodo de vigencia.</p>
+                            </div>
+                          </div>
+                          <div class="row g-3">
+                            <div class="col-md-4">
+                              <div class="form-floating">
+                                <select name="prioridad" id="nuevo_prioridad" class="form-select" required>
+                                  <option value="">Sin especificar</option>
+                                  <option value="baja">Baja</option>
+                                  <option value="normal" selected>Normal</option>
+                                  <option value="alta">Alta</option>
+                                  <option value="urgente">Urgente</option>
+                                </select>
+                                <label for="nuevo_prioridad">Prioridad</label>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-floating">
+                                <input type="datetime-local" name="inicia_en" id="nuevo_inicia_en" class="form-control" placeholder="Inicia en">
+                                <label for="nuevo_inicia_en">Inicia en</label>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-floating">
+                                <input type="datetime-local" name="finaliza_en" id="nuevo_finaliza_en" class="form-control" placeholder="Finaliza en">
+                                <label for="nuevo_finaliza_en">Finaliza en</label>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="anuncios-globales-switch-container">
+                                <div class="anuncios-globales-switch-information">
+                                  <span class="material-symbols-outlined">toggle_on</span>
+                                  <div>
+                                    <span class="anuncios-globales-switch-title">Anuncio activo</span>
+                                    <span class="anuncios-globales-switch-description">Los anuncios inactivos no se muestran.</span>
+                                  </div>
+                                </div>
+                                <div class="form-check form-switch anuncios-globales-switch">
+                                  <input type="hidden" name="activo" value="0">
+                                  <input class="form-check-input" type="checkbox" role="switch" id="nuevo_activo" name="activo" value="1" checked>
+                                  <label class="visually-hidden" for="nuevo_activo">Anuncio activo</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="anuncios-globales-modal-footer">
+                        <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="material-symbols-outlined">save</span>
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    {{-- MODAL: EDITAR --}}
+    @if($puedeEditar)
+    <div class="modal fade anuncios-globales-modal" id="modalEditar" tabindex="-1" aria-labelledby="tituloEditar" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="anuncios-globales-modal-header">
+                    <div class="anuncios-globales-modal-heading">
+                        <div class="anuncios-globales-modal-icon"><span class="material-symbols-outlined">edit</span></div>
+                        <div>
+                            <h2 class="anuncios-globales-modal-title" id="tituloEditar">Editar anuncio #<span id="editarTituloId">—</span></h2>
+                            <p class="anuncios-globales-modal-subtitle">Actualiza la información y guarda los cambios.</p>
+                        </div>
+                    </div>
+                    <button type="button" class="anuncios-globales-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                <form id="formEditar" method="POST"
+                      data-url="{{ route('anuncios_globales.actualizar', ['id' => '__ID__']) }}"
+                      data-buscar-url="{{ route('anuncios_globales.buscar', ['id' => '__ID__']) }}"
+                      novalidate>
+                    @csrf
+                    @method('PUT')
+                    <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
+
+                    <div class="modal-body anuncios-globales-modal-body">
+                        <div class="anuncios-globales-form-section">
+                          <div class="anuncios-globales-form-section-heading">
+                            <span class="material-symbols-outlined">campaign</span>
+                            <div>
+                              <h3>Contenido</h3>
+                              <p>Título y mensaje del anuncio.</p>
+                            </div>
+                          </div>
+                          <div class="row g-3">
+                            <div class="col-md-12">
+                              <div class="form-floating">
+                                <input type="text" name="titulo" id="editar_titulo" class="form-control" placeholder="Título" maxlength="150" required>
+                                <label for="editar_titulo">Título</label>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-floating">
+                                <textarea name="mensaje" id="editar_mensaje" class="form-control" placeholder="Mensaje" required></textarea>
+                                <label for="editar_mensaje">Mensaje</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="anuncios-globales-form-section">
+                          <div class="anuncios-globales-form-section-heading">
+                            <span class="material-symbols-outlined">event_repeat</span>
+                            <div>
+                              <h3>Publicación</h3>
+                              <p>Prioridad y periodo de vigencia.</p>
+                            </div>
+                          </div>
+                          <div class="row g-3">
+                            <div class="col-md-4">
+                              <div class="form-floating">
+                                <select name="prioridad" id="editar_prioridad" class="form-select" required>
+                                  <option value="">Sin especificar</option>
+                                  <option value="baja">Baja</option>
+                                  <option value="normal" selected>Normal</option>
+                                  <option value="alta">Alta</option>
+                                  <option value="urgente">Urgente</option>
+                                </select>
+                                <label for="editar_prioridad">Prioridad</label>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-floating">
+                                <input type="datetime-local" name="inicia_en" id="editar_inicia_en" class="form-control" placeholder="Inicia en">
+                                <label for="editar_inicia_en">Inicia en</label>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-floating">
+                                <input type="datetime-local" name="finaliza_en" id="editar_finaliza_en" class="form-control" placeholder="Finaliza en">
+                                <label for="editar_finaliza_en">Finaliza en</label>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="anuncios-globales-switch-container">
+                                <div class="anuncios-globales-switch-information">
+                                  <span class="material-symbols-outlined">toggle_on</span>
+                                  <div>
+                                    <span class="anuncios-globales-switch-title">Anuncio activo</span>
+                                    <span class="anuncios-globales-switch-description">Los anuncios inactivos no se muestran.</span>
+                                  </div>
+                                </div>
+                                <div class="form-check form-switch anuncios-globales-switch">
+                                  <input type="hidden" name="activo" value="0">
+                                  <input class="form-check-input" type="checkbox" role="switch" id="editar_activo" name="activo" value="1" checked>
+                                  <label class="visually-hidden" for="editar_activo">Anuncio activo</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="anuncios-globales-modal-footer">
+                        <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="material-symbols-outlined">save</span>
+                            Guardar cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    {{-- MODAL: CONSULTA --}}
+    <div class="modal fade anuncios-globales-modal" id="modalVer" tabindex="-1" aria-labelledby="tituloVer" aria-hidden="true"
+         data-buscar-url="{{ route('anuncios_globales.buscar', ['id' => '__ID__']) }}">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="anuncios-globales-modal-header">
+                    <div class="anuncios-globales-modal-heading">
+                        <div class="anuncios-globales-modal-icon"><span class="material-symbols-outlined">visibility</span></div>
+                        <div>
+                            <h2 class="anuncios-globales-modal-title" id="tituloVer">Detalle de anuncio</h2>
+                            <p class="anuncios-globales-modal-subtitle">Información completa del registro.</p>
+                        </div>
+                    </div>
+                    <button type="button" class="anuncios-globales-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
+
+                <div class="modal-body anuncios-globales-modal-body">
+                    <dl class="anuncios-globales-detail-grid">
+                        <div class="anuncios-globales-detail-item is-wide"><dt>Título</dt><dd data-ver="titulo">—</dd></div>
+                        <div class="anuncios-globales-detail-item is-wide"><dt>Mensaje</dt><dd data-ver="mensaje">—</dd></div>
+                        <div class="anuncios-globales-detail-item"><dt>Prioridad</dt><dd data-ver="prioridad">—</dd></div>
+                        <div class="anuncios-globales-detail-item"><dt>Activo</dt><dd data-ver="activo" data-formato="bool">—</dd></div>
+                        <div class="anuncios-globales-detail-item"><dt>Inicia</dt><dd data-ver="inicia_en" data-formato="fechahora">—</dd></div>
+                        <div class="anuncios-globales-detail-item"><dt>Finaliza</dt><dd data-ver="finaliza_en" data-formato="fechahora">—</dd></div>
+                        <div class="anuncios-globales-detail-item"><dt>Creado por</dt><dd data-ver="creador.nombres+creador.apellidos">—</dd></div>
+                    </dl>
+                </div>
+
+                <div class="anuncios-globales-modal-footer">
+                    <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- ===== ESPECIFICACIÓN ORIGINAL (conservada por generar-frontend.sh) ===== --}}
     {{--
     VISTA: GESTIÓN DE ANUNCIOS GLOBALES
     ------------------------------------------------------------
@@ -67,5 +458,7 @@
 @endsection
 
 @push('scripts')
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
     <script src="{{ asset('js/anuncios_globales/anuncios_globales.js') }}"></script>
 @endpush

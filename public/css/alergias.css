@@ -1,0 +1,344 @@
+
+
+/* HEALTHWARE-GENERADO v1.0.0 · alergias · lo que sigue lo regenera generar-frontend.sh (--force) */
+
+/*
+|--------------------------------------------------------------------------
+| HEALTHWARE - ESTILOS DE LA VISTA: Alergias
+|--------------------------------------------------------------------------
+| Replica el patrón de usuarios.css. No redefine tokens ni componentes de
+| global-styles.css (.btn, .form-control, .card, --md-sys-*, ...).
+|--------------------------------------------------------------------------
+*/
+
+/* 1. ESTRUCTURA Y ENCABEZADO */
+.alergias-page { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; min-width: 0; }
+.alergias-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.alergias-heading { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+.alergias-heading-icon {
+    display: grid; place-items: center; width: 52px; height: 52px; flex-shrink: 0;
+    color: var(--md-sys-color-on-primary-container);
+    background: var(--md-sys-color-primary-container);
+    border-radius: var(--md-sys-shape-lg);
+    transition: transform var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing);
+}
+.alergias-heading-icon .material-symbols-outlined { font-size: 1.8rem; }
+.alergias-heading:hover .alergias-heading-icon { transform: translateY(-2px) rotate(-3deg); }
+.alergias-title { margin: 0; font-size: 1.45rem; font-weight: 700; letter-spacing: -0.035em; }
+.alergias-subtitle { margin: 0.3rem 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.875rem; }
+.alergias-create-button {
+    flex-shrink: 0; min-height: 46px; padding-inline: 1.35rem;
+    box-shadow: var(--md-sys-elevation-1);
+    transition: transform var(--md-sys-motion-duration-short), box-shadow var(--md-sys-motion-duration-short);
+}
+.alergias-create-button:hover { transform: translateY(-2px); box-shadow: var(--md-sys-elevation-2); }
+.alergias-create-button:active { transform: translateY(0); }
+
+/* 2. SUPERFICIE */
+.alergias-surface {
+    min-width: 0; overflow: hidden;
+    background-color: var(--md-sys-color-surface-container-low);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-xl);
+    box-shadow: var(--md-sys-elevation-1);
+}
+.alergias-surface-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.5rem 1.65rem 1.25rem; }
+.alergias-surface-title { margin: 0; font-size: 1rem; font-weight: 700; letter-spacing: -0.015em; }
+.alergias-surface-description { margin: 0.3rem 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.825rem; }
+.alergias-record-indicator {
+    display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.8rem;
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-full);
+    font-size: 0.75rem; font-weight: 600; white-space: nowrap;
+}
+.alergias-record-indicator .material-symbols-outlined { font-size: 1rem; }
+
+/* 2b. BARRA DE FILTROS */
+.alergias-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 0 1.65rem 1rem; }
+.alergias-toolbar .form-select { width: auto; min-width: 170px; min-height: 42px; border-radius: var(--md-sys-shape-full); font-size: 0.82rem; }
+.alergias-toolbar-clear { margin-left: auto; }
+
+/* 3. TABLA */
+.alergias-table-container { padding: 0 1rem 1rem; }
+.alergias-table {
+    width: 100% !important; margin: 0 !important; border-collapse: separate; border-spacing: 0;
+    color: var(--md-sys-color-on-surface); vertical-align: middle;
+}
+.alergias-table thead th {
+    padding: 0.9rem 0.85rem;
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface-container);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.055em; text-transform: uppercase; white-space: nowrap;
+}
+.alergias-table thead th:first-child { border-top-left-radius: var(--md-sys-shape-md); }
+.alergias-table thead th:last-child { border-top-right-radius: var(--md-sys-shape-md); }
+.alergias-table tbody td {
+    padding: 0.95rem 0.85rem; color: var(--md-sys-color-on-surface); background-color: transparent;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    font-size: 0.835rem; vertical-align: middle;
+    transition: background-color var(--md-sys-motion-duration-short);
+}
+.alergias-table tbody tr:last-child td { border-bottom: none; }
+.alergias-table tbody tr:hover td { background-color: var(--md-sys-state-hover); }
+.alergias-table .alergias-column-id { width: 65px; }
+.alergias-id { color: var(--md-sys-color-on-surface-variant) !important; font-size: 0.75rem !important; font-weight: 600; font-variant-numeric: tabular-nums; }
+.alergias-muted { color: var(--md-sys-color-on-surface-variant) !important; }
+.alergias-mono { font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+
+/* 4. IDENTIDAD */
+.alergias-identity { display: flex; align-items: center; gap: 0.8rem; min-width: 175px; }
+.alergias-avatar {
+    display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0;
+    color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--md-sys-color-secondary-container);
+    border-radius: var(--md-sys-shape-full);
+    transition: transform var(--md-sys-motion-duration-short);
+}
+.alergias-table tbody tr:hover .alergias-avatar { transform: scale(1.06); }
+.alergias-avatar .material-symbols-outlined { font-size: 1.3rem; }
+.alergias-identity-data { display: flex; flex-direction: column; min-width: 0; gap: 0.2rem; }
+.alergias-fullname { color: var(--md-sys-color-on-surface); font-size: 0.85rem; font-weight: 600; line-height: 1.3; }
+.alergias-identity-caption { color: var(--md-sys-color-on-surface-variant); font-size: 0.7rem; }
+
+/* 5. CHIPS Y ESTADOS */
+.alergias-chip {
+    display: inline-flex; align-items: center; max-width: 200px; padding: 0.35rem 0.7rem; overflow: hidden;
+    color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--md-sys-color-secondary-container);
+    border-radius: var(--md-sys-shape-full);
+    font-size: 0.73rem; font-weight: 600; text-overflow: ellipsis; white-space: nowrap;
+}
+.alergias-status {
+    display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.65rem;
+    border-radius: var(--md-sys-shape-full); font-size: 0.72rem; font-weight: 600; white-space: nowrap;
+}
+.alergias-status-dot { width: 7px; height: 7px; flex-shrink: 0; border-radius: var(--md-sys-shape-full); background-color: currentColor; }
+.alergias-status-success { color: #286b45; background-color: #d9f2e2; }
+.alergias-status-warning { color: #805b17; background-color: #f8edce; }
+.alergias-status-info { color: var(--md-sys-color-on-primary-container); background-color: var(--md-sys-color-primary-container); }
+.alergias-status-error { color: var(--md-sys-color-error); background-color: var(--md-sys-color-error-container); }
+.alergias-status-neutral { color: var(--md-sys-color-on-surface-variant); background-color: var(--md-sys-color-surface-container-high); }
+:root[data-bs-theme="dark"] .alergias-status-success { color: #a6dcb9; background-color: #183b2a; }
+:root[data-bs-theme="dark"] .alergias-status-warning { color: #f1d18b; background-color: #493817; }
+
+/* 6. ACCIONES */
+.alergias-actions { display: flex; justify-content: center; align-items: center; gap: 0.4rem; white-space: nowrap; }
+.alergias-action-button {
+    display: grid; place-items: center; width: 36px; height: 36px; padding: 0;
+    color: var(--md-sys-color-on-surface-variant); background-color: transparent;
+    border: 1px solid transparent; border-radius: var(--md-sys-shape-full); cursor: pointer;
+    transition: color var(--md-sys-motion-duration-short), background-color var(--md-sys-motion-duration-short), transform var(--md-sys-motion-duration-short);
+}
+.alergias-action-button:hover { color: var(--md-sys-color-primary); background-color: var(--md-sys-color-primary-container); transform: translateY(-2px); }
+.alergias-action-button:focus-visible { outline: 2px solid var(--md-sys-color-primary); outline-offset: 2px; }
+.alergias-action-button .material-symbols-outlined { font-size: 1.15rem; }
+.alergias-action-delete:hover { color: var(--md-sys-color-on-error-container); background-color: var(--md-sys-color-error-container); }
+
+/* 6b. ESTADO VACÍO */
+.alergias-empty { display: grid; justify-items: center; gap: 0.6rem; padding: 3rem 1.5rem; text-align: center; color: var(--md-sys-color-on-surface-variant); }
+.alergias-empty .material-symbols-outlined { font-size: 2.6rem; color: var(--md-sys-color-primary); }
+.alergias-empty h3 { margin: 0; font-size: 1rem; color: var(--md-sys-color-on-surface); }
+.alergias-empty p { margin: 0; font-size: 0.82rem; }
+
+/* 7. DATATABLES (limitado a esta superficie) */
+.alergias-surface .dataTables_wrapper { color: var(--md-sys-color-on-surface-variant); font-size: 0.8rem; }
+.alergias-surface .dataTables_wrapper .dataTables_length,
+.alergias-surface .dataTables_wrapper .dataTables_filter { margin-bottom: 1rem; font-size: 0.8rem; }
+.alergias-surface .dataTables_wrapper .dataTables_length label,
+.alergias-surface .dataTables_wrapper .dataTables_filter label { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 0.55rem; }
+.alergias-surface .dataTables_wrapper .dataTables_filter { text-align: right; }
+.alergias-surface .dataTables_wrapper .dataTables_filter input {
+    width: min(230px, 100%); min-height: 38px; margin-left: 0.25rem; padding: 0.45rem 0.9rem; outline: none;
+    color: var(--md-sys-color-on-surface); background-color: var(--md-sys-color-surface-container-lowest);
+    border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-full);
+    transition: border-color var(--md-sys-motion-duration-short), box-shadow var(--md-sys-motion-duration-short);
+}
+.alergias-surface .dataTables_wrapper .dataTables_filter input:focus { border-color: var(--md-sys-color-primary); box-shadow: 0 0 0 3px var(--md-sys-state-focus); }
+.alergias-surface .dataTables_wrapper .dataTables_length select {
+    min-height: 36px; padding: 0.3rem 1.8rem 0.3rem 0.7rem;
+    color: var(--md-sys-color-on-surface); background-color: var(--md-sys-color-surface-container-lowest);
+    border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-sm);
+}
+.alergias-surface .dataTables_wrapper .dataTables_info { padding-top: 1rem; font-size: 0.75rem; }
+.alergias-surface .dataTables_wrapper .dataTables_paginate { padding-top: 0.65rem; }
+.alergias-surface .dataTables_wrapper .pagination { gap: 0.25rem; margin-bottom: 0; }
+.alergias-surface .dataTables_wrapper .page-link {
+    display: grid; place-items: center; min-width: 34px; min-height: 34px; padding: 0.35rem 0.65rem;
+    color: var(--md-sys-color-on-surface-variant); background-color: transparent; border: 1px solid transparent;
+    border-radius: var(--md-sys-shape-full) !important; font-size: 0.78rem; box-shadow: none;
+}
+.alergias-surface .dataTables_wrapper .page-link:hover { color: var(--md-sys-color-primary); background-color: var(--md-sys-state-hover); }
+.alergias-surface .dataTables_wrapper .page-item.active .page-link { color: var(--md-sys-color-on-primary); background-color: var(--md-sys-color-primary); border-color: var(--md-sys-color-primary); }
+.alergias-surface .dataTables_wrapper .page-item.disabled .page-link { opacity: 0.4; background-color: transparent; }
+
+/* 8. MODALES */
+.alergias-modal .modal-dialog { max-width: 850px; }
+.alergias-modal .modal-content {
+    overflow: hidden; color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface-container-low);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-xl); box-shadow: var(--md-sys-elevation-3);
+    animation: alergias-modal-enter 220ms var(--md-sys-motion-easing);
+}
+@keyframes alergias-modal-enter {
+    from { opacity: 0; transform: translateY(12px) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.alergias-modal-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.5rem 1.65rem;
+    background-color: var(--md-sys-color-surface-container); border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+.alergias-modal-heading { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+.alergias-modal-icon {
+    display: grid; place-items: center; width: 46px; height: 46px; flex-shrink: 0;
+    color: var(--md-sys-color-on-primary-container); background-color: var(--md-sys-color-primary-container);
+    border-radius: var(--md-sys-shape-md);
+}
+.alergias-modal-icon .material-symbols-outlined { font-size: 1.5rem; }
+.alergias-modal-title { margin: 0; color: var(--md-sys-color-on-surface); font-size: 1.15rem; font-weight: 700; letter-spacing: -0.025em; }
+.alergias-modal-subtitle { margin: 0.25rem 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.8rem; }
+.alergias-modal-close {
+    display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0;
+    color: var(--md-sys-color-on-surface-variant); background-color: transparent; border: none;
+    border-radius: var(--md-sys-shape-full); cursor: pointer;
+    transition: background-color var(--md-sys-motion-duration-short), transform var(--md-sys-motion-duration-short);
+}
+.alergias-modal-close:hover { color: var(--md-sys-color-on-surface); background-color: var(--md-sys-state-hover); transform: rotate(90deg); }
+.alergias-modal-close .material-symbols-outlined { font-size: 1.35rem; }
+.alergias-modal-body { display: flex; flex-direction: column; gap: 1.65rem; padding: 1.65rem; }
+.alergias-modal-footer {
+    display: flex; justify-content: flex-end; align-items: center; gap: 0.75rem; padding: 1.15rem 1.65rem;
+    background-color: var(--md-sys-color-surface-container); border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+.alergias-modal form > .alert { margin: 1rem 1.65rem 0; }
+
+/* 9. SECCIONES DE FORMULARIO */
+.alergias-form-section { display: flex; flex-direction: column; gap: 1.1rem; }
+.alergias-form-section + .alergias-form-section { padding-top: 1.4rem; border-top: 1px solid var(--md-sys-color-outline-variant); }
+.alergias-form-section-heading { display: flex; align-items: center; gap: 0.75rem; }
+.alergias-form-section-heading > .material-symbols-outlined {
+    display: grid; place-items: center; width: 36px; height: 36px; flex-shrink: 0;
+    color: var(--md-sys-color-primary); background-color: var(--md-sys-color-primary-container);
+    border-radius: var(--md-sys-shape-md); font-size: 1.2rem;
+}
+.alergias-form-section-heading h3 { margin: 0; color: var(--md-sys-color-on-surface); font-size: 0.9rem; font-weight: 700; }
+.alergias-form-section-heading p { margin: 0.2rem 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.75rem; }
+.alergias-form-section .form-floating > .form-control,
+.alergias-form-section .form-floating > .form-select { border-radius: var(--md-sys-shape-md); }
+.alergias-form-section textarea.form-control { min-height: 110px; }
+.alergias-field-hint { margin: 0.45rem 0.5rem 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.7rem; line-height: 1.5; }
+
+/* 10. SWITCH */
+.alergias-switch-container {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; min-height: 58px; padding: 0.55rem 0.9rem;
+    background-color: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-md);
+}
+.alergias-switch-container:has(.form-check-input:checked) { border-color: var(--md-sys-color-primary); background-color: var(--md-sys-color-primary-container); }
+.alergias-switch-information { display: flex; align-items: center; gap: 0.7rem; min-width: 0; }
+.alergias-switch-information > .material-symbols-outlined { color: var(--md-sys-color-primary); font-size: 1.45rem; }
+.alergias-switch-information > div { display: flex; flex-direction: column; gap: 0.15rem; }
+.alergias-switch-title { font-size: 0.8rem; font-weight: 600; }
+.alergias-switch-description { color: var(--md-sys-color-on-surface-variant); font-size: 0.68rem; }
+.alergias-switch { margin: 0; padding: 0; flex-shrink: 0; }
+.alergias-switch .form-check-input { width: 2.65rem; height: 1.45rem; margin: 0; cursor: pointer; }
+
+/* 11. MODAL DE CONSULTA */
+.alergias-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.5rem; margin: 0; }
+.alergias-detail-item { min-width: 0; padding: 0.85rem 1rem; background-color: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-md); }
+.alergias-detail-item.is-wide { grid-column: 1 / -1; }
+.alergias-detail-item dt { margin: 0 0 0.25rem; color: var(--md-sys-color-on-surface-variant); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.alergias-detail-item dd { margin: 0; color: var(--md-sys-color-on-surface); font-size: 0.88rem; overflow-wrap: anywhere; white-space: pre-line; }
+
+/* 11b. TABLA INTERNA DEL MODAL DE CONSULTA */
+.alergias-subtable { width: 100%; margin: 0; font-size: 0.78rem; --bs-table-bg: transparent; }
+.alergias-subtable th { padding: 0.45rem 0.5rem; color: var(--md-sys-color-on-surface-variant); font-size: 0.66rem; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+.alergias-subtable td { padding: 0.45rem 0.5rem; color: var(--md-sys-color-on-surface); white-space: normal; }
+
+/* 12. MODAL DE ELIMINACIÓN */
+.alergias-delete-modal .modal-dialog { max-width: 490px; }
+.alergias-delete-content { position: relative; padding: 2rem; }
+.alergias-delete-close { position: absolute; top: 1rem; right: 1rem; }
+.alergias-delete-icon {
+    display: grid; place-items: center; width: 58px; height: 58px; margin-bottom: 1.3rem;
+    color: var(--md-sys-color-on-error-container); background-color: var(--md-sys-color-error-container);
+    border-radius: var(--md-sys-shape-lg); animation: alergias-delete-pulse 2.5s ease-in-out infinite;
+}
+.alergias-delete-icon .material-symbols-outlined { font-size: 1.85rem; }
+@keyframes alergias-delete-pulse { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: 0 0 0 7px var(--md-sys-state-hover); } }
+.alergias-delete-overline { color: var(--md-sys-color-error); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.alergias-delete-heading h2 { margin: 0.45rem 0 0.5rem; color: var(--md-sys-color-on-surface); font-size: 1.35rem; font-weight: 700; letter-spacing: -0.035em; }
+.alergias-delete-heading p { margin: 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.84rem; line-height: 1.6; }
+.alergias-delete-identity {
+    display: flex; align-items: center; gap: 0.9rem; margin-top: 1.5rem; padding: 1rem;
+    background-color: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-lg);
+}
+.alergias-delete-avatar {
+    display: grid; place-items: center; width: 46px; height: 46px; flex-shrink: 0;
+    color: var(--md-sys-color-on-secondary-container); background-color: var(--md-sys-color-secondary-container);
+    border-radius: var(--md-sys-shape-full);
+}
+.alergias-delete-avatar .material-symbols-outlined { font-size: 1.65rem; }
+.alergias-delete-data { display: flex; flex-direction: column; min-width: 0; gap: 0.2rem; }
+.alergias-delete-name { color: var(--md-sys-color-on-surface); font-size: 0.88rem; font-weight: 700; overflow-wrap: anywhere; }
+.alergias-delete-sub { color: var(--md-sys-color-on-surface-variant); font-size: 0.75rem; overflow-wrap: anywhere; }
+.alergias-delete-id { color: var(--md-sys-color-on-surface-variant); font-size: 0.68rem; }
+.alergias-delete-notice {
+    display: flex; align-items: flex-start; gap: 0.65rem; margin-top: 1rem; padding: 0.85rem;
+    color: var(--md-sys-color-on-error-container); background-color: var(--md-sys-color-error-container);
+    border-radius: var(--md-sys-shape-md);
+}
+.alergias-delete-notice > .material-symbols-outlined { flex-shrink: 0; font-size: 1.15rem; }
+.alergias-delete-notice p { margin: 0; color: inherit; font-size: 0.73rem; line-height: 1.55; }
+.alergias-delete-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.6rem; }
+.alergias-delete-confirm { color: var(--md-sys-color-on-error); background-color: var(--md-sys-color-error); border: 1px solid transparent; }
+.alergias-delete-confirm:hover, .alergias-delete-confirm:focus {
+    color: var(--md-sys-color-on-error); background-color: var(--md-sys-color-error);
+    box-shadow: inset 0 0 0 100px var(--md-sys-state-hover);
+}
+
+/* 13. RESPONSIVE */
+@media (max-width: 767.98px) {
+    .alergias-page { gap: 1.1rem; }
+    .alergias-header { align-items: flex-start; flex-direction: column; }
+    .alergias-heading-icon { width: 46px; height: 46px; }
+    .alergias-title { font-size: 1.2rem; }
+    .alergias-subtitle { font-size: 0.78rem; }
+    .alergias-create-button { width: 100%; }
+    .alergias-surface { border-radius: var(--md-sys-shape-lg); }
+    .alergias-surface-header { align-items: flex-start; flex-direction: column; padding: 1.2rem; }
+    .alergias-toolbar { padding-inline: 1.2rem; }
+    .alergias-toolbar .form-select { width: 100%; }
+    .alergias-table-container { padding-inline: 0.75rem; }
+    .alergias-modal .modal-dialog { margin: 0.5rem; }
+    .alergias-modal .modal-content { border-radius: var(--md-sys-shape-lg); }
+    .alergias-modal-header, .alergias-modal-body, .alergias-modal-footer { padding-inline: 1.1rem; }
+    .alergias-modal-body { gap: 1.3rem; padding-block: 1.25rem; }
+    .alergias-modal-footer { flex-wrap: wrap; }
+    .alergias-modal-footer .btn { flex: 1; }
+    .alergias-detail-grid { grid-template-columns: 1fr; }
+    .alergias-delete-content { padding: 1.5rem; }
+    .alergias-delete-actions { flex-direction: column-reverse; }
+    .alergias-delete-actions .btn { width: 100%; }
+    .alergias-surface .dataTables_wrapper .dataTables_filter { text-align: left; }
+    .alergias-surface .dataTables_wrapper .dataTables_filter input { width: 100%; margin: 0.4rem 0 0; }
+}
+@media (max-width: 420px) {
+    .alergias-modal-heading { gap: 0.65rem; }
+    .alergias-modal-icon { width: 40px; height: 40px; }
+    .alergias-modal-title { font-size: 1rem; }
+    .alergias-modal-subtitle { font-size: 0.7rem; }
+}
+
+/* 14. ACCESIBILIDAD */
+@media (prefers-reduced-motion: reduce) {
+    .alergias-heading-icon, .alergias-create-button, .alergias-avatar, .alergias-action-button,
+    .alergias-modal-close, .alergias-modal .modal-content, .alergias-delete-icon {
+        animation: none; transition: none; transform: none;
+    }
+}

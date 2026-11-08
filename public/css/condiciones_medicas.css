@@ -1,0 +1,344 @@
+
+
+/* HEALTHWARE-GENERADO v1.0.0 · condiciones_medicas · lo que sigue lo regenera generar-frontend.sh (--force) */
+
+/*
+|--------------------------------------------------------------------------
+| HEALTHWARE - ESTILOS DE LA VISTA: Condiciones Médicas
+|--------------------------------------------------------------------------
+| Replica el patrón de usuarios.css. No redefine tokens ni componentes de
+| global-styles.css (.btn, .form-control, .card, --md-sys-*, ...).
+|--------------------------------------------------------------------------
+*/
+
+/* 1. ESTRUCTURA Y ENCABEZADO */
+.condiciones-medicas-page { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; min-width: 0; }
+.condiciones-medicas-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.condiciones-medicas-heading { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+.condiciones-medicas-heading-icon {
+    display: grid; place-items: center; width: 52px; height: 52px; flex-shrink: 0;
+    color: var(--md-sys-color-on-primary-container);
+    background: var(--md-sys-color-primary-container);
+    border-radius: var(--md-sys-shape-lg);
+    transition: transform var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing);
+}
+.condiciones-medicas-heading-icon .material-symbols-outlined { font-size: 1.8rem; }
+.condiciones-medicas-heading:hover .condiciones-medicas-heading-icon { transform: translateY(-2px) rotate(-3deg); }
+.condiciones-medicas-title { margin: 0; font-size: 1.45rem; font-weight: 700; letter-spacing: -0.035em; }
+.condiciones-medicas-subtitle { margin: 0.3rem 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.875rem; }
+.condiciones-medicas-create-button {
+    flex-shrink: 0; min-height: 46px; padding-inline: 1.35rem;
+    box-shadow: var(--md-sys-elevation-1);
+    transition: transform var(--md-sys-motion-duration-short), box-shadow var(--md-sys-motion-duration-short);
+}
+.condiciones-medicas-create-button:hover { transform: translateY(-2px); box-shadow: var(--md-sys-elevation-2); }
+.condiciones-medicas-create-button:active { transform: translateY(0); }
+
+/* 2. SUPERFICIE */
+.condiciones-medicas-surface {
+    min-width: 0; overflow: hidden;
+    background-color: var(--md-sys-color-surface-container-low);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-xl);
+    box-shadow: var(--md-sys-elevation-1);
+}
+.condiciones-medicas-surface-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.5rem 1.65rem 1.25rem; }
+.condiciones-medicas-surface-title { margin: 0; font-size: 1rem; font-weight: 700; letter-spacing: -0.015em; }
+.condiciones-medicas-surface-description { margin: 0.3rem 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.825rem; }
+.condiciones-medicas-record-indicator {
+    display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.8rem;
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-full);
+    font-size: 0.75rem; font-weight: 600; white-space: nowrap;
+}
+.condiciones-medicas-record-indicator .material-symbols-outlined { font-size: 1rem; }
+
+/* 2b. BARRA DE FILTROS */
+.condiciones-medicas-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 0 1.65rem 1rem; }
+.condiciones-medicas-toolbar .form-select { width: auto; min-width: 170px; min-height: 42px; border-radius: var(--md-sys-shape-full); font-size: 0.82rem; }
+.condiciones-medicas-toolbar-clear { margin-left: auto; }
+
+/* 3. TABLA */
+.condiciones-medicas-table-container { padding: 0 1rem 1rem; }
+.condiciones-medicas-table {
+    width: 100% !important; margin: 0 !important; border-collapse: separate; border-spacing: 0;
+    color: var(--md-sys-color-on-surface); vertical-align: middle;
+}
+.condiciones-medicas-table thead th {
+    padding: 0.9rem 0.85rem;
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface-container);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.055em; text-transform: uppercase; white-space: nowrap;
+}
+.condiciones-medicas-table thead th:first-child { border-top-left-radius: var(--md-sys-shape-md); }
+.condiciones-medicas-table thead th:last-child { border-top-right-radius: var(--md-sys-shape-md); }
+.condiciones-medicas-table tbody td {
+    padding: 0.95rem 0.85rem; color: var(--md-sys-color-on-surface); background-color: transparent;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    font-size: 0.835rem; vertical-align: middle;
+    transition: background-color var(--md-sys-motion-duration-short);
+}
+.condiciones-medicas-table tbody tr:last-child td { border-bottom: none; }
+.condiciones-medicas-table tbody tr:hover td { background-color: var(--md-sys-state-hover); }
+.condiciones-medicas-table .condiciones-medicas-column-id { width: 65px; }
+.condiciones-medicas-id { color: var(--md-sys-color-on-surface-variant) !important; font-size: 0.75rem !important; font-weight: 600; font-variant-numeric: tabular-nums; }
+.condiciones-medicas-muted { color: var(--md-sys-color-on-surface-variant) !important; }
+.condiciones-medicas-mono { font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+
+/* 4. IDENTIDAD */
+.condiciones-medicas-identity { display: flex; align-items: center; gap: 0.8rem; min-width: 175px; }
+.condiciones-medicas-avatar {
+    display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0;
+    color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--md-sys-color-secondary-container);
+    border-radius: var(--md-sys-shape-full);
+    transition: transform var(--md-sys-motion-duration-short);
+}
+.condiciones-medicas-table tbody tr:hover .condiciones-medicas-avatar { transform: scale(1.06); }
+.condiciones-medicas-avatar .material-symbols-outlined { font-size: 1.3rem; }
+.condiciones-medicas-identity-data { display: flex; flex-direction: column; min-width: 0; gap: 0.2rem; }
+.condiciones-medicas-fullname { color: var(--md-sys-color-on-surface); font-size: 0.85rem; font-weight: 600; line-height: 1.3; }
+.condiciones-medicas-identity-caption { color: var(--md-sys-color-on-surface-variant); font-size: 0.7rem; }
+
+/* 5. CHIPS Y ESTADOS */
+.condiciones-medicas-chip {
+    display: inline-flex; align-items: center; max-width: 200px; padding: 0.35rem 0.7rem; overflow: hidden;
+    color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--md-sys-color-secondary-container);
+    border-radius: var(--md-sys-shape-full);
+    font-size: 0.73rem; font-weight: 600; text-overflow: ellipsis; white-space: nowrap;
+}
+.condiciones-medicas-status {
+    display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.65rem;
+    border-radius: var(--md-sys-shape-full); font-size: 0.72rem; font-weight: 600; white-space: nowrap;
+}
+.condiciones-medicas-status-dot { width: 7px; height: 7px; flex-shrink: 0; border-radius: var(--md-sys-shape-full); background-color: currentColor; }
+.condiciones-medicas-status-success { color: #286b45; background-color: #d9f2e2; }
+.condiciones-medicas-status-warning { color: #805b17; background-color: #f8edce; }
+.condiciones-medicas-status-info { color: var(--md-sys-color-on-primary-container); background-color: var(--md-sys-color-primary-container); }
+.condiciones-medicas-status-error { color: var(--md-sys-color-error); background-color: var(--md-sys-color-error-container); }
+.condiciones-medicas-status-neutral { color: var(--md-sys-color-on-surface-variant); background-color: var(--md-sys-color-surface-container-high); }
+:root[data-bs-theme="dark"] .condiciones-medicas-status-success { color: #a6dcb9; background-color: #183b2a; }
+:root[data-bs-theme="dark"] .condiciones-medicas-status-warning { color: #f1d18b; background-color: #493817; }
+
+/* 6. ACCIONES */
+.condiciones-medicas-actions { display: flex; justify-content: center; align-items: center; gap: 0.4rem; white-space: nowrap; }
+.condiciones-medicas-action-button {
+    display: grid; place-items: center; width: 36px; height: 36px; padding: 0;
+    color: var(--md-sys-color-on-surface-variant); background-color: transparent;
+    border: 1px solid transparent; border-radius: var(--md-sys-shape-full); cursor: pointer;
+    transition: color var(--md-sys-motion-duration-short), background-color var(--md-sys-motion-duration-short), transform var(--md-sys-motion-duration-short);
+}
+.condiciones-medicas-action-button:hover { color: var(--md-sys-color-primary); background-color: var(--md-sys-color-primary-container); transform: translateY(-2px); }
+.condiciones-medicas-action-button:focus-visible { outline: 2px solid var(--md-sys-color-primary); outline-offset: 2px; }
+.condiciones-medicas-action-button .material-symbols-outlined { font-size: 1.15rem; }
+.condiciones-medicas-action-delete:hover { color: var(--md-sys-color-on-error-container); background-color: var(--md-sys-color-error-container); }
+
+/* 6b. ESTADO VACÍO */
+.condiciones-medicas-empty { display: grid; justify-items: center; gap: 0.6rem; padding: 3rem 1.5rem; text-align: center; color: var(--md-sys-color-on-surface-variant); }
+.condiciones-medicas-empty .material-symbols-outlined { font-size: 2.6rem; color: var(--md-sys-color-primary); }
+.condiciones-medicas-empty h3 { margin: 0; font-size: 1rem; color: var(--md-sys-color-on-surface); }
+.condiciones-medicas-empty p { margin: 0; font-size: 0.82rem; }
+
+/* 7. DATATABLES (limitado a esta superficie) */
+.condiciones-medicas-surface .dataTables_wrapper { color: var(--md-sys-color-on-surface-variant); font-size: 0.8rem; }
+.condiciones-medicas-surface .dataTables_wrapper .dataTables_length,
+.condiciones-medicas-surface .dataTables_wrapper .dataTables_filter { margin-bottom: 1rem; font-size: 0.8rem; }
+.condiciones-medicas-surface .dataTables_wrapper .dataTables_length label,
+.condiciones-medicas-surface .dataTables_wrapper .dataTables_filter label { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 0.55rem; }
+.condiciones-medicas-surface .dataTables_wrapper .dataTables_filter { text-align: right; }
+.condiciones-medicas-surface .dataTables_wrapper .dataTables_filter input {
+    width: min(230px, 100%); min-height: 38px; margin-left: 0.25rem; padding: 0.45rem 0.9rem; outline: none;
+    color: var(--md-sys-color-on-surface); background-color: var(--md-sys-color-surface-container-lowest);
+    border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-full);
+    transition: border-color var(--md-sys-motion-duration-short), box-shadow var(--md-sys-motion-duration-short);
+}
+.condiciones-medicas-surface .dataTables_wrapper .dataTables_filter input:focus { border-color: var(--md-sys-color-primary); box-shadow: 0 0 0 3px var(--md-sys-state-focus); }
+.condiciones-medicas-surface .dataTables_wrapper .dataTables_length select {
+    min-height: 36px; padding: 0.3rem 1.8rem 0.3rem 0.7rem;
+    color: var(--md-sys-color-on-surface); background-color: var(--md-sys-color-surface-container-lowest);
+    border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-sm);
+}
+.condiciones-medicas-surface .dataTables_wrapper .dataTables_info { padding-top: 1rem; font-size: 0.75rem; }
+.condiciones-medicas-surface .dataTables_wrapper .dataTables_paginate { padding-top: 0.65rem; }
+.condiciones-medicas-surface .dataTables_wrapper .pagination { gap: 0.25rem; margin-bottom: 0; }
+.condiciones-medicas-surface .dataTables_wrapper .page-link {
+    display: grid; place-items: center; min-width: 34px; min-height: 34px; padding: 0.35rem 0.65rem;
+    color: var(--md-sys-color-on-surface-variant); background-color: transparent; border: 1px solid transparent;
+    border-radius: var(--md-sys-shape-full) !important; font-size: 0.78rem; box-shadow: none;
+}
+.condiciones-medicas-surface .dataTables_wrapper .page-link:hover { color: var(--md-sys-color-primary); background-color: var(--md-sys-state-hover); }
+.condiciones-medicas-surface .dataTables_wrapper .page-item.active .page-link { color: var(--md-sys-color-on-primary); background-color: var(--md-sys-color-primary); border-color: var(--md-sys-color-primary); }
+.condiciones-medicas-surface .dataTables_wrapper .page-item.disabled .page-link { opacity: 0.4; background-color: transparent; }
+
+/* 8. MODALES */
+.condiciones-medicas-modal .modal-dialog { max-width: 850px; }
+.condiciones-medicas-modal .modal-content {
+    overflow: hidden; color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface-container-low);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-xl); box-shadow: var(--md-sys-elevation-3);
+    animation: condiciones-medicas-modal-enter 220ms var(--md-sys-motion-easing);
+}
+@keyframes condiciones-medicas-modal-enter {
+    from { opacity: 0; transform: translateY(12px) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.condiciones-medicas-modal-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.5rem 1.65rem;
+    background-color: var(--md-sys-color-surface-container); border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+.condiciones-medicas-modal-heading { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+.condiciones-medicas-modal-icon {
+    display: grid; place-items: center; width: 46px; height: 46px; flex-shrink: 0;
+    color: var(--md-sys-color-on-primary-container); background-color: var(--md-sys-color-primary-container);
+    border-radius: var(--md-sys-shape-md);
+}
+.condiciones-medicas-modal-icon .material-symbols-outlined { font-size: 1.5rem; }
+.condiciones-medicas-modal-title { margin: 0; color: var(--md-sys-color-on-surface); font-size: 1.15rem; font-weight: 700; letter-spacing: -0.025em; }
+.condiciones-medicas-modal-subtitle { margin: 0.25rem 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.8rem; }
+.condiciones-medicas-modal-close {
+    display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0;
+    color: var(--md-sys-color-on-surface-variant); background-color: transparent; border: none;
+    border-radius: var(--md-sys-shape-full); cursor: pointer;
+    transition: background-color var(--md-sys-motion-duration-short), transform var(--md-sys-motion-duration-short);
+}
+.condiciones-medicas-modal-close:hover { color: var(--md-sys-color-on-surface); background-color: var(--md-sys-state-hover); transform: rotate(90deg); }
+.condiciones-medicas-modal-close .material-symbols-outlined { font-size: 1.35rem; }
+.condiciones-medicas-modal-body { display: flex; flex-direction: column; gap: 1.65rem; padding: 1.65rem; }
+.condiciones-medicas-modal-footer {
+    display: flex; justify-content: flex-end; align-items: center; gap: 0.75rem; padding: 1.15rem 1.65rem;
+    background-color: var(--md-sys-color-surface-container); border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+.condiciones-medicas-modal form > .alert { margin: 1rem 1.65rem 0; }
+
+/* 9. SECCIONES DE FORMULARIO */
+.condiciones-medicas-form-section { display: flex; flex-direction: column; gap: 1.1rem; }
+.condiciones-medicas-form-section + .condiciones-medicas-form-section { padding-top: 1.4rem; border-top: 1px solid var(--md-sys-color-outline-variant); }
+.condiciones-medicas-form-section-heading { display: flex; align-items: center; gap: 0.75rem; }
+.condiciones-medicas-form-section-heading > .material-symbols-outlined {
+    display: grid; place-items: center; width: 36px; height: 36px; flex-shrink: 0;
+    color: var(--md-sys-color-primary); background-color: var(--md-sys-color-primary-container);
+    border-radius: var(--md-sys-shape-md); font-size: 1.2rem;
+}
+.condiciones-medicas-form-section-heading h3 { margin: 0; color: var(--md-sys-color-on-surface); font-size: 0.9rem; font-weight: 700; }
+.condiciones-medicas-form-section-heading p { margin: 0.2rem 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.75rem; }
+.condiciones-medicas-form-section .form-floating > .form-control,
+.condiciones-medicas-form-section .form-floating > .form-select { border-radius: var(--md-sys-shape-md); }
+.condiciones-medicas-form-section textarea.form-control { min-height: 110px; }
+.condiciones-medicas-field-hint { margin: 0.45rem 0.5rem 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.7rem; line-height: 1.5; }
+
+/* 10. SWITCH */
+.condiciones-medicas-switch-container {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; min-height: 58px; padding: 0.55rem 0.9rem;
+    background-color: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-md);
+}
+.condiciones-medicas-switch-container:has(.form-check-input:checked) { border-color: var(--md-sys-color-primary); background-color: var(--md-sys-color-primary-container); }
+.condiciones-medicas-switch-information { display: flex; align-items: center; gap: 0.7rem; min-width: 0; }
+.condiciones-medicas-switch-information > .material-symbols-outlined { color: var(--md-sys-color-primary); font-size: 1.45rem; }
+.condiciones-medicas-switch-information > div { display: flex; flex-direction: column; gap: 0.15rem; }
+.condiciones-medicas-switch-title { font-size: 0.8rem; font-weight: 600; }
+.condiciones-medicas-switch-description { color: var(--md-sys-color-on-surface-variant); font-size: 0.68rem; }
+.condiciones-medicas-switch { margin: 0; padding: 0; flex-shrink: 0; }
+.condiciones-medicas-switch .form-check-input { width: 2.65rem; height: 1.45rem; margin: 0; cursor: pointer; }
+
+/* 11. MODAL DE CONSULTA */
+.condiciones-medicas-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.5rem; margin: 0; }
+.condiciones-medicas-detail-item { min-width: 0; padding: 0.85rem 1rem; background-color: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-md); }
+.condiciones-medicas-detail-item.is-wide { grid-column: 1 / -1; }
+.condiciones-medicas-detail-item dt { margin: 0 0 0.25rem; color: var(--md-sys-color-on-surface-variant); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.condiciones-medicas-detail-item dd { margin: 0; color: var(--md-sys-color-on-surface); font-size: 0.88rem; overflow-wrap: anywhere; white-space: pre-line; }
+
+/* 11b. TABLA INTERNA DEL MODAL DE CONSULTA */
+.condiciones-medicas-subtable { width: 100%; margin: 0; font-size: 0.78rem; --bs-table-bg: transparent; }
+.condiciones-medicas-subtable th { padding: 0.45rem 0.5rem; color: var(--md-sys-color-on-surface-variant); font-size: 0.66rem; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+.condiciones-medicas-subtable td { padding: 0.45rem 0.5rem; color: var(--md-sys-color-on-surface); white-space: normal; }
+
+/* 12. MODAL DE ELIMINACIÓN */
+.condiciones-medicas-delete-modal .modal-dialog { max-width: 490px; }
+.condiciones-medicas-delete-content { position: relative; padding: 2rem; }
+.condiciones-medicas-delete-close { position: absolute; top: 1rem; right: 1rem; }
+.condiciones-medicas-delete-icon {
+    display: grid; place-items: center; width: 58px; height: 58px; margin-bottom: 1.3rem;
+    color: var(--md-sys-color-on-error-container); background-color: var(--md-sys-color-error-container);
+    border-radius: var(--md-sys-shape-lg); animation: condiciones-medicas-delete-pulse 2.5s ease-in-out infinite;
+}
+.condiciones-medicas-delete-icon .material-symbols-outlined { font-size: 1.85rem; }
+@keyframes condiciones-medicas-delete-pulse { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: 0 0 0 7px var(--md-sys-state-hover); } }
+.condiciones-medicas-delete-overline { color: var(--md-sys-color-error); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.condiciones-medicas-delete-heading h2 { margin: 0.45rem 0 0.5rem; color: var(--md-sys-color-on-surface); font-size: 1.35rem; font-weight: 700; letter-spacing: -0.035em; }
+.condiciones-medicas-delete-heading p { margin: 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.84rem; line-height: 1.6; }
+.condiciones-medicas-delete-identity {
+    display: flex; align-items: center; gap: 0.9rem; margin-top: 1.5rem; padding: 1rem;
+    background-color: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-lg);
+}
+.condiciones-medicas-delete-avatar {
+    display: grid; place-items: center; width: 46px; height: 46px; flex-shrink: 0;
+    color: var(--md-sys-color-on-secondary-container); background-color: var(--md-sys-color-secondary-container);
+    border-radius: var(--md-sys-shape-full);
+}
+.condiciones-medicas-delete-avatar .material-symbols-outlined { font-size: 1.65rem; }
+.condiciones-medicas-delete-data { display: flex; flex-direction: column; min-width: 0; gap: 0.2rem; }
+.condiciones-medicas-delete-name { color: var(--md-sys-color-on-surface); font-size: 0.88rem; font-weight: 700; overflow-wrap: anywhere; }
+.condiciones-medicas-delete-sub { color: var(--md-sys-color-on-surface-variant); font-size: 0.75rem; overflow-wrap: anywhere; }
+.condiciones-medicas-delete-id { color: var(--md-sys-color-on-surface-variant); font-size: 0.68rem; }
+.condiciones-medicas-delete-notice {
+    display: flex; align-items: flex-start; gap: 0.65rem; margin-top: 1rem; padding: 0.85rem;
+    color: var(--md-sys-color-on-error-container); background-color: var(--md-sys-color-error-container);
+    border-radius: var(--md-sys-shape-md);
+}
+.condiciones-medicas-delete-notice > .material-symbols-outlined { flex-shrink: 0; font-size: 1.15rem; }
+.condiciones-medicas-delete-notice p { margin: 0; color: inherit; font-size: 0.73rem; line-height: 1.55; }
+.condiciones-medicas-delete-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.6rem; }
+.condiciones-medicas-delete-confirm { color: var(--md-sys-color-on-error); background-color: var(--md-sys-color-error); border: 1px solid transparent; }
+.condiciones-medicas-delete-confirm:hover, .condiciones-medicas-delete-confirm:focus {
+    color: var(--md-sys-color-on-error); background-color: var(--md-sys-color-error);
+    box-shadow: inset 0 0 0 100px var(--md-sys-state-hover);
+}
+
+/* 13. RESPONSIVE */
+@media (max-width: 767.98px) {
+    .condiciones-medicas-page { gap: 1.1rem; }
+    .condiciones-medicas-header { align-items: flex-start; flex-direction: column; }
+    .condiciones-medicas-heading-icon { width: 46px; height: 46px; }
+    .condiciones-medicas-title { font-size: 1.2rem; }
+    .condiciones-medicas-subtitle { font-size: 0.78rem; }
+    .condiciones-medicas-create-button { width: 100%; }
+    .condiciones-medicas-surface { border-radius: var(--md-sys-shape-lg); }
+    .condiciones-medicas-surface-header { align-items: flex-start; flex-direction: column; padding: 1.2rem; }
+    .condiciones-medicas-toolbar { padding-inline: 1.2rem; }
+    .condiciones-medicas-toolbar .form-select { width: 100%; }
+    .condiciones-medicas-table-container { padding-inline: 0.75rem; }
+    .condiciones-medicas-modal .modal-dialog { margin: 0.5rem; }
+    .condiciones-medicas-modal .modal-content { border-radius: var(--md-sys-shape-lg); }
+    .condiciones-medicas-modal-header, .condiciones-medicas-modal-body, .condiciones-medicas-modal-footer { padding-inline: 1.1rem; }
+    .condiciones-medicas-modal-body { gap: 1.3rem; padding-block: 1.25rem; }
+    .condiciones-medicas-modal-footer { flex-wrap: wrap; }
+    .condiciones-medicas-modal-footer .btn { flex: 1; }
+    .condiciones-medicas-detail-grid { grid-template-columns: 1fr; }
+    .condiciones-medicas-delete-content { padding: 1.5rem; }
+    .condiciones-medicas-delete-actions { flex-direction: column-reverse; }
+    .condiciones-medicas-delete-actions .btn { width: 100%; }
+    .condiciones-medicas-surface .dataTables_wrapper .dataTables_filter { text-align: left; }
+    .condiciones-medicas-surface .dataTables_wrapper .dataTables_filter input { width: 100%; margin: 0.4rem 0 0; }
+}
+@media (max-width: 420px) {
+    .condiciones-medicas-modal-heading { gap: 0.65rem; }
+    .condiciones-medicas-modal-icon { width: 40px; height: 40px; }
+    .condiciones-medicas-modal-title { font-size: 1rem; }
+    .condiciones-medicas-modal-subtitle { font-size: 0.7rem; }
+}
+
+/* 14. ACCESIBILIDAD */
+@media (prefers-reduced-motion: reduce) {
+    .condiciones-medicas-heading-icon, .condiciones-medicas-create-button, .condiciones-medicas-avatar, .condiciones-medicas-action-button,
+    .condiciones-medicas-modal-close, .condiciones-medicas-modal .modal-content, .condiciones-medicas-delete-icon {
+        animation: none; transition: none; transform: none;
+    }
+}

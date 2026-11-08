@@ -1,0 +1,344 @@
+
+
+/* HEALTHWARE-GENERADO v1.0.0 · especialidades · lo que sigue lo regenera generar-frontend.sh (--force) */
+
+/*
+|--------------------------------------------------------------------------
+| HEALTHWARE - ESTILOS DE LA VISTA: Especialidades
+|--------------------------------------------------------------------------
+| Replica el patrón de usuarios.css. No redefine tokens ni componentes de
+| global-styles.css (.btn, .form-control, .card, --md-sys-*, ...).
+|--------------------------------------------------------------------------
+*/
+
+/* 1. ESTRUCTURA Y ENCABEZADO */
+.especialidades-page { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; min-width: 0; }
+.especialidades-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.especialidades-heading { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+.especialidades-heading-icon {
+    display: grid; place-items: center; width: 52px; height: 52px; flex-shrink: 0;
+    color: var(--md-sys-color-on-primary-container);
+    background: var(--md-sys-color-primary-container);
+    border-radius: var(--md-sys-shape-lg);
+    transition: transform var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing);
+}
+.especialidades-heading-icon .material-symbols-outlined { font-size: 1.8rem; }
+.especialidades-heading:hover .especialidades-heading-icon { transform: translateY(-2px) rotate(-3deg); }
+.especialidades-title { margin: 0; font-size: 1.45rem; font-weight: 700; letter-spacing: -0.035em; }
+.especialidades-subtitle { margin: 0.3rem 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.875rem; }
+.especialidades-create-button {
+    flex-shrink: 0; min-height: 46px; padding-inline: 1.35rem;
+    box-shadow: var(--md-sys-elevation-1);
+    transition: transform var(--md-sys-motion-duration-short), box-shadow var(--md-sys-motion-duration-short);
+}
+.especialidades-create-button:hover { transform: translateY(-2px); box-shadow: var(--md-sys-elevation-2); }
+.especialidades-create-button:active { transform: translateY(0); }
+
+/* 2. SUPERFICIE */
+.especialidades-surface {
+    min-width: 0; overflow: hidden;
+    background-color: var(--md-sys-color-surface-container-low);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-xl);
+    box-shadow: var(--md-sys-elevation-1);
+}
+.especialidades-surface-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.5rem 1.65rem 1.25rem; }
+.especialidades-surface-title { margin: 0; font-size: 1rem; font-weight: 700; letter-spacing: -0.015em; }
+.especialidades-surface-description { margin: 0.3rem 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.825rem; }
+.especialidades-record-indicator {
+    display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.8rem;
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-full);
+    font-size: 0.75rem; font-weight: 600; white-space: nowrap;
+}
+.especialidades-record-indicator .material-symbols-outlined { font-size: 1rem; }
+
+/* 2b. BARRA DE FILTROS */
+.especialidades-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 0 1.65rem 1rem; }
+.especialidades-toolbar .form-select { width: auto; min-width: 170px; min-height: 42px; border-radius: var(--md-sys-shape-full); font-size: 0.82rem; }
+.especialidades-toolbar-clear { margin-left: auto; }
+
+/* 3. TABLA */
+.especialidades-table-container { padding: 0 1rem 1rem; }
+.especialidades-table {
+    width: 100% !important; margin: 0 !important; border-collapse: separate; border-spacing: 0;
+    color: var(--md-sys-color-on-surface); vertical-align: middle;
+}
+.especialidades-table thead th {
+    padding: 0.9rem 0.85rem;
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface-container);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.055em; text-transform: uppercase; white-space: nowrap;
+}
+.especialidades-table thead th:first-child { border-top-left-radius: var(--md-sys-shape-md); }
+.especialidades-table thead th:last-child { border-top-right-radius: var(--md-sys-shape-md); }
+.especialidades-table tbody td {
+    padding: 0.95rem 0.85rem; color: var(--md-sys-color-on-surface); background-color: transparent;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    font-size: 0.835rem; vertical-align: middle;
+    transition: background-color var(--md-sys-motion-duration-short);
+}
+.especialidades-table tbody tr:last-child td { border-bottom: none; }
+.especialidades-table tbody tr:hover td { background-color: var(--md-sys-state-hover); }
+.especialidades-table .especialidades-column-id { width: 65px; }
+.especialidades-id { color: var(--md-sys-color-on-surface-variant) !important; font-size: 0.75rem !important; font-weight: 600; font-variant-numeric: tabular-nums; }
+.especialidades-muted { color: var(--md-sys-color-on-surface-variant) !important; }
+.especialidades-mono { font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+
+/* 4. IDENTIDAD */
+.especialidades-identity { display: flex; align-items: center; gap: 0.8rem; min-width: 175px; }
+.especialidades-avatar {
+    display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0;
+    color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--md-sys-color-secondary-container);
+    border-radius: var(--md-sys-shape-full);
+    transition: transform var(--md-sys-motion-duration-short);
+}
+.especialidades-table tbody tr:hover .especialidades-avatar { transform: scale(1.06); }
+.especialidades-avatar .material-symbols-outlined { font-size: 1.3rem; }
+.especialidades-identity-data { display: flex; flex-direction: column; min-width: 0; gap: 0.2rem; }
+.especialidades-fullname { color: var(--md-sys-color-on-surface); font-size: 0.85rem; font-weight: 600; line-height: 1.3; }
+.especialidades-identity-caption { color: var(--md-sys-color-on-surface-variant); font-size: 0.7rem; }
+
+/* 5. CHIPS Y ESTADOS */
+.especialidades-chip {
+    display: inline-flex; align-items: center; max-width: 200px; padding: 0.35rem 0.7rem; overflow: hidden;
+    color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--md-sys-color-secondary-container);
+    border-radius: var(--md-sys-shape-full);
+    font-size: 0.73rem; font-weight: 600; text-overflow: ellipsis; white-space: nowrap;
+}
+.especialidades-status {
+    display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.65rem;
+    border-radius: var(--md-sys-shape-full); font-size: 0.72rem; font-weight: 600; white-space: nowrap;
+}
+.especialidades-status-dot { width: 7px; height: 7px; flex-shrink: 0; border-radius: var(--md-sys-shape-full); background-color: currentColor; }
+.especialidades-status-success { color: #286b45; background-color: #d9f2e2; }
+.especialidades-status-warning { color: #805b17; background-color: #f8edce; }
+.especialidades-status-info { color: var(--md-sys-color-on-primary-container); background-color: var(--md-sys-color-primary-container); }
+.especialidades-status-error { color: var(--md-sys-color-error); background-color: var(--md-sys-color-error-container); }
+.especialidades-status-neutral { color: var(--md-sys-color-on-surface-variant); background-color: var(--md-sys-color-surface-container-high); }
+:root[data-bs-theme="dark"] .especialidades-status-success { color: #a6dcb9; background-color: #183b2a; }
+:root[data-bs-theme="dark"] .especialidades-status-warning { color: #f1d18b; background-color: #493817; }
+
+/* 6. ACCIONES */
+.especialidades-actions { display: flex; justify-content: center; align-items: center; gap: 0.4rem; white-space: nowrap; }
+.especialidades-action-button {
+    display: grid; place-items: center; width: 36px; height: 36px; padding: 0;
+    color: var(--md-sys-color-on-surface-variant); background-color: transparent;
+    border: 1px solid transparent; border-radius: var(--md-sys-shape-full); cursor: pointer;
+    transition: color var(--md-sys-motion-duration-short), background-color var(--md-sys-motion-duration-short), transform var(--md-sys-motion-duration-short);
+}
+.especialidades-action-button:hover { color: var(--md-sys-color-primary); background-color: var(--md-sys-color-primary-container); transform: translateY(-2px); }
+.especialidades-action-button:focus-visible { outline: 2px solid var(--md-sys-color-primary); outline-offset: 2px; }
+.especialidades-action-button .material-symbols-outlined { font-size: 1.15rem; }
+.especialidades-action-delete:hover { color: var(--md-sys-color-on-error-container); background-color: var(--md-sys-color-error-container); }
+
+/* 6b. ESTADO VACÍO */
+.especialidades-empty { display: grid; justify-items: center; gap: 0.6rem; padding: 3rem 1.5rem; text-align: center; color: var(--md-sys-color-on-surface-variant); }
+.especialidades-empty .material-symbols-outlined { font-size: 2.6rem; color: var(--md-sys-color-primary); }
+.especialidades-empty h3 { margin: 0; font-size: 1rem; color: var(--md-sys-color-on-surface); }
+.especialidades-empty p { margin: 0; font-size: 0.82rem; }
+
+/* 7. DATATABLES (limitado a esta superficie) */
+.especialidades-surface .dataTables_wrapper { color: var(--md-sys-color-on-surface-variant); font-size: 0.8rem; }
+.especialidades-surface .dataTables_wrapper .dataTables_length,
+.especialidades-surface .dataTables_wrapper .dataTables_filter { margin-bottom: 1rem; font-size: 0.8rem; }
+.especialidades-surface .dataTables_wrapper .dataTables_length label,
+.especialidades-surface .dataTables_wrapper .dataTables_filter label { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 0.55rem; }
+.especialidades-surface .dataTables_wrapper .dataTables_filter { text-align: right; }
+.especialidades-surface .dataTables_wrapper .dataTables_filter input {
+    width: min(230px, 100%); min-height: 38px; margin-left: 0.25rem; padding: 0.45rem 0.9rem; outline: none;
+    color: var(--md-sys-color-on-surface); background-color: var(--md-sys-color-surface-container-lowest);
+    border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-full);
+    transition: border-color var(--md-sys-motion-duration-short), box-shadow var(--md-sys-motion-duration-short);
+}
+.especialidades-surface .dataTables_wrapper .dataTables_filter input:focus { border-color: var(--md-sys-color-primary); box-shadow: 0 0 0 3px var(--md-sys-state-focus); }
+.especialidades-surface .dataTables_wrapper .dataTables_length select {
+    min-height: 36px; padding: 0.3rem 1.8rem 0.3rem 0.7rem;
+    color: var(--md-sys-color-on-surface); background-color: var(--md-sys-color-surface-container-lowest);
+    border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-sm);
+}
+.especialidades-surface .dataTables_wrapper .dataTables_info { padding-top: 1rem; font-size: 0.75rem; }
+.especialidades-surface .dataTables_wrapper .dataTables_paginate { padding-top: 0.65rem; }
+.especialidades-surface .dataTables_wrapper .pagination { gap: 0.25rem; margin-bottom: 0; }
+.especialidades-surface .dataTables_wrapper .page-link {
+    display: grid; place-items: center; min-width: 34px; min-height: 34px; padding: 0.35rem 0.65rem;
+    color: var(--md-sys-color-on-surface-variant); background-color: transparent; border: 1px solid transparent;
+    border-radius: var(--md-sys-shape-full) !important; font-size: 0.78rem; box-shadow: none;
+}
+.especialidades-surface .dataTables_wrapper .page-link:hover { color: var(--md-sys-color-primary); background-color: var(--md-sys-state-hover); }
+.especialidades-surface .dataTables_wrapper .page-item.active .page-link { color: var(--md-sys-color-on-primary); background-color: var(--md-sys-color-primary); border-color: var(--md-sys-color-primary); }
+.especialidades-surface .dataTables_wrapper .page-item.disabled .page-link { opacity: 0.4; background-color: transparent; }
+
+/* 8. MODALES */
+.especialidades-modal .modal-dialog { max-width: 850px; }
+.especialidades-modal .modal-content {
+    overflow: hidden; color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface-container-low);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-xl); box-shadow: var(--md-sys-elevation-3);
+    animation: especialidades-modal-enter 220ms var(--md-sys-motion-easing);
+}
+@keyframes especialidades-modal-enter {
+    from { opacity: 0; transform: translateY(12px) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.especialidades-modal-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.5rem 1.65rem;
+    background-color: var(--md-sys-color-surface-container); border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+.especialidades-modal-heading { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+.especialidades-modal-icon {
+    display: grid; place-items: center; width: 46px; height: 46px; flex-shrink: 0;
+    color: var(--md-sys-color-on-primary-container); background-color: var(--md-sys-color-primary-container);
+    border-radius: var(--md-sys-shape-md);
+}
+.especialidades-modal-icon .material-symbols-outlined { font-size: 1.5rem; }
+.especialidades-modal-title { margin: 0; color: var(--md-sys-color-on-surface); font-size: 1.15rem; font-weight: 700; letter-spacing: -0.025em; }
+.especialidades-modal-subtitle { margin: 0.25rem 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.8rem; }
+.especialidades-modal-close {
+    display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0;
+    color: var(--md-sys-color-on-surface-variant); background-color: transparent; border: none;
+    border-radius: var(--md-sys-shape-full); cursor: pointer;
+    transition: background-color var(--md-sys-motion-duration-short), transform var(--md-sys-motion-duration-short);
+}
+.especialidades-modal-close:hover { color: var(--md-sys-color-on-surface); background-color: var(--md-sys-state-hover); transform: rotate(90deg); }
+.especialidades-modal-close .material-symbols-outlined { font-size: 1.35rem; }
+.especialidades-modal-body { display: flex; flex-direction: column; gap: 1.65rem; padding: 1.65rem; }
+.especialidades-modal-footer {
+    display: flex; justify-content: flex-end; align-items: center; gap: 0.75rem; padding: 1.15rem 1.65rem;
+    background-color: var(--md-sys-color-surface-container); border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+.especialidades-modal form > .alert { margin: 1rem 1.65rem 0; }
+
+/* 9. SECCIONES DE FORMULARIO */
+.especialidades-form-section { display: flex; flex-direction: column; gap: 1.1rem; }
+.especialidades-form-section + .especialidades-form-section { padding-top: 1.4rem; border-top: 1px solid var(--md-sys-color-outline-variant); }
+.especialidades-form-section-heading { display: flex; align-items: center; gap: 0.75rem; }
+.especialidades-form-section-heading > .material-symbols-outlined {
+    display: grid; place-items: center; width: 36px; height: 36px; flex-shrink: 0;
+    color: var(--md-sys-color-primary); background-color: var(--md-sys-color-primary-container);
+    border-radius: var(--md-sys-shape-md); font-size: 1.2rem;
+}
+.especialidades-form-section-heading h3 { margin: 0; color: var(--md-sys-color-on-surface); font-size: 0.9rem; font-weight: 700; }
+.especialidades-form-section-heading p { margin: 0.2rem 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.75rem; }
+.especialidades-form-section .form-floating > .form-control,
+.especialidades-form-section .form-floating > .form-select { border-radius: var(--md-sys-shape-md); }
+.especialidades-form-section textarea.form-control { min-height: 110px; }
+.especialidades-field-hint { margin: 0.45rem 0.5rem 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.7rem; line-height: 1.5; }
+
+/* 10. SWITCH */
+.especialidades-switch-container {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; min-height: 58px; padding: 0.55rem 0.9rem;
+    background-color: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-md);
+}
+.especialidades-switch-container:has(.form-check-input:checked) { border-color: var(--md-sys-color-primary); background-color: var(--md-sys-color-primary-container); }
+.especialidades-switch-information { display: flex; align-items: center; gap: 0.7rem; min-width: 0; }
+.especialidades-switch-information > .material-symbols-outlined { color: var(--md-sys-color-primary); font-size: 1.45rem; }
+.especialidades-switch-information > div { display: flex; flex-direction: column; gap: 0.15rem; }
+.especialidades-switch-title { font-size: 0.8rem; font-weight: 600; }
+.especialidades-switch-description { color: var(--md-sys-color-on-surface-variant); font-size: 0.68rem; }
+.especialidades-switch { margin: 0; padding: 0; flex-shrink: 0; }
+.especialidades-switch .form-check-input { width: 2.65rem; height: 1.45rem; margin: 0; cursor: pointer; }
+
+/* 11. MODAL DE CONSULTA */
+.especialidades-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.5rem; margin: 0; }
+.especialidades-detail-item { min-width: 0; padding: 0.85rem 1rem; background-color: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-md); }
+.especialidades-detail-item.is-wide { grid-column: 1 / -1; }
+.especialidades-detail-item dt { margin: 0 0 0.25rem; color: var(--md-sys-color-on-surface-variant); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.especialidades-detail-item dd { margin: 0; color: var(--md-sys-color-on-surface); font-size: 0.88rem; overflow-wrap: anywhere; white-space: pre-line; }
+
+/* 11b. TABLA INTERNA DEL MODAL DE CONSULTA */
+.especialidades-subtable { width: 100%; margin: 0; font-size: 0.78rem; --bs-table-bg: transparent; }
+.especialidades-subtable th { padding: 0.45rem 0.5rem; color: var(--md-sys-color-on-surface-variant); font-size: 0.66rem; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+.especialidades-subtable td { padding: 0.45rem 0.5rem; color: var(--md-sys-color-on-surface); white-space: normal; }
+
+/* 12. MODAL DE ELIMINACIÓN */
+.especialidades-delete-modal .modal-dialog { max-width: 490px; }
+.especialidades-delete-content { position: relative; padding: 2rem; }
+.especialidades-delete-close { position: absolute; top: 1rem; right: 1rem; }
+.especialidades-delete-icon {
+    display: grid; place-items: center; width: 58px; height: 58px; margin-bottom: 1.3rem;
+    color: var(--md-sys-color-on-error-container); background-color: var(--md-sys-color-error-container);
+    border-radius: var(--md-sys-shape-lg); animation: especialidades-delete-pulse 2.5s ease-in-out infinite;
+}
+.especialidades-delete-icon .material-symbols-outlined { font-size: 1.85rem; }
+@keyframes especialidades-delete-pulse { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: 0 0 0 7px var(--md-sys-state-hover); } }
+.especialidades-delete-overline { color: var(--md-sys-color-error); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.especialidades-delete-heading h2 { margin: 0.45rem 0 0.5rem; color: var(--md-sys-color-on-surface); font-size: 1.35rem; font-weight: 700; letter-spacing: -0.035em; }
+.especialidades-delete-heading p { margin: 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.84rem; line-height: 1.6; }
+.especialidades-delete-identity {
+    display: flex; align-items: center; gap: 0.9rem; margin-top: 1.5rem; padding: 1rem;
+    background-color: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-lg);
+}
+.especialidades-delete-avatar {
+    display: grid; place-items: center; width: 46px; height: 46px; flex-shrink: 0;
+    color: var(--md-sys-color-on-secondary-container); background-color: var(--md-sys-color-secondary-container);
+    border-radius: var(--md-sys-shape-full);
+}
+.especialidades-delete-avatar .material-symbols-outlined { font-size: 1.65rem; }
+.especialidades-delete-data { display: flex; flex-direction: column; min-width: 0; gap: 0.2rem; }
+.especialidades-delete-name { color: var(--md-sys-color-on-surface); font-size: 0.88rem; font-weight: 700; overflow-wrap: anywhere; }
+.especialidades-delete-sub { color: var(--md-sys-color-on-surface-variant); font-size: 0.75rem; overflow-wrap: anywhere; }
+.especialidades-delete-id { color: var(--md-sys-color-on-surface-variant); font-size: 0.68rem; }
+.especialidades-delete-notice {
+    display: flex; align-items: flex-start; gap: 0.65rem; margin-top: 1rem; padding: 0.85rem;
+    color: var(--md-sys-color-on-error-container); background-color: var(--md-sys-color-error-container);
+    border-radius: var(--md-sys-shape-md);
+}
+.especialidades-delete-notice > .material-symbols-outlined { flex-shrink: 0; font-size: 1.15rem; }
+.especialidades-delete-notice p { margin: 0; color: inherit; font-size: 0.73rem; line-height: 1.55; }
+.especialidades-delete-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.6rem; }
+.especialidades-delete-confirm { color: var(--md-sys-color-on-error); background-color: var(--md-sys-color-error); border: 1px solid transparent; }
+.especialidades-delete-confirm:hover, .especialidades-delete-confirm:focus {
+    color: var(--md-sys-color-on-error); background-color: var(--md-sys-color-error);
+    box-shadow: inset 0 0 0 100px var(--md-sys-state-hover);
+}
+
+/* 13. RESPONSIVE */
+@media (max-width: 767.98px) {
+    .especialidades-page { gap: 1.1rem; }
+    .especialidades-header { align-items: flex-start; flex-direction: column; }
+    .especialidades-heading-icon { width: 46px; height: 46px; }
+    .especialidades-title { font-size: 1.2rem; }
+    .especialidades-subtitle { font-size: 0.78rem; }
+    .especialidades-create-button { width: 100%; }
+    .especialidades-surface { border-radius: var(--md-sys-shape-lg); }
+    .especialidades-surface-header { align-items: flex-start; flex-direction: column; padding: 1.2rem; }
+    .especialidades-toolbar { padding-inline: 1.2rem; }
+    .especialidades-toolbar .form-select { width: 100%; }
+    .especialidades-table-container { padding-inline: 0.75rem; }
+    .especialidades-modal .modal-dialog { margin: 0.5rem; }
+    .especialidades-modal .modal-content { border-radius: var(--md-sys-shape-lg); }
+    .especialidades-modal-header, .especialidades-modal-body, .especialidades-modal-footer { padding-inline: 1.1rem; }
+    .especialidades-modal-body { gap: 1.3rem; padding-block: 1.25rem; }
+    .especialidades-modal-footer { flex-wrap: wrap; }
+    .especialidades-modal-footer .btn { flex: 1; }
+    .especialidades-detail-grid { grid-template-columns: 1fr; }
+    .especialidades-delete-content { padding: 1.5rem; }
+    .especialidades-delete-actions { flex-direction: column-reverse; }
+    .especialidades-delete-actions .btn { width: 100%; }
+    .especialidades-surface .dataTables_wrapper .dataTables_filter { text-align: left; }
+    .especialidades-surface .dataTables_wrapper .dataTables_filter input { width: 100%; margin: 0.4rem 0 0; }
+}
+@media (max-width: 420px) {
+    .especialidades-modal-heading { gap: 0.65rem; }
+    .especialidades-modal-icon { width: 40px; height: 40px; }
+    .especialidades-modal-title { font-size: 1rem; }
+    .especialidades-modal-subtitle { font-size: 0.7rem; }
+}
+
+/* 14. ACCESIBILIDAD */
+@media (prefers-reduced-motion: reduce) {
+    .especialidades-heading-icon, .especialidades-create-button, .especialidades-avatar, .especialidades-action-button,
+    .especialidades-modal-close, .especialidades-modal .modal-content, .especialidades-delete-icon {
+        animation: none; transition: none; transform: none;
+    }
+}
