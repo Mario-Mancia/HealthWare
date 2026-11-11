@@ -422,7 +422,7 @@ const CONFIG = {
                                 return;
                             }
 
-                            const tabla = $('<table class="table notificaciones-subtable"></table>');
+                            const tabla = $('<table class="table hw-subtable"></table>');
                             const cabecera = $('<tr></tr>');
                             columnas.forEach(c => cabecera.append($('<th>', { text: c.titulo })));
                             tabla.append($('<thead></thead>').append(cabecera));

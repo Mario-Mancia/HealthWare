@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="es">
 <head>
@@ -11,14 +10,11 @@
     {{-- Inicialización temprana del tema --}}
     <script src="{{ asset('js/global-scripts.js') }}"></script>
 
-    {{-- Bootstrap --}}
+    {{-- Framework y sistema de diseño (mismo que el layout interno) --}}
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
-
-    {{-- Material Design System --}}
     <link rel="stylesheet" href="{{ asset('css/global-styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/toast.css') }}">
 
-    {{-- Material Symbols --}}
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 
@@ -26,67 +22,43 @@
     @stack('estilos')
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body class="auth-shell">
 
-{{-- APP BAR --}}
-<nav class="navbar navbar-healthware py-2">
-    <div class="container-fluid px-4">
-
-        <a class="navbar-brand d-flex align-items-center gap-2"
-           href="{{ url('/') }}">
-
-                <span class="material-symbols-outlined fs-2">
-                    health_and_safety
-                </span>
-
-            <span>HealthWare</span>
+    {{-- Barra superior: misma composición que la interna (marca al centro, tema a la derecha) --}}
+    <header class="auth-topbar">
+        <a href="{{ url('/') }}" class="app-brand" aria-label="HealthWare">
+            <span class="material-symbols-outlined app-brand-icon">health_and_safety</span>
+            <span class="app-brand-name">HealthWare</span>
         </a>
 
-        <button
-            type="button"
-            class="btn btn-icon"
-            id="themeToggleBtn"
-            title="Cambiar tema"
-            aria-label="Cambiar tema"
-            aria-pressed="false">
+        <div class="auth-topbar-end">
+            <button
+                type="button"
+                class="btn btn-icon"
+                id="themeToggleBtn"
+                title="Cambiar tema"
+                aria-label="Cambiar tema"
+                aria-pressed="false">
+                <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+            </button>
+        </div>
+    </header>
 
-                <span class="material-symbols-outlined" id="themeIcon">
-                    dark_mode
-                </span>
-        </button>
+    <main class="auth-main">
+        @yield('contenido')
+    </main>
 
-    </div>
-</nav>
+    <footer class="auth-footer">
+        &copy; {{ date('Y') }} HealthWare · Sistema de Gestión Clínica
+    </footer>
 
-{{-- MAIN CONTENT --}}
-<main class="container-fluid px-3 px-md-4 py-4 flex-grow-1
-                 d-flex flex-column align-items-center justify-content-center">
+    @include('components.toast')
 
-    @yield('contenido')
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/toast.js') }}"></script>
 
-</main>
-
-{{-- FOOTER --}}
-<footer class="footer-healthware mt-auto">
-    <div class="container text-center">
-            <span class="footer-text">
-                &copy; {{ date('Y') }} HealthWare.
-                Sistema de Gestión Clínica.
-            </span>
-    </div>
-</footer>
-
-{{-- REUSABLE COMPONENTS --}}
-@include('components.toast')
-
-{{-- FRAMEWORKS --}}
-<script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-{{-- GLOBAL SCRIPTS --}}
-<script src="{{ asset('js/toast.js') }}"></script>
-
-{{-- PARTICULAR SCRIPTS --}}
-@stack('scripts')
+    @stack('scripts')
 
 </body>
 </html>

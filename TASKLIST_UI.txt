@@ -1,0 +1,56 @@
+TASKLIST - REESTRUCTURACION VISUAL DE HEALTHWARE
+=================================================
+Respaldo del estado anterior: .respaldos-ui/<fecha>/  (public-css, public-js, resources-views)
+
+CARGA (despues de ejecutar el script)
+[ ] 1. php artisan view:clear   y recargar el navegador con Ctrl+F5 (los CSS cambiaron de nombre/contenido).
+[ ] 2. Iniciar sesion con cada rol (administrador, medico, recepcionista): el menu lateral solo muestra lo permitido (menu_config.php).
+[ ] 3. Boton de menu (izquierda de la barra): oculta/despliega el menu en escritorio (recuerda el estado) y en movil abre un panel.
+[ ] 4. Marca "HealthWare" al centro, accesos rapidos (Inicio, Dashboard, Accesos rapidos), tema claro/oscuro y menu de usuario.
+[ ] 5. Campana: muestra el contador de pendientes y las 5 ultimas. Requiere el modelo App\Models\Notificacion (o Notificaciones)
+       con columnas id_usuario, titulo, mensaje, tipo, leido_en, created_at. Si el modelo tiene otro nombre, ajustar la lista $claseNotificacion
+       en resources/views/layouts/app_layout.blade.php.
+
+MODULOS
+[ ] 6. Cada listado: buscador en tiempo real (sin distinguir tildes), filtros por columna, "Limpiar filtros", contador de resultados.
+[ ] 7. Modales (nuevo/editar/consultar/eliminar): el cuerpo se desplaza internamente; cabecera y botones quedan siempre visibles.
+       Etiquetas flotantes correctas en selectores y fechas (sin superponerse a los valores).
+[ ] 8. Formularios con validacion y errores por campo (el JS de cada modulo no cambio).
+[ ] 9. Usuarios: al elegir el rol Medico aparece "Perfil profesional del medico" (en nuevo y en editar). Ver CONTROLADOR abajo.
+[ ] 10. Facturacion: indicadores, boton "Exportar a PDF" (solo si existe la ruta facturas.pdf) y "Emitir factura" (solo si existe facturas.insertar).
+        Detalle imprimible: ruta nombrada detalle_facturas que envie $factura (con paciente, items y pagos).
+[ ] 11. Vistas pendientes (cita/doctor/paciente/expediente): muestran una pantalla base hasta que se conecten sus rutas.
+[ ] 12. El dashboard no se toco. Los toasts tampoco.
+
+CONTROLADOR - USUARIOS CON ROL MEDICO (ejemplo; ajustar nombres de tablas/modelos)
+La interfaz envia los campos del doctor como doctor[...] en la MISMA peticion que el usuario.
+En el controlador de usuarios (store y update):
+
+    $esMedico = (int) $request->input('id_rol') === Rol::where('rol', 'Médico')->value('id');
+
+    $request->validate([
+        // ...reglas actuales del usuario...
+        'doctor'                          => ['exclude_unless:' . ($esMedico ? 'true' : 'false') . ',true'],
+        'doctor.especialidad_id'          => [Rule::requiredIf($esMedico), 'nullable', 'exists:especialidades,id'],
+        'doctor.numero_licencia'          => [Rule::requiredIf($esMedico), 'nullable', 'string', 'max:50'],
+        'doctor.dui'                      => [Rule::requiredIf($esMedico), 'nullable', 'string', 'max:10'],
+        'doctor.fecha_nacimiento'         => [Rule::requiredIf($esMedico), 'nullable', 'date', 'before:today'],
+        'doctor.sexo'                     => [Rule::requiredIf($esMedico), 'nullable', 'in:M,F'],
+        'doctor.descripcion_profesional'  => ['nullable', 'string', 'max:500'],
+    ]);
+
+    DB::transaction(function () use ($request, $esMedico) {
+        $usuario = Usuario::create(/* datos de la cuenta */);
+
+        if ($esMedico) {
+            Doctor::updateOrCreate(['usuario_id' => $usuario->id], array_filter($request->input('doctor', [])));
+        }
+    });
+
+Para que al editar se rellene el perfil, usuarios.buscar puede devolver el usuario con la relacion: $usuario->load('doctor')
+(la interfaz usa la clave "doctor" de la respuesta JSON).
+
+NOTAS
+ - Si algo no se ve bien, quedan en .respaldos-ui/ las copias de los CSS/JS/vistas anteriores.
+ - Las clases ahora son hw-* (antes alergias-*, usuarios-*, ...). Los CSS por modulo se eliminaron; todo vive en
+   global-styles.css, app-layout.css y hw-components.css.

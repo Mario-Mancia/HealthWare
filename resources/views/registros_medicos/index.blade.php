@@ -5,7 +5,6 @@
 
 @push('estilos')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="{{ asset('css/registros_medicos.css') }}">
 @endpush
 
 @section('contenido')
@@ -19,23 +18,23 @@
         $fmtFecha = fn($v, $f = 'd/m/Y') => $v ? \Illuminate\Support\Carbon::parse($v)->format($f) : '—';
     @endphp
 
-    <div class="registros-medicos-page">
+    <div class="hw-page">
 
         {{-- ENCABEZADO --}}
-        <header class="registros-medicos-header">
-            <div class="registros-medicos-heading">
-                <div class="registros-medicos-heading-icon">
+        <header class="hw-header">
+            <div class="hw-heading">
+                <div class="hw-heading-icon">
                     <span class="material-symbols-outlined">clinical_notes</span>
                 </div>
                 <div>
-                    <h1 class="registros-medicos-title">Registros médicos</h1>
-                    <p class="registros-medicos-subtitle">Consulta clínica de las atenciones realizadas.</p>
+                    <h1 class="hw-title">Registros médicos</h1>
+                    <p class="hw-subtitle">Consulta clínica de las atenciones realizadas.</p>
                 </div>
             </div>
 
             @if($puedeCrear)
                 <button type="button"
-                        class="btn btn-primary registros-medicos-create-button"
+                        class="btn btn-primary hw-create-button"
                         data-bs-toggle="modal"
                         data-bs-target="#modalNuevo">
                     <span class="material-symbols-outlined">note_add</span>
@@ -46,38 +45,46 @@
 
 
         {{-- SUPERFICIE --}}
-        <section class="registros-medicos-surface">
+        <section class="hw-surface">
 
-            <div class="registros-medicos-surface-header">
+            <div class="hw-surface-header">
                 <div>
-                    <h2 class="registros-medicos-surface-title">Historial de atenciones</h2>
-                    <p class="registros-medicos-surface-description">Registros clínicos, ordenados por fecha.</p>
+                    <h2 class="hw-surface-title">Historial de atenciones</h2>
+                    <p class="hw-surface-description">Registros clínicos, ordenados por fecha.</p>
                 </div>
-                <div class="registros-medicos-record-indicator">
+                <div class="hw-record-indicator">
                     <span class="material-symbols-outlined">database</span>
                     <span>{{ $lista->count() }} registros</span>
                 </div>
             </div>
 
             @if($lista->isEmpty())
-                <div class="registros-medicos-empty">
+                <div class="hw-empty">
                     <span class="material-symbols-outlined">clinical_notes</span>
                     <h3>Aún no hay registros</h3>
                     <p>Cuando existan datos aparecerán aquí.</p>
                 </div>
             @else
-            <div class="registros-medicos-toolbar">
+            <div class="hw-toolbar">
+                <div class="hw-search">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="search" class="form-control" data-hw-buscar placeholder="Buscar en la tabla…" aria-label="Buscar en la tabla" autocomplete="off">
+                    <button type="button" class="btn btn-icon hw-search-clear" data-hw-buscar-limpiar aria-label="Limpiar búsqueda">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
                 <select class="form-select" data-filtro-columna="3" aria-label="Filtrar por doctor">
                     <option value="">Doctor: todos</option>
                 </select>
-                <button type="button" class="btn btn-text registros-medicos-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
+                <span class="hw-toolbar-count" data-hw-contador></span>
+                <button type="button" class="btn btn-text hw-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
             </div>
 
-            <div class="table-responsive registros-medicos-table-container">
-                <table id="tabla-registros-medicos" class="table registros-medicos-table align-middle mb-0" data-page-length="10">
+            <div class="table-responsive hw-table-container">
+                <table id="tabla-registros-medicos" class="table hw-data-table align-middle mb-0" data-page-length="10">
                     <thead>
                         <tr>
-                            <th scope="col" class="registros-medicos-column-id">ID</th>
+                            <th scope="col" class="hw-column-id">ID</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Paciente</th>
                             <th scope="col">Doctor</th>
@@ -89,29 +96,29 @@
                     <tbody>
                     @foreach($lista as $item)
                         <tr>
-                            <td class="registros-medicos-id">#{{ $item->id }}</td>
+                            <td class="hw-id">#{{ $item->id }}</td>
                             <td>{{ $fmtFecha($item->fecha_registro, 'd/m/Y H:i') }}</td>
                             <td>
-                              <div class="registros-medicos-identity">
-                                <div class="registros-medicos-avatar"><span class="material-symbols-outlined">person</span></div>
-                                <div class="registros-medicos-identity-data">
-                                  <span class="registros-medicos-fullname" data-filtro-valor>{{ ($item->paciente?->nombres ?? '') . ' ' . ($item->paciente?->apellidos ?? '') }}</span>
+                              <div class="hw-identity">
+                                <div class="hw-avatar"><span class="material-symbols-outlined">person</span></div>
+                                <div class="hw-identity-data">
+                                  <span class="hw-fullname" data-filtro-valor>{{ ($item->paciente?->nombres ?? '') . ' ' . ($item->paciente?->apellidos ?? '') }}</span>
                                 </div>
                               </div>
                             </td>
                             <td>{{ ($item->doctor?->usuario?->nombres ?? '') . ' ' . ($item->doctor?->usuario?->apellidos ?? '') ?? "—" }}</td>
-                            <td class="registros-medicos-muted" title="{{ $item->motivo_consulta }}">{{ \Illuminate\Support\Str::limit((string) ($item->motivo_consulta ?? ""), 70) ?: "—" }}</td>
-                            <td class="registros-medicos-muted" title="{{ $item->observaciones }}">{{ \Illuminate\Support\Str::limit((string) ($item->observaciones ?? ""), 70) ?: "—" }}</td>
+                            <td class="hw-muted" title="{{ $item->motivo_consulta }}">{{ \Illuminate\Support\Str::limit((string) ($item->motivo_consulta ?? ""), 70) ?: "—" }}</td>
+                            <td class="hw-muted" title="{{ $item->observaciones }}">{{ \Illuminate\Support\Str::limit((string) ($item->observaciones ?? ""), 70) ?: "—" }}</td>
                             <td>
-                                <div class="registros-medicos-actions">
-                                    <button type="button" class="registros-medicos-action-button"
+                                <div class="hw-actions">
+                                    <button type="button" class="hw-action-button"
                                             data-bs-toggle="modal" data-bs-target="#modalVer"
                                             data-id="{{ $item->id }}"
                                             title="Consultar registro médico" aria-label="Consultar registro médico">
                                         <span class="material-symbols-outlined">visibility</span>
                                     </button>
                                     @if($puedeEliminar)
-                                        <button type="button" class="registros-medicos-action-button registros-medicos-action-delete"
+                                        <button type="button" class="hw-action-button hw-action-delete"
                                                 data-bs-toggle="modal" data-bs-target="#modalEliminar"
                                                 data-id="{{ $item->id }}"
                                                 data-nombre="{{ ($item->paciente?->nombres ?? "") . " " . ($item->paciente?->apellidos ?? "") }}"
@@ -127,6 +134,10 @@
                     </tbody>
                 </table>
             </div>
+            <div class="hw-no-results">
+                <span class="material-symbols-outlined">search_off</span>
+                No se encontraron coincidencias con la búsqueda.
+            </div>
             @endif
 
         </section>
@@ -134,18 +145,18 @@
 
     {{-- MODAL: NUEVO --}}
     @if($puedeCrear)
-    <div class="modal fade registros-medicos-modal" id="modalNuevo" tabindex="-1" aria-labelledby="tituloNuevo" aria-hidden="true">
+    <div class="modal fade hw-modal" id="modalNuevo" tabindex="-1" aria-labelledby="tituloNuevo" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="registros-medicos-modal-header">
-                    <div class="registros-medicos-modal-heading">
-                        <div class="registros-medicos-modal-icon"><span class="material-symbols-outlined">note_add</span></div>
+                <div class="hw-modal-header">
+                    <div class="hw-modal-heading">
+                        <div class="hw-modal-icon"><span class="material-symbols-outlined">note_add</span></div>
                         <div>
-                            <h2 class="registros-medicos-modal-title" id="tituloNuevo">Registrar registro médico</h2>
-                            <p class="registros-medicos-modal-subtitle">Completa la información solicitada.</p>
+                            <h2 class="hw-modal-title" id="tituloNuevo">Registrar registro médico</h2>
+                            <p class="hw-modal-subtitle">Completa la información solicitada.</p>
                         </div>
                     </div>
-                    <button type="button" class="registros-medicos-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="hw-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
@@ -154,9 +165,9 @@
                     @csrf
                     <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
 
-                    <div class="modal-body registros-medicos-modal-body">
-                        <div class="registros-medicos-form-section">
-                          <div class="registros-medicos-form-section-heading">
+                    <div class="modal-body hw-modal-body">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">event_note</span>
                             <div>
                               <h3>Atención</h3>
@@ -202,12 +213,12 @@
                                 <input type="datetime-local" name="fecha_registro" id="nuevo_fecha_registro" class="form-control" placeholder="Fecha del registro">
                                 <label for="nuevo_fecha_registro">Fecha del registro</label>
                               </div>
-                              <div class="registros-medicos-field-hint">Déjalo en blanco para usar la fecha actual.</div>
+                              <div class="hw-field-hint">Déjalo en blanco para usar la fecha actual.</div>
                             </div>
                           </div>
                         </div>
-                        <div class="registros-medicos-form-section">
-                          <div class="registros-medicos-form-section-heading">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">clinical_notes</span>
                             <div>
                               <h3>Consulta</h3>
@@ -235,8 +246,8 @@
                             </div>
                           </div>
                         </div>
-                        <div class="registros-medicos-form-section">
-                          <div class="registros-medicos-form-section-heading">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">monitor_heart</span>
                             <div>
                               <h3>Signos vitales</h3>
@@ -296,7 +307,7 @@
                         </div>
                     </div>
 
-                    <div class="registros-medicos-modal-footer">
+                    <div class="hw-modal-footer">
                         <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">
                             <span class="material-symbols-outlined">save</span>
@@ -310,45 +321,45 @@
     @endif
 
     {{-- MODAL: CONSULTA --}}
-    <div class="modal fade registros-medicos-modal" id="modalVer" tabindex="-1" aria-labelledby="tituloVer" aria-hidden="true"
+    <div class="modal fade hw-modal" id="modalVer" tabindex="-1" aria-labelledby="tituloVer" aria-hidden="true"
          data-buscar-url="{{ route('registros_medicos.buscar', ['id' => '__ID__']) }}">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="registros-medicos-modal-header">
-                    <div class="registros-medicos-modal-heading">
-                        <div class="registros-medicos-modal-icon"><span class="material-symbols-outlined">visibility</span></div>
+                <div class="hw-modal-header">
+                    <div class="hw-modal-heading">
+                        <div class="hw-modal-icon"><span class="material-symbols-outlined">visibility</span></div>
                         <div>
-                            <h2 class="registros-medicos-modal-title" id="tituloVer">Detalle de registro médico</h2>
-                            <p class="registros-medicos-modal-subtitle">Información completa del registro.</p>
+                            <h2 class="hw-modal-title" id="tituloVer">Detalle de registro médico</h2>
+                            <p class="hw-modal-subtitle">Información completa del registro.</p>
                         </div>
                     </div>
-                    <button type="button" class="registros-medicos-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="hw-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
 
                 <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
 
-                <div class="modal-body registros-medicos-modal-body">
-                    <dl class="registros-medicos-detail-grid">
-                        <div class="registros-medicos-detail-item"><dt>Paciente</dt><dd data-ver="paciente.nombres+paciente.apellidos">—</dd></div>
-                        <div class="registros-medicos-detail-item"><dt>Doctor</dt><dd data-ver="doctor.usuario.nombres+doctor.usuario.apellidos">—</dd></div>
-                        <div class="registros-medicos-detail-item"><dt>Fecha del registro</dt><dd data-ver="fecha_registro" data-formato="fechahora">—</dd></div>
-                        <div class="registros-medicos-detail-item"><dt>Cita asociada</dt><dd data-ver="cita.fecha_cita" data-formato="fecha">—</dd></div>
-                        <div class="registros-medicos-detail-item is-wide"><dt>Motivo de consulta</dt><dd data-ver="motivo_consulta">—</dd></div>
-                        <div class="registros-medicos-detail-item is-wide"><dt>Notas clínicas</dt><dd data-ver="notas_clinicas">—</dd></div>
-                        <div class="registros-medicos-detail-item is-wide"><dt>Observaciones</dt><dd data-ver="observaciones">—</dd></div>
-                        <div class="registros-medicos-detail-item"><dt>Peso</dt><dd data-ver="signos_vitales.peso">—</dd></div>
-                        <div class="registros-medicos-detail-item"><dt>Altura</dt><dd data-ver="signos_vitales.altura">—</dd></div>
-                        <div class="registros-medicos-detail-item"><dt>Temperatura</dt><dd data-ver="signos_vitales.temperatura">—</dd></div>
-                        <div class="registros-medicos-detail-item"><dt>Saturación O₂</dt><dd data-ver="signos_vitales.saturacion_oxigeno">—</dd></div>
-                        <div class="registros-medicos-detail-item"><dt>Frecuencia cardíaca</dt><dd data-ver="signos_vitales.frecuencia_cardiaca">—</dd></div>
-                        <div class="registros-medicos-detail-item"><dt>Frecuencia respiratoria</dt><dd data-ver="signos_vitales.frecuencia_respiratoria">—</dd></div>
-                        <div class="registros-medicos-detail-item"><dt>Presión</dt><dd data-ver="signos_vitales.presion_sistolica+signos_vitales.presion_diastolica">—</dd></div>
+                <div class="modal-body hw-modal-body">
+                    <dl class="hw-detail-grid">
+                        <div class="hw-detail-item"><dt>Paciente</dt><dd data-ver="paciente.nombres+paciente.apellidos">—</dd></div>
+                        <div class="hw-detail-item"><dt>Doctor</dt><dd data-ver="doctor.usuario.nombres+doctor.usuario.apellidos">—</dd></div>
+                        <div class="hw-detail-item"><dt>Fecha del registro</dt><dd data-ver="fecha_registro" data-formato="fechahora">—</dd></div>
+                        <div class="hw-detail-item"><dt>Cita asociada</dt><dd data-ver="cita.fecha_cita" data-formato="fecha">—</dd></div>
+                        <div class="hw-detail-item is-wide"><dt>Motivo de consulta</dt><dd data-ver="motivo_consulta">—</dd></div>
+                        <div class="hw-detail-item is-wide"><dt>Notas clínicas</dt><dd data-ver="notas_clinicas">—</dd></div>
+                        <div class="hw-detail-item is-wide"><dt>Observaciones</dt><dd data-ver="observaciones">—</dd></div>
+                        <div class="hw-detail-item"><dt>Peso</dt><dd data-ver="signos_vitales.peso">—</dd></div>
+                        <div class="hw-detail-item"><dt>Altura</dt><dd data-ver="signos_vitales.altura">—</dd></div>
+                        <div class="hw-detail-item"><dt>Temperatura</dt><dd data-ver="signos_vitales.temperatura">—</dd></div>
+                        <div class="hw-detail-item"><dt>Saturación O₂</dt><dd data-ver="signos_vitales.saturacion_oxigeno">—</dd></div>
+                        <div class="hw-detail-item"><dt>Frecuencia cardíaca</dt><dd data-ver="signos_vitales.frecuencia_cardiaca">—</dd></div>
+                        <div class="hw-detail-item"><dt>Frecuencia respiratoria</dt><dd data-ver="signos_vitales.frecuencia_respiratoria">—</dd></div>
+                        <div class="hw-detail-item"><dt>Presión</dt><dd data-ver="signos_vitales.presion_sistolica+signos_vitales.presion_diastolica">—</dd></div>
                     </dl>
                 </div>
 
-                <div class="registros-medicos-modal-footer">
+                <div class="hw-modal-footer">
                     <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
@@ -357,18 +368,18 @@
 
     {{-- MODAL: ELIMINAR --}}
     @if($puedeEliminar)
-    <div class="modal fade registros-medicos-modal registros-medicos-delete-modal" id="modalEliminar" tabindex="-1" aria-labelledby="tituloEliminar" aria-hidden="true">
+    <div class="modal fade hw-modal hw-delete-modal" id="modalEliminar" tabindex="-1" aria-labelledby="tituloEliminar" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="registros-medicos-delete-content">
-                    <div class="registros-medicos-delete-icon"><span class="material-symbols-outlined">delete</span></div>
+                <div class="hw-delete-content">
+                    <div class="hw-delete-icon"><span class="material-symbols-outlined">delete</span></div>
 
-                    <button type="button" class="registros-medicos-modal-close registros-medicos-delete-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="hw-modal-close hw-delete-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span class="material-symbols-outlined">close</span>
                     </button>
 
-                    <div class="registros-medicos-delete-heading">
-                        <span class="registros-medicos-delete-overline">Confirmación requerida</span>
+                    <div class="hw-delete-heading">
+                        <span class="hw-delete-overline">Confirmación requerida</span>
                         <h2 id="tituloEliminar">¿Eliminar este registro médico?</h2>
                         <p>Esta acción no se puede deshacer desde la interfaz.</p>
                     </div>
@@ -379,23 +390,23 @@
                         @method('DELETE')
                         <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
 
-                        <div class="registros-medicos-delete-identity">
-                            <div class="registros-medicos-delete-avatar"><span class="material-symbols-outlined">person</span></div>
-                            <div class="registros-medicos-delete-data">
-                                <span class="registros-medicos-delete-name" id="eliminar_nombre">—</span>
-                                <span class="registros-medicos-delete-sub" id="eliminar_sub">—</span>
-                                <span class="registros-medicos-delete-id">Identificador: #<span id="eliminar_id">—</span></span>
+                        <div class="hw-delete-identity">
+                            <div class="hw-delete-avatar"><span class="material-symbols-outlined">person</span></div>
+                            <div class="hw-delete-data">
+                                <span class="hw-delete-name" id="eliminar_nombre">—</span>
+                                <span class="hw-delete-sub" id="eliminar_sub">—</span>
+                                <span class="hw-delete-id">Identificador: #<span id="eliminar_id">—</span></span>
                             </div>
                         </div>
 
-                        <div class="registros-medicos-delete-notice">
+                        <div class="hw-delete-notice">
                             <span class="material-symbols-outlined">info</span>
                             <p>Los datos clínicos requieren trazabilidad. Confirma que la eliminación es correcta.</p>
                         </div>
 
-                        <div class="registros-medicos-delete-actions">
+                        <div class="hw-delete-actions">
                             <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Conservar</button>
-                            <button type="submit" class="btn registros-medicos-delete-confirm">
+                            <button type="submit" class="btn hw-delete-confirm">
                                 <span class="material-symbols-outlined">delete</span>
                                 Eliminar
                             </button>

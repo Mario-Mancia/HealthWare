@@ -56,7 +56,7 @@ const Usuarios = (() => {
 
 
     function obtenerCampo(formulario, nombre) {
-        return formulario.find(`[name="${nombre}"]`).filter(':visible').first();
+        return formulario.find(`[name="${String(nombre).replace(/\.([^.]+)/g, '[$1]')}"]`).filter(':visible').first();
     }
 
 
@@ -97,7 +97,7 @@ const Usuarios = (() => {
 
 
     function mostrarErrorCampo(formulario, nombre, mensaje) {
-        const campo = formulario.find(`[name="${nombre}"]`).filter(':visible').first();
+        const campo = formulario.find(`[name="${String(nombre).replace(/\.([^.]+)/g, '[$1]')}"]`).filter(':visible').first();
 
         if (!campo.length) {
             mostrarResumen(formulario, mensaje);

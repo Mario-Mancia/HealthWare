@@ -5,7 +5,6 @@
 
 @push('estilos')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="{{ asset('css/doctores.css') }}">
 @endpush
 
 @section('contenido')
@@ -19,23 +18,23 @@
         $fmtFecha = fn($v, $f = 'd/m/Y') => $v ? \Illuminate\Support\Carbon::parse($v)->format($f) : '—';
     @endphp
 
-    <div class="doctores-page">
+    <div class="hw-page">
 
         {{-- ENCABEZADO --}}
-        <header class="doctores-header">
-            <div class="doctores-heading">
-                <div class="doctores-heading-icon">
+        <header class="hw-header">
+            <div class="hw-heading">
+                <div class="hw-heading-icon">
                     <span class="material-symbols-outlined">medical_information</span>
                 </div>
                 <div>
-                    <h1 class="doctores-title">Doctores</h1>
-                    <p class="doctores-subtitle">Personal médico, especialidades y datos profesionales.</p>
+                    <h1 class="hw-title">Doctores</h1>
+                    <p class="hw-subtitle">Personal médico, especialidades y datos profesionales.</p>
                 </div>
             </div>
 
             @if($puedeCrear)
                 <button type="button"
-                        class="btn btn-primary doctores-create-button"
+                        class="btn btn-primary hw-create-button"
                         data-bs-toggle="modal"
                         data-bs-target="#modalNuevo">
                     <span class="material-symbols-outlined">add_circle</span>
@@ -46,41 +45,49 @@
 
 
         {{-- SUPERFICIE --}}
-        <section class="doctores-surface">
+        <section class="hw-surface">
 
-            <div class="doctores-surface-header">
+            <div class="hw-surface-header">
                 <div>
-                    <h2 class="doctores-surface-title">Directorio médico</h2>
-                    <p class="doctores-surface-description">Consulta los doctores registrados y sus especialidades.</p>
+                    <h2 class="hw-surface-title">Directorio médico</h2>
+                    <p class="hw-surface-description">Consulta los doctores registrados y sus especialidades.</p>
                 </div>
-                <div class="doctores-record-indicator">
+                <div class="hw-record-indicator">
                     <span class="material-symbols-outlined">database</span>
                     <span>{{ $lista->count() }} registros</span>
                 </div>
             </div>
 
             @if($lista->isEmpty())
-                <div class="doctores-empty">
+                <div class="hw-empty">
                     <span class="material-symbols-outlined">medical_information</span>
                     <h3>Aún no hay registros</h3>
                     <p>Cuando existan datos aparecerán aquí.</p>
                 </div>
             @else
-            <div class="doctores-toolbar">
+            <div class="hw-toolbar">
+                <div class="hw-search">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="search" class="form-control" data-hw-buscar placeholder="Buscar en la tabla…" aria-label="Buscar en la tabla" autocomplete="off">
+                    <button type="button" class="btn btn-icon hw-search-clear" data-hw-buscar-limpiar aria-label="Limpiar búsqueda">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
                 <select class="form-select" data-filtro-columna="2" aria-label="Filtrar por especialidad">
                     <option value="">Especialidad: todos</option>
                 </select>
                 <select class="form-select" data-filtro-columna="5" aria-label="Filtrar por sexo">
                     <option value="">Sexo: todos</option>
                 </select>
-                <button type="button" class="btn btn-text doctores-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
+                <span class="hw-toolbar-count" data-hw-contador></span>
+                <button type="button" class="btn btn-text hw-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
             </div>
 
-            <div class="table-responsive doctores-table-container">
-                <table id="tabla-doctores" class="table doctores-table align-middle mb-0" data-page-length="10">
+            <div class="table-responsive hw-table-container">
+                <table id="tabla-doctores" class="table hw-data-table align-middle mb-0" data-page-length="10">
                     <thead>
                         <tr>
-                            <th scope="col" class="doctores-column-id">ID</th>
+                            <th scope="col" class="hw-column-id">ID</th>
                             <th scope="col">Doctor</th>
                             <th scope="col">Especialidad</th>
                             <th scope="col">DUI</th>
@@ -92,30 +99,30 @@
                     <tbody>
                     @foreach($lista as $item)
                         <tr>
-                            <td class="doctores-id">#{{ $item->id }}</td>
+                            <td class="hw-id">#{{ $item->id }}</td>
                             <td>
-                              <div class="doctores-identity">
-                                <div class="doctores-avatar"><span class="material-symbols-outlined">person</span></div>
-                                <div class="doctores-identity-data">
-                                  <span class="doctores-fullname" data-filtro-valor>{{ ($item->usuario?->nombres ?? '') . ' ' . ($item->usuario?->apellidos ?? '') }}</span>
-                                  <span class="doctores-identity-caption">{{ \Illuminate\Support\Str::limit((string) ($item->usuario?->correo ?? ""), 60) }}</span>
+                              <div class="hw-identity">
+                                <div class="hw-avatar"><span class="material-symbols-outlined">person</span></div>
+                                <div class="hw-identity-data">
+                                  <span class="hw-fullname" data-filtro-valor>{{ ($item->usuario?->nombres ?? '') . ' ' . ($item->usuario?->apellidos ?? '') }}</span>
+                                  <span class="hw-identity-caption">{{ \Illuminate\Support\Str::limit((string) ($item->usuario?->correo ?? ""), 60) }}</span>
                                 </div>
                               </div>
                             </td>
-                            <td><span class="doctores-chip" data-filtro-valor>{{ $item->especialidad?->especialidad ?? "N/A" }}</span></td>
-                            <td class="doctores-mono">{{ $item->dui ?? "—" }}</td>
-                            <td class="doctores-mono">{{ $item->numero_licencia ?? "—" }}</td>
+                            <td><span class="hw-chip" data-filtro-valor>{{ $item->especialidad?->especialidad ?? "N/A" }}</span></td>
+                            <td class="hw-mono">{{ $item->dui ?? "—" }}</td>
+                            <td class="hw-mono">{{ $item->numero_licencia ?? "—" }}</td>
                             <td><span data-filtro-valor>{{ $item->sexo === 'M' ? 'Masculino' : 'Femenino' }}</span></td>
                             <td>
-                                <div class="doctores-actions">
-                                    <button type="button" class="doctores-action-button"
+                                <div class="hw-actions">
+                                    <button type="button" class="hw-action-button"
                                             data-bs-toggle="modal" data-bs-target="#modalVer"
                                             data-id="{{ $item->id }}"
                                             title="Consultar doctor" aria-label="Consultar doctor">
                                         <span class="material-symbols-outlined">visibility</span>
                                     </button>
                                     @if($puedeEditar)
-                                        <button type="button" class="doctores-action-button"
+                                        <button type="button" class="hw-action-button"
                                                 data-bs-toggle="modal" data-bs-target="#modalEditar"
                                                 data-id="{{ $item->id }}"
                                                 title="Editar doctor" aria-label="Editar doctor">
@@ -129,6 +136,10 @@
                     </tbody>
                 </table>
             </div>
+            <div class="hw-no-results">
+                <span class="material-symbols-outlined">search_off</span>
+                No se encontraron coincidencias con la búsqueda.
+            </div>
             @endif
 
         </section>
@@ -136,18 +147,18 @@
 
     {{-- MODAL: NUEVO --}}
     @if($puedeCrear)
-    <div class="modal fade doctores-modal" id="modalNuevo" tabindex="-1" aria-labelledby="tituloNuevo" aria-hidden="true">
+    <div class="modal fade hw-modal" id="modalNuevo" tabindex="-1" aria-labelledby="tituloNuevo" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="doctores-modal-header">
-                    <div class="doctores-modal-heading">
-                        <div class="doctores-modal-icon"><span class="material-symbols-outlined">add_circle</span></div>
+                <div class="hw-modal-header">
+                    <div class="hw-modal-heading">
+                        <div class="hw-modal-icon"><span class="material-symbols-outlined">add_circle</span></div>
                         <div>
-                            <h2 class="doctores-modal-title" id="tituloNuevo">Registrar doctor</h2>
-                            <p class="doctores-modal-subtitle">Completa la información solicitada.</p>
+                            <h2 class="hw-modal-title" id="tituloNuevo">Registrar doctor</h2>
+                            <p class="hw-modal-subtitle">Completa la información solicitada.</p>
                         </div>
                     </div>
-                    <button type="button" class="doctores-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="hw-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
@@ -156,9 +167,9 @@
                     @csrf
                     <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
 
-                    <div class="modal-body doctores-modal-body">
-                        <div class="doctores-form-section">
-                          <div class="doctores-form-section-heading">
+                    <div class="modal-body hw-modal-body">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">manage_accounts</span>
                             <div>
                               <h3>Cuenta y especialidad</h3>
@@ -190,8 +201,8 @@
                             </div>
                           </div>
                         </div>
-                        <div class="doctores-form-section">
-                          <div class="doctores-form-section-heading">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">badge</span>
                             <div>
                               <h3>Datos profesionales</h3>
@@ -232,13 +243,13 @@
                                 <textarea name="descripcion_profesional" id="nuevo_descripcion_profesional" class="form-control" placeholder="Descripción profesional"></textarea>
                                 <label for="nuevo_descripcion_profesional">Descripción profesional</label>
                               </div>
-                              <div class="doctores-field-hint">Experiencia, enfoque o información relevante.</div>
+                              <div class="hw-field-hint">Experiencia, enfoque o información relevante.</div>
                             </div>
                           </div>
                         </div>
                     </div>
 
-                    <div class="doctores-modal-footer">
+                    <div class="hw-modal-footer">
                         <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">
                             <span class="material-symbols-outlined">save</span>
@@ -253,18 +264,18 @@
 
     {{-- MODAL: EDITAR --}}
     @if($puedeEditar)
-    <div class="modal fade doctores-modal" id="modalEditar" tabindex="-1" aria-labelledby="tituloEditar" aria-hidden="true">
+    <div class="modal fade hw-modal" id="modalEditar" tabindex="-1" aria-labelledby="tituloEditar" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="doctores-modal-header">
-                    <div class="doctores-modal-heading">
-                        <div class="doctores-modal-icon"><span class="material-symbols-outlined">edit</span></div>
+                <div class="hw-modal-header">
+                    <div class="hw-modal-heading">
+                        <div class="hw-modal-icon"><span class="material-symbols-outlined">edit</span></div>
                         <div>
-                            <h2 class="doctores-modal-title" id="tituloEditar">Editar doctor #<span id="editarTituloId">—</span></h2>
-                            <p class="doctores-modal-subtitle">Actualiza la información y guarda los cambios.</p>
+                            <h2 class="hw-modal-title" id="tituloEditar">Editar doctor #<span id="editarTituloId">—</span></h2>
+                            <p class="hw-modal-subtitle">Actualiza la información y guarda los cambios.</p>
                         </div>
                     </div>
-                    <button type="button" class="doctores-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="hw-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
@@ -277,9 +288,9 @@
                     @method('PUT')
                     <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
 
-                    <div class="modal-body doctores-modal-body">
-                        <div class="doctores-form-section">
-                          <div class="doctores-form-section-heading">
+                    <div class="modal-body hw-modal-body">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">manage_accounts</span>
                             <div>
                               <h3>Cuenta y especialidad</h3>
@@ -311,8 +322,8 @@
                             </div>
                           </div>
                         </div>
-                        <div class="doctores-form-section">
-                          <div class="doctores-form-section-heading">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">badge</span>
                             <div>
                               <h3>Datos profesionales</h3>
@@ -353,13 +364,13 @@
                                 <textarea name="descripcion_profesional" id="editar_descripcion_profesional" class="form-control" placeholder="Descripción profesional"></textarea>
                                 <label for="editar_descripcion_profesional">Descripción profesional</label>
                               </div>
-                              <div class="doctores-field-hint">Experiencia, enfoque o información relevante.</div>
+                              <div class="hw-field-hint">Experiencia, enfoque o información relevante.</div>
                             </div>
                           </div>
                         </div>
                     </div>
 
-                    <div class="doctores-modal-footer">
+                    <div class="hw-modal-footer">
                         <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">
                             <span class="material-symbols-outlined">save</span>
@@ -373,39 +384,39 @@
     @endif
 
     {{-- MODAL: CONSULTA --}}
-    <div class="modal fade doctores-modal" id="modalVer" tabindex="-1" aria-labelledby="tituloVer" aria-hidden="true"
+    <div class="modal fade hw-modal" id="modalVer" tabindex="-1" aria-labelledby="tituloVer" aria-hidden="true"
          data-buscar-url="{{ route('doctores.buscar', ['id' => '__ID__']) }}">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="doctores-modal-header">
-                    <div class="doctores-modal-heading">
-                        <div class="doctores-modal-icon"><span class="material-symbols-outlined">visibility</span></div>
+                <div class="hw-modal-header">
+                    <div class="hw-modal-heading">
+                        <div class="hw-modal-icon"><span class="material-symbols-outlined">visibility</span></div>
                         <div>
-                            <h2 class="doctores-modal-title" id="tituloVer">Detalle de doctor</h2>
-                            <p class="doctores-modal-subtitle">Información completa del registro.</p>
+                            <h2 class="hw-modal-title" id="tituloVer">Detalle de doctor</h2>
+                            <p class="hw-modal-subtitle">Información completa del registro.</p>
                         </div>
                     </div>
-                    <button type="button" class="doctores-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="hw-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
 
                 <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
 
-                <div class="modal-body doctores-modal-body">
-                    <dl class="doctores-detail-grid">
-                        <div class="doctores-detail-item"><dt>Doctor</dt><dd data-ver="usuario.nombres+usuario.apellidos">—</dd></div>
-                        <div class="doctores-detail-item"><dt>Correo</dt><dd data-ver="usuario.correo">—</dd></div>
-                        <div class="doctores-detail-item"><dt>Especialidad</dt><dd data-ver="especialidad.especialidad">—</dd></div>
-                        <div class="doctores-detail-item"><dt>DUI</dt><dd data-ver="dui">—</dd></div>
-                        <div class="doctores-detail-item"><dt>Licencia</dt><dd data-ver="numero_licencia">—</dd></div>
-                        <div class="doctores-detail-item"><dt>Fecha de nacimiento</dt><dd data-ver="fecha_nacimiento" data-formato="fecha">—</dd></div>
-                        <div class="doctores-detail-item"><dt>Sexo</dt><dd data-ver="sexo" data-formato="sexo">—</dd></div>
-                        <div class="doctores-detail-item is-wide"><dt>Descripción profesional</dt><dd data-ver="descripcion_profesional">—</dd></div>
+                <div class="modal-body hw-modal-body">
+                    <dl class="hw-detail-grid">
+                        <div class="hw-detail-item"><dt>Doctor</dt><dd data-ver="usuario.nombres+usuario.apellidos">—</dd></div>
+                        <div class="hw-detail-item"><dt>Correo</dt><dd data-ver="usuario.correo">—</dd></div>
+                        <div class="hw-detail-item"><dt>Especialidad</dt><dd data-ver="especialidad.especialidad">—</dd></div>
+                        <div class="hw-detail-item"><dt>DUI</dt><dd data-ver="dui">—</dd></div>
+                        <div class="hw-detail-item"><dt>Licencia</dt><dd data-ver="numero_licencia">—</dd></div>
+                        <div class="hw-detail-item"><dt>Fecha de nacimiento</dt><dd data-ver="fecha_nacimiento" data-formato="fecha">—</dd></div>
+                        <div class="hw-detail-item"><dt>Sexo</dt><dd data-ver="sexo" data-formato="sexo">—</dd></div>
+                        <div class="hw-detail-item is-wide"><dt>Descripción profesional</dt><dd data-ver="descripcion_profesional">—</dd></div>
                     </dl>
                 </div>
 
-                <div class="doctores-modal-footer">
+                <div class="hw-modal-footer">
                     <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>

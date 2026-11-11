@@ -4,30 +4,43 @@
 
 @push('estilos')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="{{ asset('css/usuarios.css') }}">
 @endpush
 
 @section('contenido')
 
-    <div class="usuarios-page">
+    @php
+        // Especialidades para el perfil del médico (si el controlador no las envía, se consultan aquí)
+        $especialidadesMedico = collect();
+        try {
+            $especialidadesMedico = $especialidades ?? (
+                class_exists(\App\Models\Especialidad::class)
+                    ? \App\Models\Especialidad::query()->orderBy('especialidad')->get()
+                    : collect()
+            );
+        } catch (\Throwable $e) {
+            $especialidadesMedico = collect();
+        }
+    @endphp
+
+    <div class="hw-page">
 
         {{-- ENCABEZADO --}}
-        <header class="usuarios-header">
-            <div class="usuarios-heading">
-                <div class="usuarios-heading-icon">
+        <header class="hw-header">
+            <div class="hw-heading">
+                <div class="hw-heading-icon">
                     <span class="material-symbols-outlined">group</span>
                 </div>
 
                 <div>
-                    <h1 class="usuarios-title">Usuarios del sistema</h1>
-                    <p class="usuarios-subtitle">
+                    <h1 class="hw-title">Usuarios del sistema</h1>
+                    <p class="hw-subtitle">
                         Administración de cuentas y permisos de acceso.
                     </p>
                 </div>
             </div>
 
             <button type="button"
-                    class="btn btn-primary usuarios-create-button"
+                    class="btn btn-primary hw-create-button"
                     data-bs-toggle="modal"
                     data-bs-target="#modalNuevoUsuario">
 
@@ -38,17 +51,17 @@
 
 
         {{-- SUPERFICIE DE USUARIOS --}}
-        <section class="usuarios-surface">
+        <section class="hw-surface">
 
-            <div class="usuarios-surface-header">
+            <div class="hw-surface-header">
                 <div>
-                    <h2 class="usuarios-surface-title">Directorio de usuarios</h2>
-                    <p class="usuarios-surface-description">
+                    <h2 class="hw-surface-title">Directorio de usuarios</h2>
+                    <p class="hw-surface-description">
                         Consulta y administra las cuentas registradas en HealthWare.
                     </p>
                 </div>
 
-                <div class="usuarios-record-indicator">
+                <div class="hw-record-indicator">
                     <span class="material-symbols-outlined">database</span>
                     <span>{{ $usuarios->count() }} registros</span>
                 </div>
@@ -56,15 +69,33 @@
 
 
             {{-- TABLA --}}
-            <div class="table-responsive usuarios-table-container">
+            <div class="hw-toolbar">
+                <div class="hw-search">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="search" class="form-control" data-hw-buscar placeholder="Buscar en la tabla…" aria-label="Buscar en la tabla" autocomplete="off">
+                    <button type="button" class="btn btn-icon hw-search-clear" data-hw-buscar-limpiar aria-label="Limpiar búsqueda">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <select class="form-select" data-hw-filtro-columna="3" aria-label="Filtrar por rol">
+                    <option value="">Rol: todos</option>
+                </select>
+                <select class="form-select" data-hw-filtro-columna="4" aria-label="Filtrar por estado">
+                    <option value="">Estado: todos</option>
+                </select>
+                <span class="hw-toolbar-count" data-hw-contador></span>
+                <button type="button" class="btn btn-text hw-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
+            </div>
+
+            <div class="table-responsive hw-table-container">
 
                 <table id="tbl"
-                       class="table usuarios-table align-middle mb-0"
+                       class="table hw-data-table align-middle mb-0"
                        data-page-length="10">
 
                     <thead>
                     <tr>
-                        <th scope="col" class="usuarios-column-id">ID</th>
+                        <th scope="col" class="hw-column-id">ID</th>
                         <th scope="col">Usuario</th>
                         <th scope="col">Correo electrónico</th>
                         <th scope="col">Rol</th>
@@ -78,27 +109,27 @@
 
                         <tr>
                             {{-- IDENTIFICADOR --}}
-                            <td class="usuarios-id">
+                            <td class="hw-id">
                                 #{{ $usuario->id }}
                             </td>
 
 
                             {{-- IDENTIDAD --}}
                             <td>
-                                <div class="usuarios-identity">
-                                    <div class="usuarios-avatar">
+                                <div class="hw-identity">
+                                    <div class="hw-avatar">
                                             <span class="material-symbols-outlined">
                                                 person
                                             </span>
                                     </div>
 
-                                    <div class="usuarios-identity-data">
-                                            <span class="usuarios-fullname">
+                                    <div class="hw-identity-data">
+                                            <span class="hw-fullname">
                                                 {{ $usuario->nombres }}
                                                 {{ $usuario->apellidos }}
                                             </span>
 
-                                        <span class="usuarios-identity-caption">
+                                        <span class="hw-identity-caption">
                                                 Cuenta de HealthWare
                                             </span>
                                     </div>
@@ -107,14 +138,14 @@
 
 
                             {{-- CORREO --}}
-                            <td class="usuarios-email">
+                            <td class="hw-email">
                                 {{ $usuario->correo }}
                             </td>
 
 
                             {{-- ROL --}}
                             <td>
-                                    <span class="usuarios-role">
+                                    <span class="hw-role">
                                         {{ $usuario->rol?->rol ?? 'N/A' }}
                                     </span>
                             </td>
@@ -123,19 +154,19 @@
                             {{-- ESTADO --}}
                             <td>
                                 @if($usuario->id_estado === 1)
-                                    <span class="usuarios-status usuarios-status-active">
-                                            <span class="usuarios-status-dot"></span>
+                                    <span class="hw-status hw-status-active">
+                                            <span class="hw-status-dot"></span>
                                             {{ $usuario->estado?->estado ?? 'Activo' }}
                                         </span>
 
                                 @elseif($usuario->id_estado === 2)
-                                    <span class="usuarios-status usuarios-status-inactive">
-                                            <span class="usuarios-status-dot"></span>
+                                    <span class="hw-status hw-status-inactive">
+                                            <span class="hw-status-dot"></span>
                                             {{ $usuario->estado?->estado ?? 'Inactivo' }}
                                         </span>
 
                                 @else
-                                    <span class="usuarios-status usuarios-status-deleted">
+                                    <span class="hw-status hw-status-deleted">
                                             <span class="material-symbols-outlined">
                                                 person_off
                                             </span>
@@ -147,13 +178,13 @@
 
                             {{-- ACCIONES --}}
                             <td>
-                                <div class="usuarios-actions">
+                                <div class="hw-actions">
 
                                     @if($usuario->id_estado !== \App\Models\Usuario::ESTADO_ELIMINADO)
 
                                         {{-- EDITAR --}}
                                         <button type="button"
-                                                class="usuarios-action-button"
+                                                class="hw-action-button"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalModificarUsuario"
                                                 data-id="{{ $usuario->id }}"
@@ -168,7 +199,7 @@
 
                                         {{-- ELIMINAR --}}
                                         <button type="button"
-                                                class="usuarios-action-button usuarios-action-delete"
+                                                class="hw-action-button hw-action-delete"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalEliminarUsuario"
                                                 data-id="{{ $usuario->id }}"
@@ -184,7 +215,7 @@
 
                                     @else
 
-                                        <span class="usuarios-deleted-label">
+                                        <span class="hw-deleted-label">
                                                 <span class="material-symbols-outlined">
                                                     lock
                                                 </span>
@@ -204,6 +235,10 @@
                 </table>
 
             </div>
+            <div class="hw-no-results">
+                <span class="material-symbols-outlined">search_off</span>
+                No se encontraron coincidencias con la búsqueda.
+            </div>
 
         </section>
 
@@ -213,7 +248,7 @@
     {{-- =========================================================
          MODAL: NUEVO USUARIO
     ========================================================== --}}
-    <div class="modal fade usuarios-modal"
+    <div class="modal fade hw-modal"
          id="modalNuevoUsuario"
          tabindex="-1"
          aria-labelledby="tituloNuevoUsuario"
@@ -223,26 +258,26 @@
 
             <div class="modal-content">
 
-                <div class="usuarios-modal-header">
+                <div class="hw-modal-header">
 
-                    <div class="usuarios-modal-heading">
-                        <div class="usuarios-modal-icon">
+                    <div class="hw-modal-heading">
+                        <div class="hw-modal-icon">
                             <span class="material-symbols-outlined">person_add</span>
                         </div>
 
                         <div>
-                            <h2 class="usuarios-modal-title" id="tituloNuevoUsuario">
+                            <h2 class="hw-modal-title" id="tituloNuevoUsuario">
                                 Registrar usuario
                             </h2>
 
-                            <p class="usuarios-modal-subtitle">
+                            <p class="hw-modal-subtitle">
                                 Crea una cuenta para acceder al sistema.
                             </p>
                         </div>
                     </div>
 
                     <button type="button"
-                            class="usuarios-modal-close"
+                            class="hw-modal-close"
                             data-bs-dismiss="modal"
                             aria-label="Cerrar">
 
@@ -267,12 +302,12 @@
                         data-form-errors
                     ></div>
 
-                    <div class="modal-body usuarios-modal-body">
+                    <div class="modal-body hw-modal-body">
 
                         {{-- INFORMACIÓN DE LA CUENTA --}}
-                        <div class="usuarios-form-section">
+                        <div class="hw-form-section">
 
-                            <div class="usuarios-form-section-heading">
+                            <div class="hw-form-section-heading">
                                 <span class="material-symbols-outlined">
                                     manage_accounts
                                 </span>
@@ -299,7 +334,7 @@
                                             </option>
 
                                             @foreach($roles as $rol)
-                                                <option value="{{ $rol->id }}"
+                                                <option value="{{ $rol->id }}" data-rol="{{ \Illuminate\Support\Str::of($rol->rol)->ascii()->lower() }}"
                                                     {{ old('id_rol') == $rol->id ? 'selected' : '' }}>
                                                     {{ $rol->rol }}
                                                 </option>
@@ -315,25 +350,25 @@
                                 {{-- ESTADO: SWITCH --}}
                                 <div class="col-md-6">
 
-                                    <div class="usuarios-switch-container">
+                                    <div class="hw-switch-container">
 
-                                        <div class="usuarios-switch-information">
+                                        <div class="hw-switch-information">
                                             <span class="material-symbols-outlined">
                                                 toggle_on
                                             </span>
 
                                             <div>
-                                                <span class="usuarios-switch-title">
+                                                <span class="hw-switch-title">
                                                     Acceso a la plataforma
                                                 </span>
 
-                                                <span class="usuarios-switch-description">
+                                                <span class="hw-switch-description">
                                                     Activar o desactivar la cuenta.
                                                 </span>
                                             </div>
                                         </div>
 
-                                        <div class="form-check form-switch usuarios-switch">
+                                        <div class="form-check form-switch hw-switch">
                                             <input type="hidden"
                                                    name="id_estado"
                                                    value="2">
@@ -362,9 +397,9 @@
 
 
                         {{-- INFORMACIÓN PERSONAL --}}
-                        <div class="usuarios-form-section">
+                        <div class="hw-form-section">
 
-                            <div class="usuarios-form-section-heading">
+                            <div class="hw-form-section-heading">
                                 <span class="material-symbols-outlined">
                                     badge
                                 </span>
@@ -434,7 +469,7 @@
                                 {{-- TELÉFONO --}}
                                 <div class="col-md-6">
 
-                                    <div class="input-group usuarios-phone-field">
+                                    <div class="input-group hw-phone-field">
                                         <span class="input-group-text">+503</span>
 
                                         <input type="tel"
@@ -453,10 +488,84 @@
                         </div>
 
 
-                        {{-- SEGURIDAD --}}
-                        <div class="usuarios-form-section">
+                        {{-- PERFIL PROFESIONAL (solo si el rol es Médico) --}}
+                        <div class="hw-form-section hw-section-collapsible" data-doctor-section hidden>
 
-                            <div class="usuarios-form-section-heading">
+                            <div class="hw-form-section-heading">
+                                <span class="material-symbols-outlined">stethoscope</span>
+
+                                <div>
+                                    <h3>Perfil profesional del médico</h3>
+                                    <p>Se registra junto con la cuenta; sin este perfil el médico no podría usar sus funciones.</p>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select name="doctor[especialidad_id]" id="nuevo_doctor_especialidad_id" class="form-select" disabled>
+                                            <option value="" selected></option>
+                                            @foreach($especialidadesMedico as $especialidadMedico)
+                                                <option value="{{ $especialidadMedico->id }}">{{ $especialidadMedico->especialidad }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="nuevo_doctor_especialidad_id">Especialidad</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" name="doctor[numero_licencia]" id="nuevo_doctor_numero_licencia"
+                                               class="form-control" placeholder="Número de licencia" maxlength="50" disabled>
+                                        <label for="nuevo_doctor_numero_licencia">Número de licencia</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" name="doctor[dui]" id="nuevo_doctor_dui"
+                                               class="form-control" placeholder="DUI" maxlength="10" inputmode="numeric" disabled>
+                                        <label for="nuevo_doctor_dui">DUI</label>
+                                    </div>
+                                    <div class="hw-field-hint">Formato 00000000-0.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="date" name="doctor[fecha_nacimiento]" id="nuevo_doctor_fecha_nacimiento"
+                                               class="form-control" placeholder="Fecha de nacimiento" disabled>
+                                        <label for="nuevo_doctor_fecha_nacimiento">Fecha de nacimiento</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select name="doctor[sexo]" id="nuevo_doctor_sexo" class="form-select" disabled>
+                                            <option value="" selected></option>
+                                            <option value="M">Masculino</option>
+                                            <option value="F">Femenino</option>
+                                        </select>
+                                        <label for="nuevo_doctor_sexo">Sexo</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <textarea name="doctor[descripcion_profesional]" id="nuevo_doctor_descripcion_profesional"
+                                                  class="form-control" placeholder="Descripción profesional" maxlength="500" disabled></textarea>
+                                        <label for="nuevo_doctor_descripcion_profesional">Descripción profesional (opcional)</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {{-- SEGURIDAD --}}
+                        <div class="hw-form-section">
+
+                            <div class="hw-form-section-heading">
                                 <span class="material-symbols-outlined">
                                     shield_lock
                                 </span>
@@ -514,7 +623,7 @@
                     </div>
 
 
-                    <div class="usuarios-modal-footer">
+                    <div class="hw-modal-footer">
 
                         <button type="button"
                                 class="btn btn-tonal"
@@ -541,7 +650,7 @@
     {{-- =========================================================
          MODAL: MODIFICAR USUARIO
     ========================================================== --}}
-    <div class="modal fade usuarios-modal"
+    <div class="modal fade hw-modal"
          id="modalModificarUsuario"
          tabindex="-1"
          aria-labelledby="tituloModificarUsuario"
@@ -551,26 +660,26 @@
 
             <div class="modal-content">
 
-                <div class="usuarios-modal-header">
+                <div class="hw-modal-header">
 
-                    <div class="usuarios-modal-heading">
-                        <div class="usuarios-modal-icon">
+                    <div class="hw-modal-heading">
+                        <div class="hw-modal-icon">
                             <span class="material-symbols-outlined">manage_accounts</span>
                         </div>
 
                         <div>
-                            <h2 class="usuarios-modal-title" id="tituloModificarUsuario">
+                            <h2 class="hw-modal-title" id="tituloModificarUsuario">
                                 Modificar usuario
                             </h2>
 
-                            <p class="usuarios-modal-subtitle">
+                            <p class="hw-modal-subtitle">
                                 Actualiza la información y los permisos de la cuenta.
                             </p>
                         </div>
                     </div>
 
                     <button type="button"
-                            class="usuarios-modal-close"
+                            class="hw-modal-close"
                             data-bs-dismiss="modal"
                             aria-label="Cerrar">
 
@@ -597,12 +706,12 @@
                         data-form-errors
                     ></div>
 
-                    <div class="modal-body usuarios-modal-body">
+                    <div class="modal-body hw-modal-body">
 
                         {{-- CUENTA --}}
-                        <div class="usuarios-form-section">
+                        <div class="hw-form-section">
 
-                            <div class="usuarios-form-section-heading">
+                            <div class="hw-form-section-heading">
                                 <span class="material-symbols-outlined">
                                     admin_panel_settings
                                 </span>
@@ -625,7 +734,7 @@
                                                 required>
 
                                             @foreach($roles as $rol)
-                                                <option value="{{ $rol->id }}">
+                                                <option value="{{ $rol->id }}" data-rol="{{ \Illuminate\Support\Str::of($rol->rol)->ascii()->lower() }}">
                                                     {{ $rol->rol }}
                                                 </option>
                                             @endforeach
@@ -663,9 +772,9 @@
 
 
                         {{-- DATOS PERSONALES --}}
-                        <div class="usuarios-form-section">
+                        <div class="hw-form-section">
 
-                            <div class="usuarios-form-section-heading">
+                            <div class="hw-form-section-heading">
                                 <span class="material-symbols-outlined">
                                     badge
                                 </span>
@@ -728,7 +837,7 @@
                                         Teléfono
                                     </label>
 
-                                    <div class="input-group usuarios-phone-field">
+                                    <div class="input-group hw-phone-field">
                                         <span class="input-group-text">+503</span>
 
                                         <input type="tel"
@@ -746,10 +855,84 @@
                         </div>
 
 
-                        {{-- SEGURIDAD --}}
-                        <div class="usuarios-form-section">
+                        {{-- PERFIL PROFESIONAL (solo si el rol es Médico) --}}
+                        <div class="hw-form-section hw-section-collapsible" data-doctor-section hidden>
 
-                            <div class="usuarios-form-section-heading">
+                            <div class="hw-form-section-heading">
+                                <span class="material-symbols-outlined">stethoscope</span>
+
+                                <div>
+                                    <h3>Perfil profesional del médico</h3>
+                                    <p>Se registra junto con la cuenta; sin este perfil el médico no podría usar sus funciones.</p>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select name="doctor[especialidad_id]" id="editar_doctor_especialidad_id" class="form-select" disabled>
+                                            <option value="" selected></option>
+                                            @foreach($especialidadesMedico as $especialidadMedico)
+                                                <option value="{{ $especialidadMedico->id }}">{{ $especialidadMedico->especialidad }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="editar_doctor_especialidad_id">Especialidad</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" name="doctor[numero_licencia]" id="editar_doctor_numero_licencia"
+                                               class="form-control" placeholder="Número de licencia" maxlength="50" disabled>
+                                        <label for="editar_doctor_numero_licencia">Número de licencia</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" name="doctor[dui]" id="editar_doctor_dui"
+                                               class="form-control" placeholder="DUI" maxlength="10" inputmode="numeric" disabled>
+                                        <label for="editar_doctor_dui">DUI</label>
+                                    </div>
+                                    <div class="hw-field-hint">Formato 00000000-0.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="date" name="doctor[fecha_nacimiento]" id="editar_doctor_fecha_nacimiento"
+                                               class="form-control" placeholder="Fecha de nacimiento" disabled>
+                                        <label for="editar_doctor_fecha_nacimiento">Fecha de nacimiento</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select name="doctor[sexo]" id="editar_doctor_sexo" class="form-select" disabled>
+                                            <option value="" selected></option>
+                                            <option value="M">Masculino</option>
+                                            <option value="F">Femenino</option>
+                                        </select>
+                                        <label for="editar_doctor_sexo">Sexo</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <textarea name="doctor[descripcion_profesional]" id="editar_doctor_descripcion_profesional"
+                                                  class="form-control" placeholder="Descripción profesional" maxlength="500" disabled></textarea>
+                                        <label for="editar_doctor_descripcion_profesional">Descripción profesional (opcional)</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {{-- SEGURIDAD --}}
+                        <div class="hw-form-section">
+
+                            <div class="hw-form-section-heading">
                                 <span class="material-symbols-outlined">
                                     shield_lock
                                 </span>
@@ -777,7 +960,7 @@
                                         </label>
                                     </div>
 
-                                    <div class="usuarios-field-hint">
+                                    <div class="hw-field-hint">
                                         Déjalo en blanco para conservar la contraseña actual.
                                     </div>
                                 </div>
@@ -805,7 +988,7 @@
                     </div>
 
 
-                    <div class="usuarios-modal-footer">
+                    <div class="hw-modal-footer">
 
                         <button type="button"
                                 class="btn btn-tonal"
@@ -832,7 +1015,7 @@
     {{-- =========================================================
          MODAL: ELIMINAR USUARIO
     ========================================================== --}}
-    <div class="modal fade usuarios-modal usuarios-delete-modal"
+    <div class="modal fade hw-modal hw-delete-modal"
          id="modalEliminarUsuario"
          tabindex="-1"
          aria-labelledby="tituloEliminarUsuario"
@@ -842,14 +1025,14 @@
 
             <div class="modal-content">
 
-                <div class="usuarios-delete-content">
+                <div class="hw-delete-content">
 
-                    <div class="usuarios-delete-icon">
+                    <div class="hw-delete-icon">
                         <span class="material-symbols-outlined">person_remove</span>
                     </div>
 
                     <button type="button"
-                            class="usuarios-modal-close usuarios-delete-close"
+                            class="hw-modal-close hw-delete-close"
                             data-bs-dismiss="modal"
                             aria-label="Cerrar">
 
@@ -857,8 +1040,8 @@
                     </button>
 
 
-                    <div class="usuarios-delete-heading">
-                        <span class="usuarios-delete-overline">
+                    <div class="hw-delete-heading">
+                        <span class="hw-delete-overline">
                             Acción irreversible para el acceso
                         </span>
 
@@ -889,24 +1072,24 @@
                             data-form-errors
                         ></div>
 
-                        <div class="usuarios-delete-identity">
+                        <div class="hw-delete-identity">
 
-                            <div class="usuarios-delete-avatar">
+                            <div class="hw-delete-avatar">
                                 <span class="material-symbols-outlined">
                                     account_circle
                                 </span>
                             </div>
 
-                            <div class="usuarios-delete-data">
-                                <span class="usuarios-delete-name" id="eliminar_nombre">
+                            <div class="hw-delete-data">
+                                <span class="hw-delete-name" id="eliminar_nombre">
                                     —
                                 </span>
 
-                                <span class="usuarios-delete-email" id="eliminar_correo">
+                                <span class="hw-delete-email" id="eliminar_correo">
                                     —
                                 </span>
 
-                                <span class="usuarios-delete-id">
+                                <span class="hw-delete-id">
                                     Identificador: #<span id="eliminar_id">—</span>
                                 </span>
                             </div>
@@ -914,7 +1097,7 @@
                         </div>
 
 
-                        <div class="usuarios-delete-notice">
+                        <div class="hw-delete-notice">
                             <span class="material-symbols-outlined">
                                 info
                             </span>
@@ -927,7 +1110,7 @@
                         </div>
 
 
-                        <div class="usuarios-delete-actions">
+                        <div class="hw-delete-actions">
 
                             <button type="button"
                                     class="btn btn-tonal"
@@ -936,7 +1119,7 @@
                             </button>
 
                             <button type="submit"
-                                    class="btn usuarios-delete-confirm">
+                                    class="btn hw-delete-confirm">
                                 <span class="material-symbols-outlined">
                                     delete
                                 </span>
@@ -960,4 +1143,5 @@
 
 @push('scripts')
     <script src="{{ asset('js/usuario/usuarios.js') }}"></script>
+    <script src="{{ asset('js/usuario/usuarios-medico.js') }}"></script>
 @endpush

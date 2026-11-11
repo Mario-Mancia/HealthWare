@@ -5,7 +5,6 @@
 
 @push('estilos')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="{{ asset('css/recetas.css') }}">
 @endpush
 
 @section('contenido')
@@ -19,55 +18,63 @@
         $fmtFecha = fn($v, $f = 'd/m/Y') => $v ? \Illuminate\Support\Carbon::parse($v)->format($f) : '—';
     @endphp
 
-    <div class="recetas-page">
+    <div class="hw-page">
 
         {{-- ENCABEZADO --}}
-        <header class="recetas-header">
-            <div class="recetas-heading">
-                <div class="recetas-heading-icon">
+        <header class="hw-header">
+            <div class="hw-heading">
+                <div class="hw-heading-icon">
                     <span class="material-symbols-outlined">prescriptions</span>
                 </div>
                 <div>
-                    <h1 class="recetas-title">Recetas médicas</h1>
-                    <p class="recetas-subtitle">Consulta de recetas emitidas y sus medicamentos.</p>
+                    <h1 class="hw-title">Recetas médicas</h1>
+                    <p class="hw-subtitle">Consulta de recetas emitidas y sus medicamentos.</p>
                 </div>
             </div>
         </header>
 
 
         {{-- SUPERFICIE --}}
-        <section class="recetas-surface">
+        <section class="hw-surface">
 
-            <div class="recetas-surface-header">
+            <div class="hw-surface-header">
                 <div>
-                    <h2 class="recetas-surface-title">Recetas emitidas</h2>
-                    <p class="recetas-surface-description">Consulta cada receta y el detalle de sus medicamentos.</p>
+                    <h2 class="hw-surface-title">Recetas emitidas</h2>
+                    <p class="hw-surface-description">Consulta cada receta y el detalle de sus medicamentos.</p>
                 </div>
-                <div class="recetas-record-indicator">
+                <div class="hw-record-indicator">
                     <span class="material-symbols-outlined">database</span>
                     <span>{{ $lista->count() }} registros</span>
                 </div>
             </div>
 
             @if($lista->isEmpty())
-                <div class="recetas-empty">
+                <div class="hw-empty">
                     <span class="material-symbols-outlined">prescriptions</span>
                     <h3>Aún no hay registros</h3>
                     <p>Cuando existan datos aparecerán aquí.</p>
                 </div>
             @else
-            <div class="recetas-toolbar">
+            <div class="hw-toolbar">
+                <div class="hw-search">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="search" class="form-control" data-hw-buscar placeholder="Buscar en la tabla…" aria-label="Buscar en la tabla" autocomplete="off">
+                    <button type="button" class="btn btn-icon hw-search-clear" data-hw-buscar-limpiar aria-label="Limpiar búsqueda">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
                 <select class="form-select" data-filtro-columna="3" aria-label="Filtrar por doctor">
                     <option value="">Doctor: todos</option>
                 </select>
-                <button type="button" class="btn btn-text recetas-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
+                <span class="hw-toolbar-count" data-hw-contador></span>
+                <button type="button" class="btn btn-text hw-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
             </div>
 
-            <div class="table-responsive recetas-table-container">
-                <table id="tabla-recetas" class="table recetas-table align-middle mb-0" data-page-length="10">
+            <div class="table-responsive hw-table-container">
+                <table id="tabla-recetas" class="table hw-data-table align-middle mb-0" data-page-length="10">
                     <thead>
                         <tr>
-                            <th scope="col" class="recetas-column-id">ID</th>
+                            <th scope="col" class="hw-column-id">ID</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Paciente</th>
                             <th scope="col">Doctor</th>
@@ -78,22 +85,22 @@
                     <tbody>
                     @foreach($lista as $item)
                         <tr>
-                            <td class="recetas-id">#{{ $item->id }}</td>
+                            <td class="hw-id">#{{ $item->id }}</td>
                             <td>{{ $fmtFecha($item->fecha_prescripcion, 'd/m/Y H:i') }}</td>
                             <td>
-                              <div class="recetas-identity">
-                                <div class="recetas-avatar"><span class="material-symbols-outlined">person</span></div>
-                                <div class="recetas-identity-data">
-                                  <span class="recetas-fullname" data-filtro-valor>{{ ($item->registroMedico?->paciente?->nombres ?? '') . ' ' . ($item->registroMedico?->paciente?->apellidos ?? '') }}</span>
-                                  <span class="recetas-identity-caption">{{ \Illuminate\Support\Str::limit((string) ('Registro #' . $item->id_registro_medico ?? ""), 60) }}</span>
+                              <div class="hw-identity">
+                                <div class="hw-avatar"><span class="material-symbols-outlined">person</span></div>
+                                <div class="hw-identity-data">
+                                  <span class="hw-fullname" data-filtro-valor>{{ ($item->registroMedico?->paciente?->nombres ?? '') . ' ' . ($item->registroMedico?->paciente?->apellidos ?? '') }}</span>
+                                  <span class="hw-identity-caption">{{ \Illuminate\Support\Str::limit((string) ('Registro #' . $item->id_registro_medico ?? ""), 60) }}</span>
                                 </div>
                               </div>
                             </td>
                             <td>{{ ($item->registroMedico?->doctor?->usuario?->nombres ?? '') . ' ' . ($item->registroMedico?->doctor?->usuario?->apellidos ?? '') ?? "—" }}</td>
-                            <td class="recetas-muted" title="{{ $item->notas }}">{{ \Illuminate\Support\Str::limit((string) ($item->notas ?? ""), 70) ?: "—" }}</td>
+                            <td class="hw-muted" title="{{ $item->notas }}">{{ \Illuminate\Support\Str::limit((string) ($item->notas ?? ""), 70) ?: "—" }}</td>
                             <td>
-                                <div class="recetas-actions">
-                                    <button type="button" class="recetas-action-button"
+                                <div class="hw-actions">
+                                    <button type="button" class="hw-action-button"
                                             data-bs-toggle="modal" data-bs-target="#modalVer"
                                             data-id="{{ $item->id }}"
                                             title="Consultar receta" aria-label="Consultar receta">
@@ -106,43 +113,47 @@
                     </tbody>
                 </table>
             </div>
+            <div class="hw-no-results">
+                <span class="material-symbols-outlined">search_off</span>
+                No se encontraron coincidencias con la búsqueda.
+            </div>
             @endif
 
         </section>
     </div>
 
     {{-- MODAL: CONSULTA --}}
-    <div class="modal fade recetas-modal" id="modalVer" tabindex="-1" aria-labelledby="tituloVer" aria-hidden="true"
+    <div class="modal fade hw-modal" id="modalVer" tabindex="-1" aria-labelledby="tituloVer" aria-hidden="true"
          data-buscar-url="{{ route('recetas.buscar', ['id' => '__ID__']) }}">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="recetas-modal-header">
-                    <div class="recetas-modal-heading">
-                        <div class="recetas-modal-icon"><span class="material-symbols-outlined">visibility</span></div>
+                <div class="hw-modal-header">
+                    <div class="hw-modal-heading">
+                        <div class="hw-modal-icon"><span class="material-symbols-outlined">visibility</span></div>
                         <div>
-                            <h2 class="recetas-modal-title" id="tituloVer">Detalle de receta</h2>
-                            <p class="recetas-modal-subtitle">Información completa del registro.</p>
+                            <h2 class="hw-modal-title" id="tituloVer">Detalle de receta</h2>
+                            <p class="hw-modal-subtitle">Información completa del registro.</p>
                         </div>
                     </div>
-                    <button type="button" class="recetas-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="hw-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
 
                 <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
 
-                <div class="modal-body recetas-modal-body">
-                    <dl class="recetas-detail-grid">
-                        <div class="recetas-detail-item"><dt>Paciente</dt><dd data-ver="registro_medico.paciente.nombres+registro_medico.paciente.apellidos">—</dd></div>
-                        <div class="recetas-detail-item"><dt>Doctor responsable</dt><dd data-ver="registro_medico.doctor.usuario.nombres+registro_medico.doctor.usuario.apellidos">—</dd></div>
-                        <div class="recetas-detail-item"><dt>Fecha de prescripción</dt><dd data-ver="fecha_prescripcion" data-formato="fechahora">—</dd></div>
-                        <div class="recetas-detail-item"><dt>Registro médico</dt><dd data-ver="id_registro_medico">—</dd></div>
-                        <div class="recetas-detail-item is-wide"><dt>Notas</dt><dd data-ver="notas">—</dd></div>
-                        <div class="recetas-detail-item is-wide"><dt>Medicamentos</dt><dd data-ver="detalles" data-formato="lista" data-columnas="Medicamento:medicamento.nombre;Dosis:dosis;Frecuencia:frecuencia;Duración:duracion;Vía:via_administracion;Indicaciones:instrucciones">—</dd></div>
+                <div class="modal-body hw-modal-body">
+                    <dl class="hw-detail-grid">
+                        <div class="hw-detail-item"><dt>Paciente</dt><dd data-ver="registro_medico.paciente.nombres+registro_medico.paciente.apellidos">—</dd></div>
+                        <div class="hw-detail-item"><dt>Doctor responsable</dt><dd data-ver="registro_medico.doctor.usuario.nombres+registro_medico.doctor.usuario.apellidos">—</dd></div>
+                        <div class="hw-detail-item"><dt>Fecha de prescripción</dt><dd data-ver="fecha_prescripcion" data-formato="fechahora">—</dd></div>
+                        <div class="hw-detail-item"><dt>Registro médico</dt><dd data-ver="id_registro_medico">—</dd></div>
+                        <div class="hw-detail-item is-wide"><dt>Notas</dt><dd data-ver="notas">—</dd></div>
+                        <div class="hw-detail-item is-wide"><dt>Medicamentos</dt><dd data-ver="detalles" data-formato="lista" data-columnas="Medicamento:medicamento.nombre;Dosis:dosis;Frecuencia:frecuencia;Duración:duracion;Vía:via_administracion;Indicaciones:instrucciones">—</dd></div>
                     </dl>
                 </div>
 
-                <div class="recetas-modal-footer">
+                <div class="hw-modal-footer">
                     <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>

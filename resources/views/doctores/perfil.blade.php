@@ -2,13 +2,34 @@
 
 @section('titulo', 'Perfil Doctor')
 
-@push('estilos')
-    <link rel="stylesheet" href="{{ asset('css/doctores.css') }}"
-@endpush
-
 @section('contenido')
-    <h1>Ruta de perfil de doctores</h1>
 
+    <div class="hw-page">
+
+        <header class="hw-header">
+            <div class="hw-heading">
+                <div class="hw-heading-icon">
+                    <span class="material-symbols-outlined">badge</span>
+                </div>
+                <div>
+                    <h1 class="hw-title">Perfil profesional</h1>
+                    <p class="hw-subtitle">Datos profesionales, horarios y agenda del doctor.</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="hw-surface">
+            <div class="hw-placeholder">
+                <span class="material-symbols-outlined">construction</span>
+                <h2>Pantalla pendiente de conectar</h2>
+                <p>
+                    El diseño base ya usa el layout y los componentes de HealthWare.
+                    Falta definir la ruta y la acción del controlador que cargan sus datos.
+                </p>
+            </div>
+        </section>
+
+    </div>
 
     {{--
         VISTA: Perfil profesional del doctor.

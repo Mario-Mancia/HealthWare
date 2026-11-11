@@ -5,7 +5,6 @@
 
 @push('estilos')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="{{ asset('css/notificaciones.css') }}">
 @endpush
 
 @section('contenido')
@@ -19,31 +18,31 @@
         $fmtFecha = fn($v, $f = 'd/m/Y') => $v ? \Illuminate\Support\Carbon::parse($v)->format($f) : '—';
     @endphp
 
-    <div class="notificaciones-page">
+    <div class="hw-page">
 
         {{-- ENCABEZADO --}}
-        <header class="notificaciones-header">
-            <div class="notificaciones-heading">
-                <div class="notificaciones-heading-icon">
+        <header class="hw-header">
+            <div class="hw-heading">
+                <div class="hw-heading-icon">
                     <span class="material-symbols-outlined">notifications</span>
                 </div>
                 <div>
-                    <h1 class="notificaciones-title">Notificaciones</h1>
-                    <p class="notificaciones-subtitle">Avisos recibidos dentro del sistema.</p>
+                    <h1 class="hw-title">Notificaciones</h1>
+                    <p class="hw-subtitle">Avisos recibidos dentro del sistema.</p>
                 </div>
             </div>
         </header>
 
-        <div class="notificaciones-stats">
-          <div class="notificaciones-stat">
+        <div class="hw-stats">
+          <div class="hw-stat">
             <span class="material-symbols-outlined">notifications</span>
             <div><strong>{{ $lista->count() }}</strong><span>Total</span></div>
           </div>
-          <div class="notificaciones-stat">
+          <div class="hw-stat">
             <span class="material-symbols-outlined">mark_email_read</span>
             <div><strong>{{ $lista->whereNotNull("leido_en")->count() }}</strong><span>Leídas</span></div>
           </div>
-          <div class="notificaciones-stat">
+          <div class="hw-stat">
             <span class="material-symbols-outlined">mark_email_unread</span>
             <div><strong>{{ $lista->whereNull("leido_en")->count() }}</strong><span>Pendientes</span></div>
           </div>
@@ -51,41 +50,49 @@
 
 
         {{-- SUPERFICIE --}}
-        <section class="notificaciones-surface">
+        <section class="hw-surface">
 
-            <div class="notificaciones-surface-header">
+            <div class="hw-surface-header">
                 <div>
-                    <h2 class="notificaciones-surface-title">Bandeja de notificaciones</h2>
-                    <p class="notificaciones-surface-description">Consulta el contenido y el estado de lectura.</p>
+                    <h2 class="hw-surface-title">Bandeja de notificaciones</h2>
+                    <p class="hw-surface-description">Consulta el contenido y el estado de lectura.</p>
                 </div>
-                <div class="notificaciones-record-indicator">
+                <div class="hw-record-indicator">
                     <span class="material-symbols-outlined">database</span>
                     <span>{{ $lista->count() }} registros</span>
                 </div>
             </div>
 
             @if($lista->isEmpty())
-                <div class="notificaciones-empty">
+                <div class="hw-empty">
                     <span class="material-symbols-outlined">notifications</span>
                     <h3>Aún no hay registros</h3>
                     <p>Cuando existan datos aparecerán aquí.</p>
                 </div>
             @else
-            <div class="notificaciones-toolbar">
+            <div class="hw-toolbar">
+                <div class="hw-search">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="search" class="form-control" data-hw-buscar placeholder="Buscar en la tabla…" aria-label="Buscar en la tabla" autocomplete="off">
+                    <button type="button" class="btn btn-icon hw-search-clear" data-hw-buscar-limpiar aria-label="Limpiar búsqueda">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
                 <select class="form-select" data-filtro-columna="5" aria-label="Filtrar por estado">
                     <option value="">Estado: todos</option>
                 </select>
                 <select class="form-select" data-filtro-columna="2" aria-label="Filtrar por tipo">
                     <option value="">Tipo: todos</option>
                 </select>
-                <button type="button" class="btn btn-text notificaciones-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
+                <span class="hw-toolbar-count" data-hw-contador></span>
+                <button type="button" class="btn btn-text hw-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
             </div>
 
-            <div class="table-responsive notificaciones-table-container">
-                <table id="tabla-notificaciones" class="table notificaciones-table align-middle mb-0" data-page-length="10">
+            <div class="table-responsive hw-table-container">
+                <table id="tabla-notificaciones" class="table hw-data-table align-middle mb-0" data-page-length="10">
                     <thead>
                         <tr>
-                            <th scope="col" class="notificaciones-column-id">ID</th>
+                            <th scope="col" class="hw-column-id">ID</th>
                             <th scope="col">Notificación</th>
                             <th scope="col">Tipo</th>
                             <th scope="col">Destinatario</th>
@@ -97,23 +104,23 @@
                     <tbody>
                     @foreach($lista as $item)
                         <tr>
-                            <td class="notificaciones-id">#{{ $item->id }}</td>
+                            <td class="hw-id">#{{ $item->id }}</td>
                             <td>
-                              <div class="notificaciones-identity">
-                                <div class="notificaciones-avatar"><span class="material-symbols-outlined">mail</span></div>
-                                <div class="notificaciones-identity-data">
-                                  <span class="notificaciones-fullname" data-filtro-valor>{{ $item->titulo }}</span>
-                                  <span class="notificaciones-identity-caption">{{ \Illuminate\Support\Str::limit((string) ($item->mensaje ?? ""), 60) }}</span>
+                              <div class="hw-identity">
+                                <div class="hw-avatar"><span class="material-symbols-outlined">mail</span></div>
+                                <div class="hw-identity-data">
+                                  <span class="hw-fullname" data-filtro-valor>{{ $item->titulo }}</span>
+                                  <span class="hw-identity-caption">{{ \Illuminate\Support\Str::limit((string) ($item->mensaje ?? ""), 60) }}</span>
                                 </div>
                               </div>
                             </td>
-                            <td><span class="notificaciones-chip" data-filtro-valor>{{ $item->tipo ?? "N/A" }}</span></td>
+                            <td><span class="hw-chip" data-filtro-valor>{{ $item->tipo ?? "N/A" }}</span></td>
                             <td>{{ ($item->usuario?->nombres ?? '') . ' ' . ($item->usuario?->apellidos ?? '') ?? "—" }}</td>
                             <td>{{ $fmtFecha($item->created_at, 'd/m/Y H:i') }}</td>
-                            <td><span class="notificaciones-status notificaciones-status-{{ $item->leido_en ? 'success' : 'warning' }}" data-filtro-valor><span class="notificaciones-status-dot"></span>{{ $item->leido_en ? 'Leída' : 'Pendiente' }}</span></td>
+                            <td><span class="hw-status hw-status-{{ $item->leido_en ? 'success' : 'warning' }}" data-filtro-valor><span class="hw-status-dot"></span>{{ $item->leido_en ? 'Leída' : 'Pendiente' }}</span></td>
                             <td>
-                                <div class="notificaciones-actions">
-                                    <button type="button" class="notificaciones-action-button"
+                                <div class="hw-actions">
+                                    <button type="button" class="hw-action-button"
                                             data-bs-toggle="modal" data-bs-target="#modalVer"
                                             data-id="{{ $item->id }}"
                                             title="Consultar notificación" aria-label="Consultar notificación">
@@ -126,43 +133,47 @@
                     </tbody>
                 </table>
             </div>
+            <div class="hw-no-results">
+                <span class="material-symbols-outlined">search_off</span>
+                No se encontraron coincidencias con la búsqueda.
+            </div>
             @endif
 
         </section>
     </div>
 
     {{-- MODAL: CONSULTA --}}
-    <div class="modal fade notificaciones-modal" id="modalVer" tabindex="-1" aria-labelledby="tituloVer" aria-hidden="true"
+    <div class="modal fade hw-modal" id="modalVer" tabindex="-1" aria-labelledby="tituloVer" aria-hidden="true"
          data-buscar-url="{{ route('notificaciones.buscar', ['id' => '__ID__']) }}">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="notificaciones-modal-header">
-                    <div class="notificaciones-modal-heading">
-                        <div class="notificaciones-modal-icon"><span class="material-symbols-outlined">visibility</span></div>
+                <div class="hw-modal-header">
+                    <div class="hw-modal-heading">
+                        <div class="hw-modal-icon"><span class="material-symbols-outlined">visibility</span></div>
                         <div>
-                            <h2 class="notificaciones-modal-title" id="tituloVer">Detalle de notificación</h2>
-                            <p class="notificaciones-modal-subtitle">Información completa del registro.</p>
+                            <h2 class="hw-modal-title" id="tituloVer">Detalle de notificación</h2>
+                            <p class="hw-modal-subtitle">Información completa del registro.</p>
                         </div>
                     </div>
-                    <button type="button" class="notificaciones-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="hw-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
 
                 <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
 
-                <div class="modal-body notificaciones-modal-body">
-                    <dl class="notificaciones-detail-grid">
-                        <div class="notificaciones-detail-item"><dt>Título</dt><dd data-ver="titulo">—</dd></div>
-                        <div class="notificaciones-detail-item"><dt>Tipo</dt><dd data-ver="tipo">—</dd></div>
-                        <div class="notificaciones-detail-item is-wide"><dt>Mensaje</dt><dd data-ver="mensaje">—</dd></div>
-                        <div class="notificaciones-detail-item"><dt>Destinatario</dt><dd data-ver="usuario.nombres+usuario.apellidos">—</dd></div>
-                        <div class="notificaciones-detail-item"><dt>Recibida</dt><dd data-ver="created_at" data-formato="fechahora">—</dd></div>
-                        <div class="notificaciones-detail-item"><dt>Leída</dt><dd data-ver="leido_en" data-formato="fechahora">—</dd></div>
+                <div class="modal-body hw-modal-body">
+                    <dl class="hw-detail-grid">
+                        <div class="hw-detail-item"><dt>Título</dt><dd data-ver="titulo">—</dd></div>
+                        <div class="hw-detail-item"><dt>Tipo</dt><dd data-ver="tipo">—</dd></div>
+                        <div class="hw-detail-item is-wide"><dt>Mensaje</dt><dd data-ver="mensaje">—</dd></div>
+                        <div class="hw-detail-item"><dt>Destinatario</dt><dd data-ver="usuario.nombres+usuario.apellidos">—</dd></div>
+                        <div class="hw-detail-item"><dt>Recibida</dt><dd data-ver="created_at" data-formato="fechahora">—</dd></div>
+                        <div class="hw-detail-item"><dt>Leída</dt><dd data-ver="leido_en" data-formato="fechahora">—</dd></div>
                     </dl>
                 </div>
 
-                <div class="notificaciones-modal-footer">
+                <div class="hw-modal-footer">
                     <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>

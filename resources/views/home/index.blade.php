@@ -1,43 +1,79 @@
-{{-- Vista generada por reestructurar-vistas.sh: home.index --}}
 @extends('layouts.app_layout')
 
-@section('titulo', 'Home')
-
-@push('estilos')
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-@endpush
+@section('titulo', 'Inicio')
 
 @section('contenido')
-    <h1 class="fw-bold fs-1">Ruta: home.index</h1>
 
+    @php
+        $usuarioActual = auth()->user();
+        $rolInicio = mb_strtolower(trim($usuarioActual->rol->rol ?? ''));
+        $configuracionInicio = require resource_path('views/layouts/partials/menu_config.php');
 
+        // Solo los módulos con ruta existente y permitidos para el rol del usuario
+        $gruposInicio = [];
+        foreach ($configuracionInicio['modulos'] as $moduloInicio) {
+            $enlacesInicio = array_values(array_filter(
+                $moduloInicio['enlaces'],
+                fn ($enlace) => \Illuminate\Support\Facades\Route::has($enlace['ruta'])
+                    && in_array($rolInicio, $enlace['roles'], true)
+            ));
 
-    {{--
-        VISTA: Página principal de HealthWare.
+            if ($enlacesInicio !== []) {
+                $gruposInicio[] = [
+                    'titulo' => $moduloInicio['titulo'],
+                    'icono' => $moduloInicio['icono'],
+                    'enlaces' => $enlacesInicio,
+                ];
+            }
+        }
 
-        OBJETIVO:
-        Presentar una pantalla de bienvenida al usuario autenticado y servir
-        como punto de entrada al sistema.
+        $horaInicio = (int) now()->format('H');
+        $saludoInicio = $horaInicio < 12 ? 'Buenos días' : ($horaInicio < 19 ? 'Buenas tardes' : 'Buenas noches');
+    @endphp
 
-        CONTENIDO:
-        - Encabezado de bienvenida con el nombre del usuario autenticado.
-        - Breve descripción del propósito del sistema.
-        - Accesos rápidos a los módulos disponibles según el rol.
-        - Resumen de las principales funciones de HealthWare.
-        - Indicadores generales opcionales, sin duplicar el Dashboard.
+    <div class="hw-page">
 
-        INTERACCIÓN:
-        - Botones o tarjetas que redirijan a los módulos correspondientes.
-        - Mostrar únicamente accesos permitidos para el rol del usuario.
+        <section class="hw-hero">
+            <div>
+                <h1>{{ $saludoInicio }}, {{ $usuarioActual->nombres ?? 'bienvenido' }}</h1>
+                <p>
+                    Bienvenido a HealthWare, el sistema de gestión clínica. Desde aquí puedes
+                    ir directamente a los módulos disponibles para tu rol.
+                </p>
+            </div>
 
-        CONSIDERACIONES:
-        - No convertir esta pantalla en otro Dashboard.
-        - Mantener un diseño limpio, sencillo y orientado a la navegación.
-        - Utilizar el layout principal app_layout.
-    --}}
+            <span class="hw-hero-badge">
+                <span class="material-symbols-outlined">verified_user</span>
+                {{ $usuarioActual->rol->rol ?? 'Usuario' }}
+            </span>
+        </section>
+
+        @forelse($gruposInicio as $grupoInicio)
+            <section class="hw-quick-section">
+                <h2>
+                    <span class="material-symbols-outlined">{{ $grupoInicio['icono'] }}</span>
+                    {{ $grupoInicio['titulo'] }}
+                </h2>
+
+                <div class="hw-quick-grid">
+                    @foreach($grupoInicio['enlaces'] as $enlaceInicio)
+                        <a href="{{ route($enlaceInicio['ruta']) }}" class="hw-quick-card">
+                            <span class="material-symbols-outlined">{{ $enlaceInicio['icono'] }}</span>
+                            <span class="hw-quick-text">{{ $enlaceInicio['etiqueta'] }}</span>
+                        </a>
+                    @endforeach
+                </div>
+            </section>
+        @empty
+            <section class="hw-surface">
+                <div class="hw-empty">
+                    <span class="material-symbols-outlined">lock</span>
+                    <h3>No hay módulos disponibles</h3>
+                    <p>Tu rol todavía no tiene accesos asignados. Contacta con el administrador.</p>
+                </div>
+            </section>
+        @endforelse
+
+    </div>
 
 @endsection
-
-@push('scripts')
-    <script src="{{ asset('js/home/recetas.js') }}"></script>
-@endpush

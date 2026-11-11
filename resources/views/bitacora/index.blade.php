@@ -5,7 +5,6 @@
 
 @push('estilos')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="{{ asset('css/bitacora.css') }}">
 @endpush
 
 @section('contenido')
@@ -19,23 +18,23 @@
         $fmtFecha = fn($v, $f = 'd/m/Y') => $v ? \Illuminate\Support\Carbon::parse($v)->format($f) : '—';
     @endphp
 
-    <div class="bitacora-page">
+    <div class="hw-page">
 
         {{-- ENCABEZADO --}}
-        <header class="bitacora-header">
-            <div class="bitacora-heading">
-                <div class="bitacora-heading-icon">
+        <header class="hw-header">
+            <div class="hw-heading">
+                <div class="hw-heading-icon">
                     <span class="material-symbols-outlined">history</span>
                 </div>
                 <div>
-                    <h1 class="bitacora-title">Bitácora del sistema</h1>
-                    <p class="bitacora-subtitle">Trazabilidad de las operaciones realizadas.</p>
+                    <h1 class="hw-title">Bitácora del sistema</h1>
+                    <p class="hw-subtitle">Trazabilidad de las operaciones realizadas.</p>
                 </div>
             </div>
         </header>
 
         {{-- FILTROS DEL SERVIDOR (BitacoraController: evento, fecha_desde, fecha_hasta) --}}
-        <form method="GET" action="{{ route('bitacora') }}" class="bitacora-server-filters">
+        <form method="GET" action="{{ route('bitacora') }}" class="hw-server-filters">
             <div class="form-floating">
                 <select name="evento" id="filtro_evento" class="form-select">
                     <option value="">Todos</option>
@@ -62,41 +61,49 @@
 
 
         {{-- SUPERFICIE --}}
-        <section class="bitacora-surface">
+        <section class="hw-surface">
 
-            <div class="bitacora-surface-header">
+            <div class="hw-surface-header">
                 <div>
-                    <h2 class="bitacora-surface-title">Eventos registrados</h2>
-                    <p class="bitacora-surface-description">Accesos y cambios, del más reciente al más antiguo.</p>
+                    <h2 class="hw-surface-title">Eventos registrados</h2>
+                    <p class="hw-surface-description">Accesos y cambios, del más reciente al más antiguo.</p>
                 </div>
-                <div class="bitacora-record-indicator">
+                <div class="hw-record-indicator">
                     <span class="material-symbols-outlined">database</span>
                     <span>{{ $lista->count() }} registros</span>
                 </div>
             </div>
 
             @if($lista->isEmpty())
-                <div class="bitacora-empty">
+                <div class="hw-empty">
                     <span class="material-symbols-outlined">history</span>
                     <h3>Aún no hay registros</h3>
                     <p>Cuando existan datos aparecerán aquí.</p>
                 </div>
             @else
-            <div class="bitacora-toolbar">
+            <div class="hw-toolbar">
+                <div class="hw-search">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="search" class="form-control" data-hw-buscar placeholder="Buscar en la tabla…" aria-label="Buscar en la tabla" autocomplete="off">
+                    <button type="button" class="btn btn-icon hw-search-clear" data-hw-buscar-limpiar aria-label="Limpiar búsqueda">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
                 <select class="form-select" data-filtro-columna="3" aria-label="Filtrar por evento">
                     <option value="">Evento: todos</option>
                 </select>
                 <select class="form-select" data-filtro-columna="4" aria-label="Filtrar por módulo">
                     <option value="">Módulo: todos</option>
                 </select>
-                <button type="button" class="btn btn-text bitacora-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
+                <span class="hw-toolbar-count" data-hw-contador></span>
+                <button type="button" class="btn btn-text hw-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
             </div>
 
-            <div class="table-responsive bitacora-table-container">
-                <table id="tabla-bitacora" class="table bitacora-table align-middle mb-0" data-page-length="10" data-sin-acciones="1">
+            <div class="table-responsive hw-table-container">
+                <table id="tabla-bitacora" class="table hw-data-table align-middle mb-0" data-page-length="10" data-sin-acciones="1">
                     <thead>
                         <tr>
-                            <th scope="col" class="bitacora-column-id">ID</th>
+                            <th scope="col" class="hw-column-id">ID</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Usuario</th>
                             <th scope="col">Evento</th>
@@ -108,25 +115,29 @@
                     <tbody>
                     @foreach($lista as $item)
                         <tr>
-                            <td class="bitacora-id">#{{ $item->id }}</td>
+                            <td class="hw-id">#{{ $item->id }}</td>
                             <td>{{ $fmtFecha($item->created_at, 'd/m/Y H:i') }}</td>
                             <td>
-                              <div class="bitacora-identity">
-                                <div class="bitacora-avatar"><span class="material-symbols-outlined">person</span></div>
-                                <div class="bitacora-identity-data">
-                                  <span class="bitacora-fullname" data-filtro-valor>{{ $item->usuario_nombre ?? 'Sistema' }}</span>
-                                  <span class="bitacora-identity-caption">{{ \Illuminate\Support\Str::limit((string) ($item->ip_address ?? ""), 60) }}</span>
+                              <div class="hw-identity">
+                                <div class="hw-avatar"><span class="material-symbols-outlined">person</span></div>
+                                <div class="hw-identity-data">
+                                  <span class="hw-fullname" data-filtro-valor>{{ $item->usuario_nombre ?? 'Sistema' }}</span>
+                                  <span class="hw-identity-caption">{{ \Illuminate\Support\Str::limit((string) ($item->ip_address ?? ""), 60) }}</span>
                                 </div>
                               </div>
                             </td>
-                            <td><span class="bitacora-status bitacora-status-{{ ['LOGIN_OK' => 'success', 'LOGIN_FALLIDO' => 'error', 'LOGOUT' => 'neutral', 'CREADO' => 'info', 'ACTUALIZADO' => 'warning', 'ELIMINADO' => 'error', ][(string) ($item->evento)] ?? "neutral" }}" data-filtro-valor><span class="bitacora-status-dot"></span>{{ ucfirst(str_replace("_", " ", (string) ($item->evento))) }}</span></td>
-                            <td><span class="bitacora-chip" data-filtro-valor>{{ $item->modulo ?? "N/A" }}</span></td>
+                            <td><span class="hw-status hw-status-{{ ['LOGIN_OK' => 'success', 'LOGIN_FALLIDO' => 'error', 'LOGOUT' => 'neutral', 'CREADO' => 'info', 'ACTUALIZADO' => 'warning', 'ELIMINADO' => 'error', ][(string) ($item->evento)] ?? "neutral" }}" data-filtro-valor><span class="hw-status-dot"></span>{{ ucfirst(str_replace("_", " ", (string) ($item->evento))) }}</span></td>
+                            <td><span class="hw-chip" data-filtro-valor>{{ $item->modulo ?? "N/A" }}</span></td>
                             <td>{{ $item->registro_id ? '#' . $item->registro_id : null ?? "—" }}</td>
-                            <td class="bitacora-muted" title="{{ $item->descripcion }}">{{ \Illuminate\Support\Str::limit((string) ($item->descripcion ?? ""), 70) ?: "—" }}</td>
+                            <td class="hw-muted" title="{{ $item->descripcion }}">{{ \Illuminate\Support\Str::limit((string) ($item->descripcion ?? ""), 70) ?: "—" }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
+            </div>
+            <div class="hw-no-results">
+                <span class="material-symbols-outlined">search_off</span>
+                No se encontraron coincidencias con la búsqueda.
             </div>
             @endif
 

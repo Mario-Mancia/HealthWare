@@ -5,7 +5,6 @@
 
 @push('estilos')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="{{ asset('css/pacientes.css') }}">
 @endpush
 
 @section('contenido')
@@ -19,23 +18,23 @@
         $fmtFecha = fn($v, $f = 'd/m/Y') => $v ? \Illuminate\Support\Carbon::parse($v)->format($f) : '—';
     @endphp
 
-    <div class="pacientes-page">
+    <div class="hw-page">
 
         {{-- ENCABEZADO --}}
-        <header class="pacientes-header">
-            <div class="pacientes-heading">
-                <div class="pacientes-heading-icon">
+        <header class="hw-header">
+            <div class="hw-heading">
+                <div class="hw-heading-icon">
                     <span class="material-symbols-outlined">personal_injury</span>
                 </div>
                 <div>
-                    <h1 class="pacientes-title">Pacientes</h1>
-                    <p class="pacientes-subtitle">Registro administrativo de los pacientes de la clínica.</p>
+                    <h1 class="hw-title">Pacientes</h1>
+                    <p class="hw-subtitle">Registro administrativo de los pacientes de la clínica.</p>
                 </div>
             </div>
 
             @if($puedeCrear)
                 <button type="button"
-                        class="btn btn-primary pacientes-create-button"
+                        class="btn btn-primary hw-create-button"
                         data-bs-toggle="modal"
                         data-bs-target="#modalNuevo">
                     <span class="material-symbols-outlined">person_add</span>
@@ -46,41 +45,49 @@
 
 
         {{-- SUPERFICIE --}}
-        <section class="pacientes-surface">
+        <section class="hw-surface">
 
-            <div class="pacientes-surface-header">
+            <div class="hw-surface-header">
                 <div>
-                    <h2 class="pacientes-surface-title">Directorio de pacientes</h2>
-                    <p class="pacientes-surface-description">Consulta y administra los pacientes registrados.</p>
+                    <h2 class="hw-surface-title">Directorio de pacientes</h2>
+                    <p class="hw-surface-description">Consulta y administra los pacientes registrados.</p>
                 </div>
-                <div class="pacientes-record-indicator">
+                <div class="hw-record-indicator">
                     <span class="material-symbols-outlined">database</span>
                     <span>{{ $lista->count() }} registros</span>
                 </div>
             </div>
 
             @if($lista->isEmpty())
-                <div class="pacientes-empty">
+                <div class="hw-empty">
                     <span class="material-symbols-outlined">personal_injury</span>
                     <h3>Aún no hay registros</h3>
                     <p>Cuando existan datos aparecerán aquí.</p>
                 </div>
             @else
-            <div class="pacientes-toolbar">
+            <div class="hw-toolbar">
+                <div class="hw-search">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="search" class="form-control" data-hw-buscar placeholder="Buscar en la tabla…" aria-label="Buscar en la tabla" autocomplete="off">
+                    <button type="button" class="btn btn-icon hw-search-clear" data-hw-buscar-limpiar aria-label="Limpiar búsqueda">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
                 <select class="form-select" data-filtro-columna="5" aria-label="Filtrar por género">
                     <option value="">Género: todos</option>
                 </select>
                 <select class="form-select" data-filtro-columna="6" aria-label="Filtrar por sangre">
                     <option value="">Sangre: todos</option>
                 </select>
-                <button type="button" class="btn btn-text pacientes-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
+                <span class="hw-toolbar-count" data-hw-contador></span>
+                <button type="button" class="btn btn-text hw-toolbar-clear" data-filtros-limpiar>Limpiar filtros</button>
             </div>
 
-            <div class="table-responsive pacientes-table-container">
-                <table id="tabla-pacientes" class="table pacientes-table align-middle mb-0" data-page-length="10">
+            <div class="table-responsive hw-table-container">
+                <table id="tabla-pacientes" class="table hw-data-table align-middle mb-0" data-page-length="10">
                     <thead>
                         <tr>
-                            <th scope="col" class="pacientes-column-id">ID</th>
+                            <th scope="col" class="hw-column-id">ID</th>
                             <th scope="col">Paciente</th>
                             <th scope="col">DUI</th>
                             <th scope="col">Nacimiento</th>
@@ -93,31 +100,31 @@
                     <tbody>
                     @foreach($lista as $item)
                         <tr>
-                            <td class="pacientes-id">#{{ $item->id }}</td>
+                            <td class="hw-id">#{{ $item->id }}</td>
                             <td>
-                              <div class="pacientes-identity">
-                                <div class="pacientes-avatar"><span class="material-symbols-outlined">person</span></div>
-                                <div class="pacientes-identity-data">
-                                  <span class="pacientes-fullname" data-filtro-valor>{{ ($item->nombres ?? '') . ' ' . ($item->apellidos ?? '') }}</span>
-                                  <span class="pacientes-identity-caption">{{ \Illuminate\Support\Str::limit((string) ($item->correo ?? ""), 60) }}</span>
+                              <div class="hw-identity">
+                                <div class="hw-avatar"><span class="material-symbols-outlined">person</span></div>
+                                <div class="hw-identity-data">
+                                  <span class="hw-fullname" data-filtro-valor>{{ ($item->nombres ?? '') . ' ' . ($item->apellidos ?? '') }}</span>
+                                  <span class="hw-identity-caption">{{ \Illuminate\Support\Str::limit((string) ($item->correo ?? ""), 60) }}</span>
                                 </div>
                               </div>
                             </td>
-                            <td class="pacientes-mono">{{ $item->numero_identificacion ?? "—" }}</td>
-                            <td>{{ $fmtFecha($item->fecha_nacimiento) }} <span class="pacientes-muted">· {{ $item->fecha_nacimiento ? \Illuminate\Support\Carbon::parse($item->fecha_nacimiento)->age : '—' }} años</span></td>
+                            <td class="hw-mono">{{ $item->numero_identificacion ?? "—" }}</td>
+                            <td>{{ $fmtFecha($item->fecha_nacimiento) }} <span class="hw-muted">· {{ $item->fecha_nacimiento ? \Illuminate\Support\Carbon::parse($item->fecha_nacimiento)->age : '—' }} años</span></td>
                             <td>{{ $item->telefono ?? "—" }}</td>
                             <td><span data-filtro-valor>{{ $item->genero }}</span></td>
-                            <td><span class="pacientes-chip" data-filtro-valor>{{ $item->tipoSanguineo?->tipo_sanguineo ?? "N/A" }}</span></td>
+                            <td><span class="hw-chip" data-filtro-valor>{{ $item->tipoSanguineo?->tipo_sanguineo ?? "N/A" }}</span></td>
                             <td>
-                                <div class="pacientes-actions">
-                                    <button type="button" class="pacientes-action-button"
+                                <div class="hw-actions">
+                                    <button type="button" class="hw-action-button"
                                             data-bs-toggle="modal" data-bs-target="#modalVer"
                                             data-id="{{ $item->id }}"
                                             title="Consultar paciente" aria-label="Consultar paciente">
                                         <span class="material-symbols-outlined">visibility</span>
                                     </button>
                                     @if($puedeEditar)
-                                        <button type="button" class="pacientes-action-button"
+                                        <button type="button" class="hw-action-button"
                                                 data-bs-toggle="modal" data-bs-target="#modalEditar"
                                                 data-id="{{ $item->id }}"
                                                 title="Editar paciente" aria-label="Editar paciente">
@@ -125,7 +132,7 @@
                                         </button>
                                     @endif
                                     @if($puedeEliminar)
-                                        <button type="button" class="pacientes-action-button pacientes-action-delete"
+                                        <button type="button" class="hw-action-button hw-action-delete"
                                                 data-bs-toggle="modal" data-bs-target="#modalEliminar"
                                                 data-id="{{ $item->id }}"
                                                 data-nombre="{{ ($item->nombres ?? "") . " " . ($item->apellidos ?? "") }}"
@@ -141,6 +148,10 @@
                     </tbody>
                 </table>
             </div>
+            <div class="hw-no-results">
+                <span class="material-symbols-outlined">search_off</span>
+                No se encontraron coincidencias con la búsqueda.
+            </div>
             @endif
 
         </section>
@@ -148,18 +159,18 @@
 
     {{-- MODAL: NUEVO --}}
     @if($puedeCrear)
-    <div class="modal fade pacientes-modal" id="modalNuevo" tabindex="-1" aria-labelledby="tituloNuevo" aria-hidden="true">
+    <div class="modal fade hw-modal" id="modalNuevo" tabindex="-1" aria-labelledby="tituloNuevo" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="pacientes-modal-header">
-                    <div class="pacientes-modal-heading">
-                        <div class="pacientes-modal-icon"><span class="material-symbols-outlined">person_add</span></div>
+                <div class="hw-modal-header">
+                    <div class="hw-modal-heading">
+                        <div class="hw-modal-icon"><span class="material-symbols-outlined">person_add</span></div>
                         <div>
-                            <h2 class="pacientes-modal-title" id="tituloNuevo">Registrar paciente</h2>
-                            <p class="pacientes-modal-subtitle">Completa la información solicitada.</p>
+                            <h2 class="hw-modal-title" id="tituloNuevo">Registrar paciente</h2>
+                            <p class="hw-modal-subtitle">Completa la información solicitada.</p>
                         </div>
                     </div>
-                    <button type="button" class="pacientes-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="hw-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
@@ -168,9 +179,9 @@
                     @csrf
                     <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
 
-                    <div class="modal-body pacientes-modal-body">
-                        <div class="pacientes-form-section">
-                          <div class="pacientes-form-section-heading">
+                    <div class="modal-body hw-modal-body">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">badge</span>
                             <div>
                               <h3>Datos personales</h3>
@@ -225,8 +236,8 @@
                             </div>
                           </div>
                         </div>
-                        <div class="pacientes-form-section">
-                          <div class="pacientes-form-section-heading">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">call</span>
                             <div>
                               <h3>Contacto</h3>
@@ -254,8 +265,8 @@
                             </div>
                           </div>
                         </div>
-                        <div class="pacientes-form-section">
-                          <div class="pacientes-form-section-heading">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">emergency</span>
                             <div>
                               <h3>Contacto de emergencia</h3>
@@ -285,7 +296,7 @@
                         </div>
                     </div>
 
-                    <div class="pacientes-modal-footer">
+                    <div class="hw-modal-footer">
                         <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">
                             <span class="material-symbols-outlined">save</span>
@@ -300,18 +311,18 @@
 
     {{-- MODAL: EDITAR --}}
     @if($puedeEditar)
-    <div class="modal fade pacientes-modal" id="modalEditar" tabindex="-1" aria-labelledby="tituloEditar" aria-hidden="true">
+    <div class="modal fade hw-modal" id="modalEditar" tabindex="-1" aria-labelledby="tituloEditar" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="pacientes-modal-header">
-                    <div class="pacientes-modal-heading">
-                        <div class="pacientes-modal-icon"><span class="material-symbols-outlined">edit</span></div>
+                <div class="hw-modal-header">
+                    <div class="hw-modal-heading">
+                        <div class="hw-modal-icon"><span class="material-symbols-outlined">edit</span></div>
                         <div>
-                            <h2 class="pacientes-modal-title" id="tituloEditar">Editar paciente #<span id="editarTituloId">—</span></h2>
-                            <p class="pacientes-modal-subtitle">Actualiza la información y guarda los cambios.</p>
+                            <h2 class="hw-modal-title" id="tituloEditar">Editar paciente #<span id="editarTituloId">—</span></h2>
+                            <p class="hw-modal-subtitle">Actualiza la información y guarda los cambios.</p>
                         </div>
                     </div>
-                    <button type="button" class="pacientes-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="hw-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
@@ -324,9 +335,9 @@
                     @method('PUT')
                     <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
 
-                    <div class="modal-body pacientes-modal-body">
-                        <div class="pacientes-form-section">
-                          <div class="pacientes-form-section-heading">
+                    <div class="modal-body hw-modal-body">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">badge</span>
                             <div>
                               <h3>Datos personales</h3>
@@ -381,8 +392,8 @@
                             </div>
                           </div>
                         </div>
-                        <div class="pacientes-form-section">
-                          <div class="pacientes-form-section-heading">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">call</span>
                             <div>
                               <h3>Contacto</h3>
@@ -410,8 +421,8 @@
                             </div>
                           </div>
                         </div>
-                        <div class="pacientes-form-section">
-                          <div class="pacientes-form-section-heading">
+                        <div class="hw-form-section">
+                          <div class="hw-form-section-heading">
                             <span class="material-symbols-outlined">emergency</span>
                             <div>
                               <h3>Contacto de emergencia</h3>
@@ -441,7 +452,7 @@
                         </div>
                     </div>
 
-                    <div class="pacientes-modal-footer">
+                    <div class="hw-modal-footer">
                         <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">
                             <span class="material-symbols-outlined">save</span>
@@ -455,42 +466,42 @@
     @endif
 
     {{-- MODAL: CONSULTA --}}
-    <div class="modal fade pacientes-modal" id="modalVer" tabindex="-1" aria-labelledby="tituloVer" aria-hidden="true"
+    <div class="modal fade hw-modal" id="modalVer" tabindex="-1" aria-labelledby="tituloVer" aria-hidden="true"
          data-buscar-url="{{ route('pacientes.buscar', ['id' => '__ID__']) }}">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="pacientes-modal-header">
-                    <div class="pacientes-modal-heading">
-                        <div class="pacientes-modal-icon"><span class="material-symbols-outlined">visibility</span></div>
+                <div class="hw-modal-header">
+                    <div class="hw-modal-heading">
+                        <div class="hw-modal-icon"><span class="material-symbols-outlined">visibility</span></div>
                         <div>
-                            <h2 class="pacientes-modal-title" id="tituloVer">Detalle de paciente</h2>
-                            <p class="pacientes-modal-subtitle">Información completa del registro.</p>
+                            <h2 class="hw-modal-title" id="tituloVer">Detalle de paciente</h2>
+                            <p class="hw-modal-subtitle">Información completa del registro.</p>
                         </div>
                     </div>
-                    <button type="button" class="pacientes-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="hw-modal-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
 
                 <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
 
-                <div class="modal-body pacientes-modal-body">
-                    <dl class="pacientes-detail-grid">
-                        <div class="pacientes-detail-item"><dt>Paciente</dt><dd data-ver="nombres+apellidos">—</dd></div>
-                        <div class="pacientes-detail-item"><dt>DUI</dt><dd data-ver="numero_identificacion">—</dd></div>
-                        <div class="pacientes-detail-item"><dt>Fecha de nacimiento</dt><dd data-ver="fecha_nacimiento" data-formato="fecha">—</dd></div>
-                        <div class="pacientes-detail-item"><dt>Género</dt><dd data-ver="genero">—</dd></div>
-                        <div class="pacientes-detail-item"><dt>Tipo sanguíneo</dt><dd data-ver="tipo_sanguineo.tipo_sanguineo">—</dd></div>
-                        <div class="pacientes-detail-item"><dt>Teléfono</dt><dd data-ver="telefono">—</dd></div>
-                        <div class="pacientes-detail-item"><dt>Correo</dt><dd data-ver="correo">—</dd></div>
-                        <div class="pacientes-detail-item is-wide"><dt>Dirección</dt><dd data-ver="direccion">—</dd></div>
-                        <div class="pacientes-detail-item"><dt>Contacto de emergencia</dt><dd data-ver="nombre_contacto_emergencia">—</dd></div>
-                        <div class="pacientes-detail-item"><dt>Teléfono de emergencia</dt><dd data-ver="telefono_contacto_emergencia">—</dd></div>
-                        <div class="pacientes-detail-item"><dt>Parentesco</dt><dd data-ver="parentesco_contacto_emergencia">—</dd></div>
+                <div class="modal-body hw-modal-body">
+                    <dl class="hw-detail-grid">
+                        <div class="hw-detail-item"><dt>Paciente</dt><dd data-ver="nombres+apellidos">—</dd></div>
+                        <div class="hw-detail-item"><dt>DUI</dt><dd data-ver="numero_identificacion">—</dd></div>
+                        <div class="hw-detail-item"><dt>Fecha de nacimiento</dt><dd data-ver="fecha_nacimiento" data-formato="fecha">—</dd></div>
+                        <div class="hw-detail-item"><dt>Género</dt><dd data-ver="genero">—</dd></div>
+                        <div class="hw-detail-item"><dt>Tipo sanguíneo</dt><dd data-ver="tipo_sanguineo.tipo_sanguineo">—</dd></div>
+                        <div class="hw-detail-item"><dt>Teléfono</dt><dd data-ver="telefono">—</dd></div>
+                        <div class="hw-detail-item"><dt>Correo</dt><dd data-ver="correo">—</dd></div>
+                        <div class="hw-detail-item is-wide"><dt>Dirección</dt><dd data-ver="direccion">—</dd></div>
+                        <div class="hw-detail-item"><dt>Contacto de emergencia</dt><dd data-ver="nombre_contacto_emergencia">—</dd></div>
+                        <div class="hw-detail-item"><dt>Teléfono de emergencia</dt><dd data-ver="telefono_contacto_emergencia">—</dd></div>
+                        <div class="hw-detail-item"><dt>Parentesco</dt><dd data-ver="parentesco_contacto_emergencia">—</dd></div>
                     </dl>
                 </div>
 
-                <div class="pacientes-modal-footer">
+                <div class="hw-modal-footer">
                     <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
@@ -499,18 +510,18 @@
 
     {{-- MODAL: ELIMINAR --}}
     @if($puedeEliminar)
-    <div class="modal fade pacientes-modal pacientes-delete-modal" id="modalEliminar" tabindex="-1" aria-labelledby="tituloEliminar" aria-hidden="true">
+    <div class="modal fade hw-modal hw-delete-modal" id="modalEliminar" tabindex="-1" aria-labelledby="tituloEliminar" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="pacientes-delete-content">
-                    <div class="pacientes-delete-icon"><span class="material-symbols-outlined">delete</span></div>
+                <div class="hw-delete-content">
+                    <div class="hw-delete-icon"><span class="material-symbols-outlined">delete</span></div>
 
-                    <button type="button" class="pacientes-modal-close pacientes-delete-close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="hw-modal-close hw-delete-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span class="material-symbols-outlined">close</span>
                     </button>
 
-                    <div class="pacientes-delete-heading">
-                        <span class="pacientes-delete-overline">Confirmación requerida</span>
+                    <div class="hw-delete-heading">
+                        <span class="hw-delete-overline">Confirmación requerida</span>
                         <h2 id="tituloEliminar">¿Eliminar este paciente?</h2>
                         <p>Esta acción no se puede deshacer desde la interfaz.</p>
                     </div>
@@ -521,23 +532,23 @@
                         @method('DELETE')
                         <div class="alert alert-danger d-none" role="alert" data-form-errors></div>
 
-                        <div class="pacientes-delete-identity">
-                            <div class="pacientes-delete-avatar"><span class="material-symbols-outlined">person</span></div>
-                            <div class="pacientes-delete-data">
-                                <span class="pacientes-delete-name" id="eliminar_nombre">—</span>
-                                <span class="pacientes-delete-sub" id="eliminar_sub">—</span>
-                                <span class="pacientes-delete-id">Identificador: #<span id="eliminar_id">—</span></span>
+                        <div class="hw-delete-identity">
+                            <div class="hw-delete-avatar"><span class="material-symbols-outlined">person</span></div>
+                            <div class="hw-delete-data">
+                                <span class="hw-delete-name" id="eliminar_nombre">—</span>
+                                <span class="hw-delete-sub" id="eliminar_sub">—</span>
+                                <span class="hw-delete-id">Identificador: #<span id="eliminar_id">—</span></span>
                             </div>
                         </div>
 
-                        <div class="pacientes-delete-notice">
+                        <div class="hw-delete-notice">
                             <span class="material-symbols-outlined">info</span>
                             <p>La eliminación respeta la lógica de estados definida. No se eliminan datos clínicos relacionados.</p>
                         </div>
 
-                        <div class="pacientes-delete-actions">
+                        <div class="hw-delete-actions">
                             <button type="button" class="btn btn-tonal" data-bs-dismiss="modal">Conservar</button>
-                            <button type="submit" class="btn pacientes-delete-confirm">
+                            <button type="submit" class="btn hw-delete-confirm">
                                 <span class="material-symbols-outlined">delete</span>
                                 Eliminar
                             </button>
